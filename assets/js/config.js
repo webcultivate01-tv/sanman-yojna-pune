@@ -29,28 +29,28 @@ const SITE = {
   regNo2: "P.F./19614, Pune",
 
   /* ---- Contact ---- */
-  phone:  "+91 87669 45548",
-  phone2: "+91 87669 45548",
+  phone:  "+91 8766945548",
+  phone2: "+91 8766945548",
   email:    "info@sanmanyojana.org",       /* TODO: confirm */
   emailAlt: "support@sanmanyojana.org",    /* TODO: confirm */
 
   officeAddress: {
-    en: "Shahid Bhagat Singh Pratishthan, Pune, Maharashtra",          /* TODO: full street address */
-    mr: "शहीद भगतसिंग प्रतिष्ठान, पुणे, महाराष्ट्र",
-    hi: "शहीद भगतसिंह प्रतिष्ठान, पुणे, महाराष्ट्र"
+    en: "2nd Floor, E-Building, Mantri Market, Hadapsar, Pune, Maharashtra 411028",
+    mr: "२रा मजला, ई-बिल्डिंग, मंत्री मार्केट, हडपसर, पुणे, महाराष्ट्र ४११०२८",
+    hi: "दूसरी मंज़िल, ई-बिल्डिंग, मंत्री मार्केट, हडपसर, पुणे, महाराष्ट्र ४११०२८"
   },
 
   /* ---- Service coverage ---- */
   serviceArea: {
-    en: "Pune District & Pimpri-Chinchwad",
-    mr: "पुणे जिल्हा व पिंपरी-चिंचवड",
-    hi: "पुणे जिला व पिंपरी-चिंचवड"
+    en: "Pune, Maharashtra",
+    mr: "पुणे, महाराष्ट्र",
+    hi: "पुणे, महाराष्ट्र"
   },
   freeKm: 20,
 
-  /* ---- Google Map (TODO: replace with the exact office pin) ---- */
-  mapLink: "https://maps.google.com/?q=Pune,Maharashtra",
-  mapEmbed: "https://www.google.com/maps?q=Pune,Maharashtra&hl=en&z=12&output=embed",
+  /* ---- Google Map ---- */
+  mapLink: "https://maps.google.com/?q=Mantri+Market,+Hadapsar,+Pune,+Maharashtra+411028",
+  mapEmbed: "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3783.633370727179!2d73.93221707519113!3d18.500258982589354!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTjCsDMwJzAwLjkiTiA3M8KwNTYnMDUuMyJF!5e0!3m2!1sen!2sin!4v1785993530695!5m2!1sen!2sin",
 
   /* ---- Office hours ---- */
   hours: {
@@ -74,10 +74,11 @@ const SITE = {
     facebook:  "#",   /* TODO */
     instagram: "#",   /* TODO */
     youtube:   "#",   /* TODO */
+    threads:   "#",   /* TODO */
     whatsapp:  "https://wa.me/918766945548"
   },
 
-  logo: "assets/img/logo.svg",
+  logo: "assets/img/logo2.png",
 
   /* ---- Counters shown on the home page ---- */
   stats: { years: 25, families: 4200, volunteers: 150, hours: 24 },

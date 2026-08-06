@@ -9,9 +9,17 @@ const I18N = {
     /* Navigation */
     "nav.home": "Home",
     "nav.about": "About",
-    "nav.services": "Plans & Services",
+    "nav.services": "Services",
+    "nav.gallery": "Gallery",
     "nav.contact": "Contact",
     "nav.cta": "Get Started",
+    "nav.contactnow": "Contact Now",
+
+    /* GALLERY PAGE */
+    "gallery.hero.badge": "Our Work",
+    "gallery.hero.title": "Gallery",
+    "gallery.hero.desc": "Moments from our service — arrangements, ceremonies and the families we have stood beside across Pune.",
+    "gallery.note": "Tap any photo to view it larger.",
 
     /* Common */
     "common.callnow": "Call Now",
@@ -23,6 +31,16 @@ const I18N = {
     /* CONTACT PAGE */
     "contact.title": "Contact Us",
     "contact.subtitle": "Get in touch with us for funeral arrangements and inquiries",
+
+    "contact.hero.title": "Get in Touch 24/7",
+    "contact.hero.desc": "We're here to offer constant support. Whether you need immediate assistance after the passing of a loved one or want to explore pre-planning for a funeral, you can contact Sanman Yojana with a simple phone call.",
+    "contact.hero.note": "In this stressful time, we're here for you.",
+    "contact.hero.callus": "Call us anytime",
+    "contact.hero.badge": "Available 24 × 7",
+    "contact.hero.whatsapp": "WhatsApp",
+    "contact.hero.availability": "Availability",
+    "contact.hero.availvalue": "24 × 7 — every day of the year",
+    "contact.hero.follow": "Follow us",
     "contact.about.title": "About Sanman Yojana",
     "contact.about.desc": "At Sanman Yojana, we provide complete end-to-end funeral arrangements in Pune with dignity, compassion, and transparency. With 15 years of experience, we've served thousands of families.",
     "contact.about.desc2": "Our team is available 24/7 for emergency support and guidance during your most difficult times.",
@@ -67,6 +85,7 @@ const I18N = {
 
     /* Contact page — info cards */
     "contact.help.title": "We're Here to Help",
+    "contact.help.subtitle": "Reach us the way that suits you best — day or night.",
     "contact.card.email": "Email",
     "contact.card.phone": "Phone",
     "contact.card.location": "Location",
@@ -84,11 +103,10 @@ const I18N = {
     /* Footer — contact page columns */
     "footer.aboutus": "About Us",
     "footer.services": "Our Services",
-    "footer.useful": "Useful Links",
+    "footer.useful": "Quick Links",
     "footer.helpline": "24×7 Helpline",
-    "footer.enquire": "Enquire",
-    "footer.enquire.desc": "Leave your name and number — we will call you back.",
-    "footer.enquire.btn": "Send Enquiry",
+    "footer.terms": "Terms & Conditions",
+    "footer.findus": "Find Us",
     "footer.svc1": "Ambulance & Transport Service",
     "footer.svc2": "Guruji & Ritual Arrangements",
     "footer.svc3": "Wood & Samagri Supply",
@@ -157,8 +175,9 @@ const I18N = {
     "footer.links": "Quick Links",
     "footer.contact": "Contact",
     "footer.social": "Follow Us",
-    "footer.rights": "© 2024 Sanman Yojana. All rights reserved.",
-    "footer.disclaimer": "Shahid Bhagat Singh Pratishthan, Pune | Registration: Maharashtra 779/2004",
+    "footer.rights": "© 2026 Sanman Yojana. All rights reserved.",
+    "footer.disclaimer": "Shahid Bhagat Singh Pratishthan, Pune",
+    "footer.registration": "Registration: Maharashtra 779/2004",
   },
 
   /* मराठी - MARATHI */
@@ -166,9 +185,17 @@ const I18N = {
     /* Navigation */
     "nav.home": "मुख्यपृष्ठ",
     "nav.about": "परिचय",
-    "nav.services": "योजना व सेवा",
+    "nav.services": "सेवा",
+    "nav.gallery": "गॅलरी",
     "nav.contact": "संपर्क",
     "nav.cta": "सुरुवात करा",
+    "nav.contactnow": "संपर्क करा",
+
+    /* GALLERY PAGE */
+    "gallery.hero.badge": "आमचे कार्य",
+    "gallery.hero.title": "गॅलरी",
+    "gallery.hero.desc": "आमच्या सेवेतील क्षण — व्यवस्था, विधी आणि पुणे परिसरातील ज्या कुटुंबांसोबत आम्ही उभे राहिलो.",
+    "gallery.note": "मोठ्या आकारात पाहण्यासाठी कोणत्याही फोटोवर टॅप करा.",
 
     /* Common */
     "common.callnow": "आत्ता कॉल करा",
@@ -180,6 +207,16 @@ const I18N = {
     /* CONTACT PAGE */
     "contact.title": "संपर्क साधा",
     "contact.subtitle": "अंत्यसंस्कार व माहितीसाठी आमच्याशी संपर्क साधा",
+
+    "contact.hero.title": "२४/७ संपर्क साधा",
+    "contact.hero.desc": "आम्ही सतत आपल्या पाठीशी आहोत. एखाद्या प्रिय व्यक्तीच्या निधनानंतर तातडीची मदत हवी असो, किंवा अंत्यसंस्कारांचे आधीच नियोजन करायचे असो — एका फोन कॉलवर आपण सन्मान योजनेशी संपर्क साधू शकता.",
+    "contact.hero.note": "या कठीण प्रसंगी आम्ही आपल्यासोबत आहोत.",
+    "contact.hero.callus": "कधीही फोन करा",
+    "contact.hero.badge": "२४ × ७ उपलब्ध",
+    "contact.hero.whatsapp": "व्हॉट्सॲप",
+    "contact.hero.availability": "उपलब्धता",
+    "contact.hero.availvalue": "२४ × ७ — वर्षातील प्रत्येक दिवस",
+    "contact.hero.follow": "आम्हाला फॉलो करा",
     "contact.about.title": "सन्मान योजनाविषयी",
     "contact.about.desc": "सन्मान योजना पुणे येथे संपूर्ण अंत्यसंस्कार व्यवस्था सन्मान, सहानुभूती आणि पारदर्शकतेने प्रदान करते. १५ वर्षांचा अनुभव असून हजारो कुटुंबांची सेवा केली आहे.",
     "contact.about.desc2": "आमचे संघ २४/७ आपत्कालीन समर्थन आणि मार्गदर्शन प्रदान करण्यास सदैव तयार आहे.",
@@ -224,6 +261,7 @@ const I18N = {
 
     /* संपर्क पृष्ठ — माहिती कार्ड */
     "contact.help.title": "आम्ही तुमच्या मदतीसाठी आहोत",
+    "contact.help.subtitle": "तुम्हाला सोयीच्या मार्गाने आमच्याशी संपर्क साधा — दिवसा किंवा रात्री.",
     "contact.card.email": "ई-मेल",
     "contact.card.phone": "फोन",
     "contact.card.location": "पत्ता",
@@ -241,11 +279,10 @@ const I18N = {
     /* फूटर */
     "footer.aboutus": "आमच्याविषयी",
     "footer.services": "आमच्या सेवा",
-    "footer.useful": "उपयुक्त दुवे",
+    "footer.useful": "जलद दुवे",
     "footer.helpline": "२४×७ हेल्पलाइन",
-    "footer.enquire": "विचारणा करा",
-    "footer.enquire.desc": "तुमचे नाव व मोबाईल क्रमांक द्या — आम्ही तुम्हाला परत कॉल करू.",
-    "footer.enquire.btn": "विचारणा पाठवा",
+    "footer.terms": "नियम व अटी",
+    "footer.findus": "आम्हाला शोधा",
     "footer.svc1": "रुग्णवाहिका व वाहतूक सेवा",
     "footer.svc2": "गुरुजी व विधी व्यवस्था",
     "footer.svc3": "लाकूड व साहित्य पुरवठा",
@@ -314,8 +351,9 @@ const I18N = {
     "footer.links": "उपयुक्त दुवे",
     "footer.contact": "संपर्क",
     "footer.social": "आमचा अनुसरण करा",
-    "footer.rights": "© २०२४ सन्मान योजना. सर्व हक्क राखीव.",
-    "footer.disclaimer": "शहीद भगतसिंह प्रतिष्ठान, पुणे | नोंदणी: महाराष्ट्र ७७९/२००४",
+    "footer.rights": "© २०२६ सन्मान योजना. सर्व हक्क राखीव.",
+    "footer.disclaimer": "शहीद भगतसिंह प्रतिष्ठान, पुणे",
+    "footer.registration": "नोंदणी: महाराष्ट्र ७७९/२००४",
   },
 
   /* हिंदी - HINDI */
@@ -323,9 +361,17 @@ const I18N = {
     /* Navigation */
     "nav.home": "मुख्य पृष्ठ",
     "nav.about": "परिचय",
-    "nav.services": "योजनाएँ व सेवाएँ",
+    "nav.services": "सेवाएँ",
+    "nav.gallery": "गैलरी",
     "nav.contact": "संपर्क",
     "nav.cta": "शुरुआत करें",
+    "nav.contactnow": "संपर्क करें",
+
+    /* GALLERY PAGE */
+    "gallery.hero.badge": "हमारा कार्य",
+    "gallery.hero.title": "गैलरी",
+    "gallery.hero.desc": "हमारी सेवा के क्षण — व्यवस्थाएँ, विधियाँ और वे परिवार जिनके साथ हम पुणे भर में खड़े रहे.",
+    "gallery.note": "बड़ा देखने के लिए किसी भी फ़ोटो पर टैप करें.",
 
     /* Common */
     "common.callnow": "अभी कॉल करें",
@@ -337,6 +383,16 @@ const I18N = {
     /* CONTACT PAGE */
     "contact.title": "संपर्क करें",
     "contact.subtitle": "अंत्येष्टि और जानकारी के लिए हमसे संपर्क करें",
+
+    "contact.hero.title": "२४/७ संपर्क करें",
+    "contact.hero.desc": "हम निरंतर आपके साथ हैं। किसी अपने के निधन के बाद तत्काल सहायता चाहिए हो, या अंत्येष्टि की पूर्व-योजना बनानी हो — एक फोन कॉल पर आप सन्मान योजना से संपर्क कर सकते हैं।",
+    "contact.hero.note": "इस कठिन समय में हम आपके साथ हैं।",
+    "contact.hero.callus": "कभी भी फोन करें",
+    "contact.hero.badge": "२४ × ७ उपलब्ध",
+    "contact.hero.whatsapp": "व्हाट्सऐप",
+    "contact.hero.availability": "उपलब्धता",
+    "contact.hero.availvalue": "२४ × ७ — वर्ष का हर दिन",
+    "contact.hero.follow": "हमें फॉलो करें",
     "contact.about.title": "सम्मान योजना के बारे में",
     "contact.about.desc": "सम्मान योजना पुणे में पूर्ण अंत्येष्टि व्यवस्था सम्मान, सहानुभूति और पारदर्शिता के साथ प्रदान करता है। 15 वर्षों का अनुभव रखते हुए हमने हजारों परिवारों की सेवा की है।",
     "contact.about.desc2": "हमारी टीम आपातकालीन समर्थन और मार्गदर्शन के लिए 24/7 उपलब्ध है।",
@@ -381,6 +437,7 @@ const I18N = {
 
     /* संपर्क पृष्ठ — जानकारी कार्ड */
     "contact.help.title": "हम आपकी सहायता के लिए हैं",
+    "contact.help.subtitle": "आपको जो तरीका सुविधाजनक लगे, उसी से संपर्क करें — दिन हो या रात।",
     "contact.card.email": "ईमेल",
     "contact.card.phone": "फोन",
     "contact.card.location": "पता",
@@ -398,11 +455,10 @@ const I18N = {
     /* फुटर */
     "footer.aboutus": "हमारे बारे में",
     "footer.services": "हमारी सेवाएँ",
-    "footer.useful": "उपयोगी लिंक",
+    "footer.useful": "त्वरित लिंक",
     "footer.helpline": "24×7 हेल्पलाइन",
-    "footer.enquire": "पूछताछ करें",
-    "footer.enquire.desc": "अपना नाम और मोबाइल नंबर दें — हम आपको वापस कॉल करेंगे।",
-    "footer.enquire.btn": "पूछताछ भेजें",
+    "footer.terms": "नियम एवं शर्तें",
+    "footer.findus": "हमें खोजें",
     "footer.svc1": "एम्बुलेंस व परिवहन सेवा",
     "footer.svc2": "गुरुजी व अनुष्ठान व्यवस्था",
     "footer.svc3": "लकड़ी व सामग्री आपूर्ति",
@@ -471,7 +527,8 @@ const I18N = {
     "footer.links": "उपयोगी लिंक",
     "footer.contact": "संपर्क",
     "footer.social": "हमें फॉलो करें",
-    "footer.rights": "© 2024 सम्मान योजना। सर्वाधिकार सुरक्षित।",
-    "footer.disclaimer": "शहीद भगत सिंह प्रतिष्ठान, पुणे | पंजीकरण: महाराष्ट्र 779/2004",
+    "footer.rights": "© 2026 सम्मान योजना। सर्वाधिकार सुरक्षित।",
+    "footer.disclaimer": "शहीद भगत सिंह प्रतिष्ठान, पुणे",
+    "footer.registration": "पंजीकरण: महाराष्ट्र 779/2004",
   }
 };

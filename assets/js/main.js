@@ -41,7 +41,7 @@
     document.querySelectorAll('[data-link="map"]').forEach(function (a) {
       a.href = SITE.mapLink;
     });
-    ["whatsapp", "facebook", "instagram", "youtube"].forEach(function (k) {
+    ["whatsapp", "facebook", "instagram", "youtube", "threads"].forEach(function (k) {
       document.querySelectorAll('[data-link="' + k + '"]').forEach(function (a) {
         a.href = (SITE.social && SITE.social[k]) || "#";
       });
@@ -99,6 +99,9 @@
     document.querySelectorAll(".lang-btn").forEach(function (b) {
       b.classList.toggle("active", b.dataset.lang === lang);
     });
+    document.querySelectorAll(".lang-current").forEach(function (el) {
+      el.textContent = lang.toUpperCase();
+    });
   }
   window.setLang = setLang;
 
@@ -136,8 +139,76 @@
     }
 
     document.querySelectorAll(".lang-btn").forEach(function (b) {
-      b.addEventListener("click", function () { setLang(b.dataset.lang); });
+      b.addEventListener("click", function () {
+        setLang(b.dataset.lang);
+        var wrap = b.closest(".lang-switch");
+        if (wrap) {
+          wrap.classList.remove("open");
+          var t = wrap.querySelector(".lang-toggle");
+          if (t) t.setAttribute("aria-expanded", "false");
+        }
+      });
       b.classList.toggle("active", b.dataset.lang === LANG);
+    });
+
+    document.querySelectorAll(".lang-current").forEach(function (el) {
+      el.textContent = LANG.toUpperCase();
+    });
+  }
+
+  function initLangSwitch() {
+    document.querySelectorAll(".lang-toggle").forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var wrap = btn.closest(".lang-switch");
+        var isOpen = wrap.classList.contains("open");
+        document.querySelectorAll(".lang-switch.open").forEach(function (w) {
+          w.classList.remove("open");
+          var t = w.querySelector(".lang-toggle");
+          if (t) t.setAttribute("aria-expanded", "false");
+        });
+        if (!isOpen) {
+          wrap.classList.add("open");
+          btn.setAttribute("aria-expanded", "true");
+        }
+      });
+    });
+
+    document.addEventListener("click", function () {
+      document.querySelectorAll(".lang-switch.open").forEach(function (w) {
+        w.classList.remove("open");
+        var t = w.querySelector(".lang-toggle");
+        if (t) t.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+
+  /* ---------- 3b. Active nav item (current page only) ---------- */
+
+  function initActiveNav() {
+    var file = (location.pathname.split("/").pop() || "").toLowerCase();
+    if (!file) file = "index.html";
+
+    var same = function (a) {
+      var href = (a.getAttribute("href") || "").split("#")[0].split("/").pop().toLowerCase();
+      if (!href) href = "index.html";
+      return href === file;
+    };
+
+    /* desktop links: underline only the current page */
+    document.querySelectorAll("#siteHeader .nav-link").forEach(function (a) {
+      var on = same(a);
+      a.classList.toggle("active", on);
+      if (on) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+
+    /* mobile menu links */
+    document.querySelectorAll("#mobileMenu .mnav-link").forEach(function (a) {
+      var on = same(a);
+      a.classList.toggle("active", on);
+      if (on) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
     });
   }
 
@@ -198,20 +269,7 @@
     });
   }
 
-  /* ---------- 7. Back to top ---------- */
-
-  function initToTop() {
-    var btn = document.getElementById("toTop");
-    if (!btn) return;
-    window.addEventListener("scroll", function () {
-      btn.classList.toggle("show", window.scrollY > 400);
-    }, { passive: true });
-    btn.addEventListener("click", function () {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  }
-
-  /* ---------- 8. Enquiry form ---------- */
+  /* ---------- 7. Enquiry form ---------- */
 
   function initForm() {
     var form = document.getElementById("contactForm");
@@ -284,6 +342,8 @@
     wireSite();
     applyI18n();
     initHeader();
+    initLangSwitch();
+    initActiveNav();
     initReveal();
     initCounters();
     initAccordion();

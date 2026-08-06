@@ -63,6 +63,54 @@ p {
   color: white;
 }
 
+/* Anchored sections clear the sticky header */
+section[id],
+[id="enquiry"] {
+  scroll-margin-top: 7rem;
+}
+
+/* ============================================================
+   BRAND LOGO (navbar) — image only, no frame or backdrop
+   ============================================================ */
+.site-logo {
+  display: block;
+  height: 3.9rem;          /* mobile  */
+  width: auto;
+  object-fit: contain;
+}
+
+@media (min-width: 640px) {
+  .site-logo { height: 4.6rem; }   /* tablet  */
+}
+
+@media (min-width: 1024px) {
+  .site-logo { height: 5.1rem; }   /* desktop */
+}
+
+/* Footer uses the same mark, a touch larger */
+.footer-logo {
+  display: block;
+  height: 5.25rem;
+  width: auto;
+  object-fit: contain;
+}
+
+@media (min-width: 640px) {
+  .footer-logo { height: 6rem; }
+}
+
+/* Footer link lists ("Our Services", "Quick Links") — icon + text row */
+.fl-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: padding-left 0.25s ease, color 0.25s ease;
+}
+
+.fl-link:hover {
+  padding-left: 6px;
+}
+
 /* ============================================================
    NAVIGATION LINKS
    ============================================================ */
@@ -70,8 +118,8 @@ p {
   position: relative;
   font-weight: 600;
   font-size: 0.95rem;
-  color: var(--text);
-  opacity: 0.8;
+  color: #44403c;
+  opacity: 0.85;
   padding: 0.5rem 0;
   transition: opacity 0.3s ease, color 0.3s ease;
 }
@@ -99,6 +147,146 @@ p {
   width: 100%;
 }
 
+/* "Contact Now" call-to-action in the navbar */
+.nav-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.625rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  box-shadow: 0 10px 22px -14px rgba(120, 53, 15, 0.9);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.nav-cta svg {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.25s ease;
+}
+
+.nav-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.35) 48%, transparent 66%);
+  transform: translateX(-120%);
+  transition: transform 0.6s ease;
+}
+
+.nav-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px -14px rgba(120, 53, 15, 1);
+}
+
+.nav-cta:hover svg {
+  transform: translateX(3px);
+}
+
+.nav-cta:hover::after {
+  transform: translateX(120%);
+}
+
+/* ============================================================
+   LANGUAGE SWITCHER — single icon + dropdown
+   ============================================================ */
+.lang-switch {
+  position: relative;
+}
+
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition: background 0.2s ease;
+}
+
+.lang-toggle svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
+}
+
+.lang-toggle:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+/* Always light, regardless of the visitor's OS/browser dark-mode
+   preference — this chip sits on the white header, not the dark topbar. */
+.lang-toggle-light {
+  background: #fef3c7;
+  color: #78350f;
+  border: 1px solid #f3e0bb;
+}
+
+.lang-toggle-light:hover {
+  background: #fde9c8;
+}
+
+.lang-current {
+  text-transform: uppercase;
+}
+
+.lang-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 140px;
+  background: #fff;
+  border-radius: 0.75rem;
+  border: 1px solid #f1e4d2;
+  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.35);
+  padding: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+  z-index: 60;
+}
+
+.lang-switch.open .lang-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.lang-menu .lang-btn {
+  text-align: left;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #44403c;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.lang-menu .lang-btn:hover {
+  background: #fdf3e4;
+  color: var(--primary-dark);
+}
+
+.lang-menu .lang-btn.active {
+  background: var(--primary);
+  color: #fff;
+}
+
 /* Mobile menu */
 #mobileMenu {
   max-height: 0;
@@ -107,7 +295,81 @@ p {
 }
 
 #mobileMenu.open {
-  max-height: 24rem;
+  max-height: 34rem;
+}
+
+.mnav-link {
+  color: #44403c;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.mnav-link:hover {
+  background: #f5f5f4;
+}
+
+.mnav-link.active {
+  background: #fffbeb;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* ============================================================
+   FLOATING WHATSAPP BUTTON (all pages)
+   ============================================================ */
+.wa-float {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 9999px;
+  background: #25d366;
+  color: #fff;
+  box-shadow: 0 12px 26px -10px rgba(37, 211, 102, 0.8);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.wa-float:hover,
+.wa-float:focus-visible {
+  background: #1ebe5b;
+  transform: translateY(-3px);
+  box-shadow: 0 18px 32px -12px rgba(37, 211, 102, 0.9);
+}
+
+.wa-float svg {
+  width: 1.65rem;
+  height: 1.65rem;
+}
+
+/* soft pulse ring */
+.wa-float::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #25d366;
+  opacity: 0.45;
+  z-index: -1;
+  animation: wa-pulse 2.4s ease-out infinite;
+}
+
+@keyframes wa-pulse {
+  0%   { transform: scale(1);   opacity: 0.45; }
+  70%  { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+@media (min-width: 640px) {
+  .wa-float {
+    right: 1.5rem;
+    bottom: 1.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  .wa-float svg { width: 1.8rem; height: 1.8rem; }
 }
 
 /* ============================================================
@@ -178,6 +440,10 @@ p {
   opacity: 1;
   transform: none;
 }
+
+/* Directional variants — pair with .reveal */
+.reveal-left { transform: translateX(-40px); }
+.reveal-right { transform: translateX(40px); }
 
 /* Staggered delays */
 .d1 { transition-delay: 0.1s; }
