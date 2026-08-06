@@ -31,8 +31,8 @@ const SITE = {
   /* ---- Contact ---- */
   phone:  "+91 8766945548",
   phone2: "+91 8766945548",
-  email:    "info@sanmanyojana.org",       /* TODO: confirm */
-  emailAlt: "support@sanmanyojana.org",    /* TODO: confirm */
+  email:    "sanmanyojana05@gmail.com",
+  emailAlt: "sanmanyojana05@gmail.com",
 
   officeAddress: {
     en: "2nd Floor, E-Building, Mantri Market, Hadapsar, Pune, Maharashtra 411028",
