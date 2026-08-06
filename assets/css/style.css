@@ -1,0 +1,366 @@
+/* ============================================================
+   SANMAN YOJANA — Light Funeral Scheme Theme
+   Modern, clean, responsive design with accessibility
+   ============================================================ */
+
+:root {
+  --primary: #b45309;
+  --primary-dark: #92400e;
+  --secondary: #78350f;
+  --light: #fef3c7;
+  --white: #ffffff;
+  --text: #1f1917;
+  --text-muted: #78350f;
+  --border: #f3e8d6;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: "Poppins", "Noto Sans Devanagari", system-ui, sans-serif;
+  color: var(--text);
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display", "Noto Serif Devanagari", Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+p {
+  line-height: 1.75;
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+  border-radius: 99px;
+  border: 2px solid var(--light);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
+
+::selection {
+  background: var(--primary);
+  color: white;
+}
+
+/* ============================================================
+   NAVIGATION LINKS
+   ============================================================ */
+.nav-link {
+  position: relative;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text);
+  opacity: 0.8;
+  padding: 0.5rem 0;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+  border-radius: 99px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  opacity: 1;
+  color: var(--primary);
+}
+
+.nav-link.active::after,
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Mobile menu */
+#mobileMenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#mobileMenu.open {
+  max-height: 24rem;
+}
+
+/* ============================================================
+   LANGUAGE BUTTONS
+   ============================================================ */
+.lang-btn {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.lang-btn.active {
+  background: var(--primary) !important;
+  color: white !important;
+  font-weight: 700;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes floaty {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: floaty 3s ease-in-out infinite;
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ============================================================
+   REVEAL ON SCROLL
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.show {
+  opacity: 1;
+  transform: none;
+}
+
+/* Staggered delays */
+.d1 { transition-delay: 0.1s; }
+.d2 { transition-delay: 0.2s; }
+.d3 { transition-delay: 0.3s; }
+.d4 { transition-delay: 0.4s; }
+.d5 { transition-delay: 0.5s; }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+.btn:active {
+  transform: translateY(2px);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 4px 15px -5px rgba(37, 99, 235, 0.5);
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  box-shadow: 0 8px 25px -8px rgba(37, 99, 235, 0.6);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: var(--light);
+  color: var(--text);
+  border: 2px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: white;
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* ============================================================
+   GRID BACKGROUND
+   ============================================================ */
+.bg-grid-slate-200 {
+  background-image:
+    linear-gradient(0deg, #e2e8f0 1px, transparent 1px),
+    linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
+}
+
+.bg-grid-16 {
+  background-size: 16px 16px;
+}
+
+/* ============================================================
+   ACCESSIBILITY
+   ============================================================ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.sr-only:not(.focus-visible):focus,
+.focus\:not-sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* ============================================================
+   HEADER STICKY EFFECTS
+   ============================================================ */
+#siteHeader.shadow-lg {
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================================
+   FORM STYLES (if needed later)
+   ============================================================ */
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.shadow-soft {
+  box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================ */
+@media (max-width: 768px) {
+  body {
+    font-size: 0.95rem;
+  }
+
+  h1 {
+    font-size: 1.875rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ============================================================
+   DARK MODE SUPPORT (optional)
+   ============================================================ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #f1f5f9;
+    --text-muted: #cbd5e1;
+    --border: #334155;
+    --light: #1e293b;
+  }
+
+  body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  }
+}
+
+/* ============================================================
+   PRINT STYLES
+   ============================================================ */
+@media print {
+  body {
+    background: white;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}

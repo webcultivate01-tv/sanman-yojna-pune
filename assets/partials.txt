@@ -1,0 +1,19 @@
+Reference notes for the shared header/footer markup used on every page.
+Kept as a plain text note so it does not get served as a page.
+
+- Top bar        : email / phone / location + social icons  (hidden below lg)
+- Header         : logo + nav + 24x7 helpline block + "Become a Member" CTA
+- Page banner    : title + subtext + breadcrumb (inner pages only)
+- Footer columns : About Us | Our Services | Useful Links | Enquire
+- Bottom bar     : copyright + "24x7 Response Guaranteed"
+
+Nav items and their files:
+  Home      index.html
+  About     about.html
+  Services  services.html
+  Plans     plans.html
+  Terms     terms.html
+  Contact   contact.html
+  (CTA)     register.html
+
+To change contact details, prices or plan contents, edit assets/js/config.js only.
