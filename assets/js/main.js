@@ -335,6 +335,44 @@
     });
   }
 
+  /* ---------- 8. Back-to-top button ---------- */
+
+  function initToTop() {
+    var btn = document.getElementById("toTop");
+    if (!btn) {
+      btn = document.createElement("button");
+      btn.id = "toTop";
+      btn.type = "button";
+      btn.className = "to-top";
+      btn.setAttribute("aria-label", "Back to top");
+      btn.innerHTML =
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">' +
+        '<path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"/></svg>';
+      document.body.appendChild(btn);
+    }
+    btn.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    var toggle = function () { btn.classList.toggle("show", window.scrollY > 500); };
+    window.addEventListener("scroll", toggle, { passive: true });
+    toggle();
+  }
+
+  /* ---------- 9. Reading progress bar ---------- */
+
+  function initProgress() {
+    var bar = document.createElement("div");
+    bar.className = "scroll-progress";
+    document.body.appendChild(bar);
+    var update = function () {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + "%";
+    };
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  }
+
   /* ---------- Boot ---------- */
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -348,6 +386,7 @@
     initCounters();
     initAccordion();
     initToTop();
+    initProgress();
     initForm();
   });
 })();
