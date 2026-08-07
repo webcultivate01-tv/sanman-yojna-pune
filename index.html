@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Sanman Yojana - Professional funeral assistance with dignity, transparency & compassion.">
+<meta name="description" content="Sanman Yojana - Professional funeral assistance with dignity, transparency & compassion. 24x7 support for every family.">
 <title>Sanman Yojana - Funeral Assistance Scheme</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +12,316 @@
 <script src="assets/js/tw-config.js"></script>
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="icon" href="assets/img/logo.png">
+
+<style>
+  /* ===================== HERO (VIDEO) ===================== */
+  .hero-video-wrap{
+    position: relative;
+    min-height: 88svh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    isolation: isolate;
+    background: #1c1917;
+  }
+  @media (min-width: 1024px){
+    .hero-video-wrap{ min-height: 92vh; }
+  }
+  .hero-video-wrap video{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -2;
+  }
+  /* Readability veil — kept light so the footage stays clearly visible.
+     Desktop: darkens the left side only (text sits there).
+     Mobile: soft top/bottom bands, middle of the frame stays clear. */
+  .hero-video-wrap::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    background:
+      linear-gradient(180deg, rgba(28,25,23,.35) 0%, rgba(28,25,23,.15) 40%, rgba(28,25,23,.40) 100%);
+  }
+  @media (min-width: 1024px){
+    .hero-video-wrap::before{
+      background:
+        linear-gradient(100deg, rgba(28,25,23,.50) 0%, rgba(28,25,23,.35) 42%, rgba(28,25,23,.08) 72%, rgba(28,25,23,.02) 100%);
+    }
+  }
+  .hero-video-wrap::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    background: radial-gradient(circle at 15% 20%, rgba(217,119,6,.22) 0%, rgba(217,119,6,0) 45%);
+  }
+  /* text gets its own soft shadow instead of a heavier overlay */
+  .hero-copy{ text-shadow: 0 2px 18px rgba(0,0,0,.55); }
+  .hero-badge-dot{
+    animation: pulseDot 1.8s ease-in-out infinite;
+  }
+  @keyframes pulseDot{
+    0%,100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:.5; transform:scale(1.3); }
+  }
+  .hero-scroll{
+    animation: bounceY 2s ease-in-out infinite;
+  }
+  @keyframes bounceY{
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(8px); }
+  }
+
+  /* ===================== SHARED SECTION STYLES ===================== */
+  .divider-amber{
+    background: linear-gradient(90deg, #b45309, #d97706 50%, #f0b256);
+  }
+
+  .img-card{
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+  .img-card img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .5s ease;
+  }
+  .img-card:hover img{ transform: scale(1.06); }
+
+  /* Service cards */
+  .svc-card{
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .svc-card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px -20px rgba(120,53,15,.35);
+    border-color: #d97706;
+  }
+
+  /* Steps connector line */
+  .step-line{
+    background: repeating-linear-gradient(90deg, #d97706 0, #d97706 8px, transparent 8px, transparent 16px);
+  }
+
+  /* CTA band */
+  .cta-band{
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(120deg, #78350f 0%, #92400e 45%, #78350f 100%);
+  }
+  .cta-band::before,
+  .cta-band::after{
+    content:"";
+    position:absolute;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,.12) 0%, rgba(255,255,255,0) 70%);
+  }
+  .cta-band::before{ top:-140px; left:-120px; }
+  .cta-band::after{ bottom:-160px; right:-100px; }
+
+  /* Testimonial cards */
+  .quote-mark{
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+  }
+
+  /* ===================== EMERGENCY STRIP ===================== */
+  .emg-band{
+    background: linear-gradient(115deg, #7f1d1d 0%, #991b1b 50%, #7f1d1d 100%);
+  }
+  .emg-pulse{ animation: emgPulse 2s ease-in-out infinite; }
+  @keyframes emgPulse{
+    0%,100%{ box-shadow: 0 0 0 0 rgba(255,255,255,.45); }
+    70%{ box-shadow: 0 0 0 14px rgba(255,255,255,0); }
+  }
+
+  /* ===================== FEATURE CARDS ===================== */
+  .feat-card{
+    position: relative;
+    overflow: hidden;
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .feat-card::after{
+    content:"";
+    position:absolute;
+    left:0; bottom:0;
+    height:3px; width:0;
+    background: linear-gradient(90deg,#b45309,#f0b256);
+    transition: width .35s ease;
+  }
+  .feat-card:hover{
+    transform: translateY(-6px);
+    border-color:#fcd34d;
+    box-shadow: 0 22px 44px -26px rgba(120,53,15,.55);
+  }
+  .feat-card:hover::after{ width:100%; }
+  .feat-ico{ transition: transform .35s ease, background .35s ease, color .35s ease; }
+  .feat-card:hover .feat-ico{
+    transform: rotate(-8deg) scale(1.08);
+    background:#b45309; color:#fff;
+  }
+
+  /* ===================== PLAN CARDS ===================== */
+  .plan-card{
+    display:flex; flex-direction:column;
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .plan-card:hover{
+    transform: translateY(-6px);
+    border-color:#d97706;
+    box-shadow: 0 24px 46px -26px rgba(120,53,15,.5);
+  }
+  .plan-card.featured{
+    border-color:#b45309;
+    box-shadow: 0 24px 46px -26px rgba(120,53,15,.55);
+  }
+
+  /* horizontal snap-scroll on small screens */
+  .snap-row{
+    display:grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 82%;
+    gap:1rem;
+    overflow-x:auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom:.75rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width:none;
+  }
+  .snap-row::-webkit-scrollbar{ display:none; }
+  .snap-row > *{ scroll-snap-align:center; }
+  @media (min-width: 640px){
+    .snap-row{ grid-auto-columns: 46%; }
+  }
+  @media (min-width: 1024px){
+    .snap-row{
+      grid-auto-flow: row;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      grid-auto-columns:auto;
+      overflow: visible;
+      gap:1.5rem;
+    }
+  }
+
+  /* ===================== SAMAGRI CHIPS ===================== */
+  .chip{
+    transition: transform .25s ease, background .25s ease, color .25s ease, border-color .25s ease;
+  }
+  .chip:hover{
+    transform: translateY(-3px);
+    background:#b45309; color:#fff; border-color:#b45309;
+  }
+
+  /* ===================== GALLERY STRIP ===================== */
+  .gthumb{
+    position:relative;
+    border-radius:.9rem;
+    overflow:hidden;
+    cursor:zoom-in;
+    background:#fff;
+    border:1px solid #f3e8d6;
+  }
+  .gthumb img{
+    width:100%; height:100%;
+    object-fit:cover;
+    transition: transform .45s ease;
+  }
+  .gthumb::after{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(28,25,23,.45) 100%);
+    opacity:0; transition:opacity .3s ease;
+  }
+  .gthumb:hover img{ transform:scale(1.07); }
+  .gthumb:hover::after{ opacity:1; }
+
+  .hl-box{
+    position:fixed; inset:0; z-index:80;
+    display:grid; place-items:center;
+    padding:1rem;
+    background:rgba(12,10,9,.9);
+    opacity:0; pointer-events:none;
+    transition:opacity .3s ease;
+  }
+  .hl-box.active{ opacity:1; pointer-events:auto; }
+  .hl-box img{
+    max-width:min(92vw, 780px);
+    max-height:86vh;
+    border-radius:.9rem;
+    box-shadow:0 30px 70px -20px rgba(0,0,0,.8);
+    transform:scale(.94);
+    transition:transform .3s ease;
+  }
+  .hl-box.active img{ transform:scale(1); }
+  .hl-btn{
+    position:absolute;
+    width:2.75rem; height:2.75rem;
+    border-radius:9999px;
+    display:grid; place-items:center;
+    background:rgba(255,255,255,.14);
+    color:#fff;
+    transition:background .25s ease, transform .25s ease;
+  }
+  .hl-btn:hover{ background:rgba(255,255,255,.3); }
+  .hl-close{ top:1rem; right:1rem; }
+  .hl-prev{ left:.65rem; top:50%; transform:translateY(-50%); }
+  .hl-next{ right:.65rem; top:50%; transform:translateY(-50%); }
+  .hl-prev:hover, .hl-next:hover{ transform:translateY(-50%) scale(1.08); }
+  @media (min-width:768px){
+    .hl-prev{ left:2rem; }
+    .hl-next{ right:2rem; }
+  }
+
+  /* ===================== TESTIMONIAL SLIDER ===================== */
+  .tslider{
+    display:grid;
+    grid-auto-flow:column;
+    grid-auto-columns: 88%;
+    gap:1.25rem;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:none;
+    padding-bottom:.5rem;
+  }
+  .tslider::-webkit-scrollbar{ display:none; }
+  .tslider > *{ scroll-snap-align:center; }
+  @media (min-width:768px){
+    .tslider{ grid-auto-columns: 46%; }
+  }
+  @media (min-width:1024px){
+    .tslider{ grid-auto-columns: 31.5%; }
+  }
+  .tdot{
+    width:.55rem; height:.55rem;
+    border-radius:9999px;
+    background:#e7e5e4;
+    transition:width .3s ease, background .3s ease;
+  }
+  .tdot.active{ width:1.6rem; background:#b45309; }
+
+  /* ===================== AREA CHIPS ===================== */
+  .area-pill{
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .area-pill:hover{
+    transform: translateY(-3px);
+    border-color:#d97706;
+    box-shadow:0 12px 24px -16px rgba(120,53,15,.6);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero-badge-dot, .hero-scroll, .emg-pulse{ animation:none !important; }
+    .feat-card, .plan-card, .svc-card, .chip, .area-pill, .gthumb img{ transition:none !important; }
+  }
+</style>
 </head>
 <body class="font-body bg-gradient-to-br from-amber-50 via-stone-50 to-yellow-50">
 <a href="#main" class="sr-only focus:not-sr-only">Skip to main content</a>
@@ -66,7 +376,6 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="h-20 sm:h-24 flex items-center justify-between gap-3 sm:gap-4">
 
-      <!-- Logo only — no frame, ring or backdrop -->
       <a href="index.html" class="shrink-0" aria-label="Sanman Yojana — Home">
         <img data-logo src="assets/img/logo2.png" alt="Sanman Yojana" class="site-logo">
       </a>
@@ -122,73 +431,76 @@
   </div>
 </header>
 
-<!-- MAIN -->
 <main id="main">
 
-<!-- HERO -->
-<section class="relative py-20 lg:py-32 overflow-hidden">
-  <div class="absolute inset-0 bg-gradient-to-br from-amber-100/30 to-yellow-100/20 z-0"></div>
-  <div class="absolute -top-40 -right-40 w-96 h-96 bg-amber-200 rounded-full blur-3xl opacity-20"></div>
+<!-- ============================================================
+     HERO — full-screen video background
+     ============================================================ -->
+<section class="hero-video-wrap">
+  <!-- muted + playsinline + autoplay = plays inline on iOS/Android too -->
+  <video autoplay muted loop playsinline preload="auto" aria-hidden="true"
+         poster="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/A_Deeya_Diya_oil_lamp_with_a_swastika_sign%2C_Hinduism_Varanasi_India.jpg/1280px-A_Deeya_Diya_oil_lamp_with_a_swastika_sign%2C_Hinduism_Varanasi_India.jpg">
+    <source src="assets/video/hero.mp4" type="video/mp4">
+  </video>
 
-  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid lg:grid-cols-2 gap-12 items-center">
-      <div class="reveal space-y-6">
-        <div class="inline-block px-4 py-2 bg-amber-100 border border-amber-300 rounded-full">
-          <span class="text-sm font-bold text-amber-900" data-i18n="home.hero.badge">Dignified farewell for every family</span>
-        </div>
+  <div class="hero-copy relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-16 w-full">
+    <div class="max-w-2xl">
 
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-stone-900">
-          <span class="bg-gradient-to-r from-amber-800 to-yellow-700 bg-clip-text text-transparent" data-i18n="home.hero.slogan">Honor in Farewell</span>
-        </h1>
+      <span class="reveal inline-flex items-center gap-2.5 rounded-full bg-white/10 backdrop-blur border border-white/25 px-4 py-2 text-[13px] font-bold uppercase tracking-[0.14em] text-amber-100">
+        <span class="relative flex w-2.5 h-2.5">
+          <span class="hero-badge-dot absolute inline-flex w-full h-full rounded-full bg-amber-400 opacity-75"></span>
+          <span class="relative inline-flex w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+        </span>
+        <span data-i18n="home.hero.badge">Dignified farewell for every family</span>
+      </span>
 
-        <p class="text-lg text-stone-700 leading-relaxed" data-i18n="home.hero.desc">15 years of compassionate funeral assistance. Affordable, transparent, and respectful services for every family.</p>
+      <h1 class="reveal d1 mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.12]">
+        <span data-i18n="home.hero.slogan">Honor in Farewell</span>
+      </h1>
 
-        <div class="flex flex-wrap gap-4 pt-4">
-          <a href="packages.html" class="inline-flex items-center gap-2 px-8 py-3 bg-amber-700 hover:bg-amber-800 text-white font-bold rounded-lg transition hover:shadow-lg hover:-translate-y-1">
-            <span data-i18n="home.hero.btn1">View Plans</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-          </a>
-          <a data-link="phone" class="inline-flex items-center gap-2 px-8 py-3 border-2 border-amber-700 text-amber-700 hover:bg-amber-50 font-bold rounded-lg transition">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg>
-            <span data-i18n="common.callnow">Call Now</span>
-          </a>
-        </div>
+      <div class="reveal d2 mt-6 w-20 h-1.5 rounded-full divider-amber"></div>
 
-        <ul class="space-y-3 pt-4">
-          <li class="flex items-center gap-3"><span class="w-5 h-5 rounded-full bg-green-100 text-green-700 grid place-items-center font-bold text-xs">✓</span> <span class="text-stone-700" data-i18n="home.hero.tag1">Affordable and transparent pricing</span></li>
-          <li class="flex items-center gap-3"><span class="w-5 h-5 rounded-full bg-green-100 text-green-700 grid place-items-center font-bold text-xs">✓</span> <span class="text-stone-700" data-i18n="home.hero.tag2">24/7 emergency support</span></li>
-          <li class="flex items-center gap-3"><span class="w-5 h-5 rounded-full bg-green-100 text-green-700 grid place-items-center font-bold text-xs">✓</span> <span class="text-stone-700" data-i18n="home.hero.tag3">Complete rituals and ceremonies</span></li>
-        </ul>
+      <p class="reveal d2 mt-6 text-lg sm:text-xl text-stone-200 leading-relaxed" data-i18n="home.hero.desc">
+        15 years of compassionate funeral assistance. Affordable, transparent, and respectful services for every family — day or night.
+      </p>
+
+      <div class="reveal d3 mt-9 flex flex-wrap gap-4">
+        <a data-link="phone" class="inline-flex items-center gap-2 px-8 py-3.5 bg-amber-700 hover:bg-amber-800 text-white font-bold rounded-lg shadow-[0_10px_25px_-10px_rgba(120,53,15,.6)] transition hover:-translate-y-0.5">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg>
+          <span data-i18n="common.callnow">Call Now</span>
+        </a>
+        <a href="packages.html" class="inline-flex items-center gap-2 px-8 py-3.5 bg-white/10 backdrop-blur hover:bg-white/20 text-white font-bold rounded-lg border-2 border-white/30 hover:border-white/50 transition hover:-translate-y-0.5">
+          <span data-i18n="home.hero.btn1">View Plans</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+        </a>
       </div>
 
-      <div class="reveal relative">
-        <div class="bg-gradient-to-br from-amber-100 to-yellow-50 rounded-2xl p-8 aspect-[4/5] shadow-lg border-2 border-amber-200">
-          <div class="h-full grid place-items-center text-center space-y-4">
-            <div class="w-24 h-24 mx-auto rounded-2xl bg-white/80 grid place-items-center shadow-md">
-              <svg class="w-12 h-12 text-amber-700" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
-            </div>
-            <p class="font-semibold text-stone-700" data-i18n="home.hero.image.text">Compassionate Support</p>
-          </div>
-        </div>
-
-        <div class="absolute -bottom-6 left-4 sm:left-8 bg-white rounded-xl shadow-lg p-5 max-w-xs">
-          <div class="flex items-center gap-4">
-            <div class="w-14 h-14 rounded-lg bg-amber-100 grid place-items-center">
-              <span class="text-2xl font-bold text-amber-700"><span data-num="15">15</span>+</span>
-            </div>
-            <div>
-              <p class="font-bold text-stone-900">15+ Years</p>
-              <p class="text-xs text-stone-500 font-medium" data-i18n="home.stats.years">Of compassionate service</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ul class="reveal d4 mt-9 flex flex-wrap gap-x-8 gap-y-3">
+        <li class="flex items-center gap-2.5 text-stone-100 text-sm font-semibold">
+          <span class="w-5 h-5 rounded-full bg-amber-500/25 text-amber-300 grid place-items-center text-xs">✓</span>
+          <span data-i18n="home.hero.tag1">Affordable and transparent pricing</span>
+        </li>
+        <li class="flex items-center gap-2.5 text-stone-100 text-sm font-semibold">
+          <span class="w-5 h-5 rounded-full bg-amber-500/25 text-amber-300 grid place-items-center text-xs">✓</span>
+          <span data-i18n="home.hero.tag2">24/7 emergency support</span>
+        </li>
+        <li class="flex items-center gap-2.5 text-stone-100 text-sm font-semibold">
+          <span class="w-5 h-5 rounded-full bg-amber-500/25 text-amber-300 grid place-items-center text-xs">✓</span>
+          <span data-i18n="home.hero.tag3">Complete rituals and ceremonies</span>
+        </li>
+      </ul>
     </div>
   </div>
+
+  <a href="#stats" aria-label="Scroll down" class="hero-scroll absolute bottom-7 left-1/2 -translate-x-1/2 z-10 text-white/70 hover:text-white transition">
+    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+  </a>
 </section>
 
-<!-- STATS -->
-<section class="py-16 bg-white border-y-2 border-amber-200">
+<!-- ============================================================
+     STATS
+     ============================================================ -->
+<section id="stats" class="py-16 bg-white border-y-2 border-amber-200">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
       <div class="reveal text-center">
@@ -208,6 +520,711 @@
         <p class="mt-3 text-sm text-stone-600 font-semibold" data-i18n="home.stats.area">Area coverage</p>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     EMERGENCY HELPLINE STRIP
+     ============================================================ -->
+<section class="emg-band py-8 sm:py-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col lg:flex-row items-center justify-between gap-6 text-center lg:text-left">
+
+      <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-5">
+        <span class="emg-pulse w-14 h-14 shrink-0 rounded-full bg-white/15 grid place-items-center text-white">
+          <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg>
+        </span>
+        <div>
+          <p class="text-[13px] font-bold uppercase tracking-[0.16em] text-red-200" data-i18n="home.emg.badge">Emergency Helpline</p>
+          <h2 class="mt-1 text-2xl sm:text-3xl font-bold text-white" data-i18n="home.emg.title">Need help right now? Call us.</h2>
+          <p class="mt-1.5 text-red-100 text-sm sm:text-base" data-i18n="home.emg.desc">Our team answers every call, 24 hours a day, across Pune and Pimpri-Chinchwad.</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0">
+        <a data-link="phone" class="inline-flex items-center gap-2.5 px-7 py-3.5 bg-white hover:bg-red-50 text-red-800 font-bold rounded-lg shadow-lg transition hover:-translate-y-0.5">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg>
+          <span data-site="phone">+91 8766945548</span>
+        </a>
+        <a data-link="whatsapp" target="_blank" rel="noopener" class="inline-flex items-center gap-2.5 px-7 py-3.5 bg-transparent hover:bg-white/10 text-white font-bold rounded-lg border-2 border-white/50 hover:border-white transition hover:-translate-y-0.5">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-71.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+          <span data-i18n="contact.hero.whatsapp">WhatsApp</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ABOUT / TRUST — image + copy
+     ============================================================ -->
+<section class="py-16 lg:py-24 bg-gradient-to-br from-amber-50 via-stone-50 to-yellow-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+      <div class="reveal reveal-left relative">
+        <div class="img-card aspect-[16/12] shadow-xl border-2 border-amber-200">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Pune%2C_Maharashtra%2C_India%2C_Family%2C_Mothers_and_their_children.jpg/1280px-Pune%2C_Maharashtra%2C_India%2C_Family%2C_Mothers_and_their_children.jpg" alt="A family in Pune supported by Sanman Yojana" loading="lazy">
+        </div>
+        <div class="absolute -bottom-6 -right-4 sm:-right-8 bg-white rounded-xl shadow-lg p-5 max-w-[220px] border border-amber-100">
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 rounded-lg bg-amber-100 grid place-items-center">
+              <span class="text-2xl font-bold text-amber-700">15+</span>
+            </div>
+            <div>
+              <p class="font-bold text-stone-900 text-sm">15+ Years</p>
+              <p class="text-xs text-stone-500 font-medium" data-i18n="home.stats.years">Of compassionate service</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-right space-y-6">
+        <span class="inline-flex items-center gap-2 rounded-full bg-amber-100 border border-amber-300 px-4 py-2 text-[13px] font-bold uppercase tracking-[0.12em] text-amber-800">
+          <span data-i18n="home.about.badge">Who We Are</span>
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-bold text-stone-900 leading-tight" data-i18n="home.about.title">
+          A helping hand when your family needs it most
+        </h2>
+        <p class="text-lg text-stone-700 leading-relaxed" data-i18n="home.about.desc">
+          Sanman Yojana was founded so that no family ever has to face the loss of a loved one alone. From the first phone call to the final rites, our trained team handles every arrangement with dignity, speed, and complete transparency — so you can focus on grieving, not logistics.
+        </p>
+        <ul class="space-y-4 pt-2">
+          <li class="flex items-start gap-3">
+            <span class="mt-0.5 w-6 h-6 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center font-bold text-xs">✓</span>
+            <span class="text-stone-700" data-i18n="home.about.pt1">Immediate response, any time of day or night</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="mt-0.5 w-6 h-6 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center font-bold text-xs">✓</span>
+            <span class="text-stone-700" data-i18n="home.about.pt2">No hidden charges — every cost explained upfront</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="mt-0.5 w-6 h-6 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center font-bold text-xs">✓</span>
+            <span class="text-stone-700" data-i18n="home.about.pt3">Rituals performed as per family tradition and faith</span>
+          </li>
+        </ul>
+        <a href="about.html" class="inline-flex items-center gap-2 px-7 py-3 bg-amber-700 hover:bg-amber-800 text-white font-bold rounded-lg transition hover:-translate-y-0.5">
+          <span data-i18n="home.about.btn">Learn More About Us</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SERVICES PREVIEW
+     ============================================================ -->
+<section class="py-16 lg:py-24 bg-white border-y-2 border-amber-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="max-w-2xl mx-auto text-center">
+      <span class="reveal inline-flex items-center gap-2 rounded-full bg-amber-100 border border-amber-300 px-4 py-2 text-[13px] font-bold uppercase tracking-[0.12em] text-amber-800">
+        <span data-i18n="home.services.badge">What We Offer</span>
+      </span>
+      <h2 class="reveal d1 mt-5 text-3xl sm:text-4xl font-bold text-stone-900" data-i18n="home.services.title">
+        Complete Funeral Assistance, Under One Roof
+      </h2>
+      <p class="reveal d2 mt-4 text-lg text-stone-600" data-i18n="home.services.desc">
+        Every service your family needs during this difficult time — coordinated by one caring team.
+      </p>
+    </div>
+
+    <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div class="reveal svc-card rounded-2xl border border-stone-200 overflow-hidden bg-white">
+        <div class="img-card aspect-[16/10]">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Ambulance_in_India.jpg/1280px-Ambulance_in_India.jpg" alt="Ambulance and transport service" loading="lazy">
+        </div>
+        <div class="p-6">
+          <h3 class="text-lg font-bold text-stone-900" data-i18n="home.services.svc1.title">Ambulance &amp; Transport</h3>
+          <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.services.svc1.desc">Prompt, dignified transport service available round the clock.</p>
+        </div>
+      </div>
+
+      <div class="reveal d1 svc-card rounded-2xl border border-stone-200 overflow-hidden bg-white">
+        <div class="img-card aspect-[16/10]">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/HINDU_PRIEST.jpg/1280px-HINDU_PRIEST.jpg" alt="Guruji and ritual arrangements" loading="lazy">
+        </div>
+        <div class="p-6">
+          <h3 class="text-lg font-bold text-stone-900" data-i18n="home.services.svc2.title">Guruji &amp; Rituals</h3>
+          <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.services.svc2.desc">Complete ceremony arrangements as per your family's tradition.</p>
+        </div>
+      </div>
+
+      <div class="reveal d2 svc-card rounded-2xl border border-stone-200 overflow-hidden bg-white">
+        <div class="img-card aspect-[16/10]">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Incense_sticks_in_bangalore.jpg/1280px-Incense_sticks_in_bangalore.jpg" alt="Wood and samagri supply" loading="lazy">
+        </div>
+        <div class="p-6">
+          <h3 class="text-lg font-bold text-stone-900" data-i18n="home.services.svc3.title">Wood &amp; Samagri Supply</h3>
+          <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.services.svc3.desc">All essential materials arranged and delivered on time.</p>
+        </div>
+      </div>
+
+      <div class="reveal svc-card rounded-2xl border border-stone-200 overflow-hidden bg-white">
+        <div class="img-card aspect-[16/10]">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Varanasi_Munshi_Ghat3.jpg/1280px-Varanasi_Munshi_Ghat3.jpg" alt="Cremation ground coordination" loading="lazy">
+        </div>
+        <div class="p-6">
+          <h3 class="text-lg font-bold text-stone-900" data-i18n="home.services.svc4.title">Cremation Ground Coordination</h3>
+          <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.services.svc4.desc">We handle every permission and coordination on your behalf.</p>
+        </div>
+      </div>
+
+      <div class="reveal d1 svc-card rounded-2xl border border-stone-200 overflow-hidden bg-white">
+        <div class="img-card aspect-[16/10]">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Marigold_Flowers_as_garland_in_India.jpg/1280px-Marigold_Flowers_as_garland_in_India.jpg" alt="Workers and complete setup" loading="lazy">
+        </div>
+        <div class="p-6">
+          <h3 class="text-lg font-bold text-stone-900" data-i18n="home.services.svc5.title">Workers &amp; Complete Setup</h3>
+          <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.services.svc5.desc">Trained staff to manage the entire process, start to finish.</p>
+        </div>
+      </div>
+
+      <div class="reveal d2 rounded-2xl border-2 border-dashed border-amber-300 bg-amber-50 flex flex-col items-center justify-center text-center p-8">
+        <svg class="w-10 h-10 text-amber-600" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/></svg>
+        <h3 class="mt-4 text-lg font-bold text-stone-900" data-i18n="home.services.viewall.title">See All Services &amp; Plans</h3>
+        <a href="services.html" class="mt-4 inline-flex items-center gap-2 px-6 py-2.5 bg-amber-700 hover:bg-amber-800 text-white font-bold text-sm rounded-lg transition">
+          <span data-i18n="home.services.viewall.btn">View All</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WHY CHOOSE US — feature grid
+     ============================================================ -->
+<section class="py-16 lg:py-24 bg-gradient-to-br from-amber-50 via-stone-50 to-yellow-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="max-w-2xl mx-auto text-center">
+      <span class="reveal inline-flex items-center gap-2 rounded-full bg-amber-100 border border-amber-300 px-4 py-2 text-[13px] font-bold uppercase tracking-[0.12em] text-amber-800">
+        <span data-i18n="home.features.badge">Why Families Trust Us</span>
+      </span>
+      <h2 class="reveal d1 mt-5 text-3xl sm:text-4xl font-bold text-stone-900" data-i18n="home.features.title">Why Choose Sanman Yojana?</h2>
+      <p class="reveal d2 mt-4 text-lg text-stone-600" data-i18n="home.features.sub">Complete funeral assistance with dignity, transparency, and care.</p>
+    </div>
+
+    <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div class="reveal feat-card rounded-2xl border border-stone-200 bg-white p-7">
+        <div class="feat-ico w-14 h-14 rounded-xl bg-amber-100 text-amber-700 grid place-items-center">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+        </div>
+        <h3 class="mt-5 text-lg font-bold text-stone-900" data-i18n="home.features.f1.title">Transparent Pricing</h3>
+        <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.features.f1.desc">No hidden charges. Clear breakdown of all costs with affordable payment options.</p>
+      </div>
+
+      <div class="reveal d1 feat-card rounded-2xl border border-stone-200 bg-white p-7">
+        <div class="feat-ico w-14 h-14 rounded-xl bg-amber-100 text-amber-700 grid place-items-center">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+        </div>
+        <h3 class="mt-5 text-lg font-bold text-stone-900" data-i18n="home.features.f2.title">24/7 Support</h3>
+        <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.features.f2.desc">Available any time of day or night. Emergency helpline always ready to assist.</p>
+      </div>
+
+      <div class="reveal d2 feat-card rounded-2xl border border-stone-200 bg-white p-7">
+        <div class="feat-ico w-14 h-14 rounded-xl bg-amber-100 text-amber-700 grid place-items-center">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/></svg>
+        </div>
+        <h3 class="mt-5 text-lg font-bold text-stone-900" data-i18n="home.features.f3.title">Compassionate Staff</h3>
+        <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.features.f3.desc">Trained professionals who understand your grief and provide respectful guidance.</p>
+      </div>
+
+      <div class="reveal feat-card rounded-2xl border border-stone-200 bg-white p-7">
+        <div class="feat-ico w-14 h-14 rounded-xl bg-amber-100 text-amber-700 grid place-items-center">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m0 13.5V21m9-9h-2.25M5.25 12H3m14.36-6.36-1.59 1.59M8.23 15.77l-1.59 1.59m10.72 0-1.59-1.59M8.23 8.23 6.64 6.64"/></svg>
+        </div>
+        <h3 class="mt-5 text-lg font-bold text-stone-900" data-i18n="home.features.f4.title">Complete Rituals</h3>
+        <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.features.f4.desc">From cremation to ceremonies, we handle all arrangements with care and respect.</p>
+      </div>
+
+      <div class="reveal d1 feat-card rounded-2xl border border-stone-200 bg-white p-7">
+        <div class="feat-ico w-14 h-14 rounded-xl bg-amber-100 text-amber-700 grid place-items-center">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+        </div>
+        <h3 class="mt-5 text-lg font-bold text-stone-900" data-i18n="home.features.f5.title">Flexible Plans</h3>
+        <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.features.f5.desc">Choose a plan that fits your needs and budget. Upgrade anytime.</p>
+      </div>
+
+      <div class="reveal d2 feat-card rounded-2xl border border-stone-200 bg-white p-7">
+        <div class="feat-ico w-14 h-14 rounded-xl bg-amber-100 text-amber-700 grid place-items-center">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm3.75 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm3.75 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z"/></svg>
+        </div>
+        <h3 class="mt-5 text-lg font-bold text-stone-900" data-i18n="home.features.f6.title">Family Counseling</h3>
+        <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.features.f6.desc">Grief support and post-funeral guidance to help families during difficult times.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     HOW IT WORKS
+     ============================================================ -->
+<section class="py-16 lg:py-24 bg-white border-y-2 border-amber-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="max-w-2xl mx-auto text-center">
+      <span class="reveal inline-flex items-center gap-2 rounded-full bg-amber-100 border border-amber-300 px-4 py-2 text-[13px] font-bold uppercase tracking-[0.12em] text-amber-800">
+        <span data-i18n="home.how.badge">Simple Process</span>
+      </span>
+      <h2 class="reveal d1 mt-5 text-3xl sm:text-4xl font-bold text-stone-900" data-i18n="home.how.title">How Sanman Yojana Helps You</h2>
+    </div>
+
+    <div class="mt-14 relative grid sm:grid-cols-3 gap-10 sm:gap-6">
+      <div class="hidden sm:block step-line absolute top-8 left-[16.5%] right-[16.5%] h-0.5"></div>
+
+      <div class="reveal text-center relative">
+        <div class="mx-auto w-16 h-16 rounded-full bg-amber-700 text-white grid place-items-center text-xl font-bold shadow-lg relative z-10">1</div>
+        <h3 class="mt-5 text-lg font-bold text-stone-900" data-i18n="home.how.step1.title">Call Our Helpline</h3>
+        <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.how.step1.desc">One call, any hour — our team responds immediately.</p>
+      </div>
+
+      <div class="reveal d1 text-center relative">
+        <div class="mx-auto w-16 h-16 rounded-full bg-amber-700 text-white grid place-items-center text-xl font-bold shadow-lg relative z-10">2</div>
+        <h3 class="mt-5 text-lg font-bold text-stone-900" data-i18n="home.how.step2.title">We Arrive &amp; Assist</h3>
+        <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.how.step2.desc">Our staff reaches your location and manages every arrangement.</p>
+      </div>
+
+      <div class="reveal d2 text-center relative">
+        <div class="mx-auto w-16 h-16 rounded-full bg-amber-700 text-white grid place-items-center text-xl font-bold shadow-lg relative z-10">3</div>
+        <h3 class="mt-5 text-lg font-bold text-stone-900" data-i18n="home.how.step3.title">Rituals Completed with Care</h3>
+        <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.how.step3.desc">Every ceremony conducted with full respect and dignity.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PLANS & PRICING PREVIEW
+     ============================================================ -->
+<section id="plans" class="py-16 lg:py-24 bg-gradient-to-br from-amber-50 via-stone-50 to-yellow-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="max-w-2xl mx-auto text-center">
+      <span class="reveal inline-flex items-center gap-2 rounded-full bg-amber-100 border border-amber-300 px-4 py-2 text-[13px] font-bold uppercase tracking-[0.12em] text-amber-800">
+        <span data-i18n="home.plans.badge">Membership Plans</span>
+      </span>
+      <h2 class="reveal d1 mt-5 text-3xl sm:text-4xl font-bold text-stone-900" data-i18n="home.plans.title">Flexible Service Plans</h2>
+      <p class="reveal d2 mt-4 text-lg text-stone-600" data-i18n="home.plans.sub">Choose the right plan for your family's needs.</p>
+    </div>
+
+    <p class="reveal mt-8 lg:hidden text-center text-sm text-stone-500 font-medium" data-i18n="home.plans.swipe">Swipe to see all plans →</p>
+
+    <div class="mt-6 lg:mt-14 snap-row">
+
+      <!-- Basic -->
+      <div class="reveal plan-card rounded-2xl border-2 border-stone-200 bg-white p-6 sm:p-7">
+        <span class="inline-flex text-[11px] font-bold uppercase tracking-[0.12em] text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-3 py-1.5" data-i18n="home.plans.plan1.badge">Starting Plan</span>
+        <h3 class="mt-4 text-xl font-bold text-stone-900" data-i18n="home.plans.plan1.name">Basic Kit</h3>
+        <p class="mt-1.5 text-sm text-stone-600" data-i18n="home.plans.plan1.desc">Essential funeral arrangements</p>
+        <div class="mt-5 flex items-end gap-1.5">
+          <span class="text-3xl sm:text-4xl font-bold text-stone-900">₹11,000</span>
+          <span class="pb-1 text-xs text-stone-500 font-semibold" data-i18n="home.plans.onetime">one-time</span>
+        </div>
+        <ul class="mt-5 space-y-2.5 text-sm text-stone-700 flex-1">
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center text-[11px] font-bold">✓</span><span data-i18n="home.plans.p1.i1">Death certificate (natural death)</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center text-[11px] font-bold">✓</span><span data-i18n="home.plans.p1.i2">Hearse van within Pune &amp; PCMC limits</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center text-[11px] font-bold">✓</span><span data-i18n="home.plans.p1.i3">Basic funeral materials</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center text-[11px] font-bold">✓</span><span data-i18n="home.plans.p1.i4">Crematorium booking</span></li>
+        </ul>
+        <a href="services.html" class="mt-6 inline-flex items-center justify-center gap-2 w-full px-5 py-3 bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold text-sm rounded-lg border border-amber-200 transition">
+          <span data-i18n="home.plans.cta">Learn More</span>
+        </a>
+      </div>
+
+      <!-- Sanman (featured) -->
+      <div class="reveal d1 plan-card featured relative rounded-2xl border-2 bg-white p-6 sm:p-7">
+        <span class="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-amber-700 text-white text-[11px] font-bold uppercase tracking-[0.12em] px-4 py-1.5 shadow-lg" data-i18n="home.plans.plan2.badge">Most Popular</span>
+        <span class="inline-flex text-[11px] font-bold uppercase tracking-[0.12em] text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-3 py-1.5" data-i18n="home.plans.tier2">Basic + Sanman</span>
+        <h3 class="mt-4 text-xl font-bold text-stone-900" data-i18n="home.plans.plan2.name">Sanman Kit</h3>
+        <p class="mt-1.5 text-sm text-stone-600" data-i18n="home.plans.plan2.desc">Complete ceremony support</p>
+        <div class="mt-5 flex items-end gap-1.5">
+          <span class="text-3xl sm:text-4xl font-bold text-amber-700">₹21,000</span>
+          <span class="pb-1 text-xs text-stone-500 font-semibold" data-i18n="home.plans.onetime">one-time</span>
+        </div>
+        <ul class="mt-5 space-y-2.5 text-sm text-stone-700 flex-1">
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center text-[11px] font-bold">✓</span><span data-i18n="home.plans.p2.i1">Everything in Basic Kit</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center text-[11px] font-bold">✓</span><span data-i18n="home.plans.p2.i2">Freezer box (24 hours)</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center text-[11px] font-bold">✓</span><span data-i18n="home.plans.p2.i3">Guruji / Purohit for the rites</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center text-[11px] font-bold">✓</span><span data-i18n="home.plans.p2.i4">10 days of family coordination</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center text-[11px] font-bold">✓</span><span data-i18n="home.plans.p2.i5">Grief counselling for the family</span></li>
+        </ul>
+        <a href="services.html" class="mt-6 inline-flex items-center justify-center gap-2 w-full px-5 py-3 bg-amber-700 hover:bg-amber-800 text-white font-bold text-sm rounded-lg transition">
+          <span data-i18n="home.plans.cta">Learn More</span>
+        </a>
+      </div>
+
+      <!-- Dashakriya -->
+      <div class="reveal d2 plan-card rounded-2xl border-2 border-stone-200 bg-white p-6 sm:p-7">
+        <span class="inline-flex text-[11px] font-bold uppercase tracking-[0.12em] text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-3 py-1.5" data-i18n="home.plans.plan3.badge">Extended Care</span>
+        <h3 class="mt-4 text-xl font-bold text-stone-900" data-i18n="home.plans.plan3.name">Dashakriya Kit</h3>
+        <p class="mt-1.5 text-sm text-stone-600" data-i18n="home.plans.plan3.desc">10-day rituals included</p>
+        <div class="mt-5 flex items-end gap-1.5">
+          <span class="text-3xl sm:text-4xl font-bold text-stone-900">₹51,000</span>
+          <span class="pb-1 text-xs text-stone-500 font-semibold" data-i18n="home.plans.onetime">one-time</span>
+        </div>
+        <ul class="mt-5 space-y-2.5 text-sm text-stone-700 flex-1">
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center text-[11px] font-bold">✓</span><span data-i18n="home.plans.p3.i1">Everything in Sanman Kit</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center text-[11px] font-bold">✓</span><span data-i18n="home.plans.p3.i2">Dashakriya rites &amp; puja materials</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center text-[11px] font-bold">✓</span><span data-i18n="home.plans.p3.i3">Meal arrangement for up to 50 people</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center text-[11px] font-bold">✓</span><span data-i18n="home.plans.p3.i4">Ash immersion with vehicle &amp; priest</span></li>
+        </ul>
+        <a href="services.html" class="mt-6 inline-flex items-center justify-center gap-2 w-full px-5 py-3 bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold text-sm rounded-lg border border-amber-200 transition">
+          <span data-i18n="home.plans.cta">Learn More</span>
+        </a>
+      </div>
+
+      <!-- Family -->
+      <div class="reveal d3 plan-card rounded-2xl border-2 border-stone-200 bg-white p-6 sm:p-7">
+        <span class="inline-flex text-[11px] font-bold uppercase tracking-[0.12em] text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-3 py-1.5" data-i18n="home.plans.plan4.badge">Premium Plan</span>
+        <h3 class="mt-4 text-xl font-bold text-stone-900" data-i18n="home.plans.plan4.name">Family Kit</h3>
+        <p class="mt-1.5 text-sm text-stone-600" data-i18n="home.plans.plan4.desc">Both spouses covered</p>
+        <div class="mt-5 flex items-end gap-1.5">
+          <span class="text-3xl sm:text-4xl font-bold text-stone-900">₹1,11,000</span>
+          <span class="pb-1 text-xs text-stone-500 font-semibold" data-i18n="home.plans.onetime">one-time</span>
+        </div>
+        <ul class="mt-5 space-y-2.5 text-sm text-stone-700 flex-1">
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center text-[11px] font-bold">✓</span><span data-i18n="home.plans.p4.i1">Everything in Dashakriya Kit</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center text-[11px] font-bold">✓</span><span data-i18n="home.plans.p4.i2">Coverage for husband and wife both</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center text-[11px] font-bold">✓</span><span data-i18n="home.plans.p4.i3">10th / 13th day (Terava) rites with Guruji</span></li>
+          <li class="flex items-start gap-2.5"><span class="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-green-100 text-green-700 grid place-items-center text-[11px] font-bold">✓</span><span data-i18n="home.plans.p4.i4">Meal arrangement for up to 100 people</span></li>
+        </ul>
+        <a href="services.html" class="mt-6 inline-flex items-center justify-center gap-2 w-full px-5 py-3 bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold text-sm rounded-lg border border-amber-200 transition">
+          <span data-i18n="home.plans.cta">Learn More</span>
+        </a>
+      </div>
+
+    </div>
+
+    <div class="mt-10 text-center">
+      <a href="services.html" class="inline-flex items-center gap-2 px-8 py-3.5 bg-amber-700 hover:bg-amber-800 text-white font-bold rounded-lg transition hover:-translate-y-0.5">
+        <span data-i18n="home.plans.viewall">View All Plans &amp; Pricing</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+      </a>
+      <p class="mt-4 text-sm text-stone-500" data-i18n="home.plans.note">Free service up to 20 km. Extra distance charged separately.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     WHAT'S INCLUDED — samagri chips
+     ============================================================ -->
+<section class="py-16 lg:py-24 bg-white border-y-2 border-amber-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+      <div class="reveal reveal-left space-y-6">
+        <span class="inline-flex items-center gap-2 rounded-full bg-amber-100 border border-amber-300 px-4 py-2 text-[13px] font-bold uppercase tracking-[0.12em] text-amber-800">
+          <span data-i18n="home.samagri.badge">Included In Every Kit</span>
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-bold text-stone-900 leading-tight" data-i18n="home.samagri.title">All funeral samagri — arranged and delivered</h2>
+        <p class="text-lg text-stone-700 leading-relaxed" data-i18n="home.samagri.desc">
+          You will not have to run from shop to shop. Every item needed for the last rites comes with your kit, arranged at your doorstep.
+        </p>
+
+        <div class="flex flex-wrap gap-2.5">
+          <span class="chip rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-900" data-i18n="home.samagri.i1">White shroud (Kafan)</span>
+          <span class="chip rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-900" data-i18n="home.samagri.i2">Flowers &amp; garland</span>
+          <span class="chip rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-900" data-i18n="home.samagri.i3">Tulsi leaves</span>
+          <span class="chip rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-900" data-i18n="home.samagri.i4">Gangajal</span>
+          <span class="chip rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-900" data-i18n="home.samagri.i5">Sandalwood &amp; powder</span>
+          <span class="chip rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-900" data-i18n="home.samagri.i6">Kumkum</span>
+          <span class="chip rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-900" data-i18n="home.samagri.i7">Turmeric</span>
+          <span class="chip rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-900" data-i18n="home.samagri.i8">Akshata</span>
+          <span class="chip rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-900" data-i18n="home.samagri.i9">Ghee</span>
+          <span class="chip rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-900" data-i18n="home.samagri.i10">Camphor</span>
+          <span class="chip rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-900" data-i18n="home.samagri.i11">Incense sticks</span>
+          <span class="chip rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-900" data-i18n="home.samagri.i12">Coconut</span>
+          <span class="chip rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-900" data-i18n="home.samagri.i13">Sesame seeds</span>
+          <span class="chip rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-900" data-i18n="home.samagri.i14">Cotton cord (Dori)</span>
+          <span class="chip rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-900" data-i18n="home.samagri.i15">Bier (Arthi)</span>
+          <span class="chip rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-900" data-i18n="home.samagri.i16">Clay pot (Madke)</span>
+          <span class="chip rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-900" data-i18n="home.samagri.i17">Attar</span>
+        </div>
+      </div>
+
+      <div class="reveal reveal-right grid grid-cols-2 gap-4">
+        <div class="img-card aspect-square shadow-lg border-2 border-amber-100">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Marigold_Flowers_as_garland_in_India.jpg/1280px-Marigold_Flowers_as_garland_in_India.jpg" alt="Marigold garlands" loading="lazy">
+        </div>
+        <div class="img-card aspect-square shadow-lg border-2 border-amber-100 mt-8">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/A_Deeya_Diya_oil_lamp_with_a_swastika_sign%2C_Hinduism_Varanasi_India.jpg/1280px-A_Deeya_Diya_oil_lamp_with_a_swastika_sign%2C_Hinduism_Varanasi_India.jpg" alt="Oil lamp lit for the rites" loading="lazy">
+        </div>
+        <div class="img-card aspect-square shadow-lg border-2 border-amber-100">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/RudrakshaBeads.jpg/1280px-RudrakshaBeads.jpg" alt="Rudraksha beads" loading="lazy">
+        </div>
+        <div class="img-card aspect-square shadow-lg border-2 border-amber-100 mt-8">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Incense_sticks_in_bangalore.jpg/1280px-Incense_sticks_in_bangalore.jpg" alt="Incense sticks" loading="lazy">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     GALLERY PREVIEW — tap to enlarge
+     ============================================================ -->
+<section class="py-16 lg:py-24 bg-gradient-to-br from-amber-50 via-stone-50 to-yellow-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="max-w-2xl mx-auto text-center">
+      <span class="reveal inline-flex items-center gap-2 rounded-full bg-amber-100 border border-amber-300 px-4 py-2 text-[13px] font-bold uppercase tracking-[0.12em] text-amber-800">
+        <span data-i18n="gallery.hero.badge">Our Work</span>
+      </span>
+      <h2 class="reveal d1 mt-5 text-3xl sm:text-4xl font-bold text-stone-900" data-i18n="home.gallery.title">Scheme Details &amp; Moments</h2>
+      <p class="reveal d2 mt-4 text-lg text-stone-600" data-i18n="gallery.note">Tap any photo to view it larger.</p>
+    </div>
+
+    <div class="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+      <button type="button" class="gthumb aspect-[3/4] reveal" data-gsrc="assets/img/poster-scheme.jpeg"><img src="assets/img/poster-scheme.jpeg" alt="Sanman Yojana scheme poster" loading="lazy"></button>
+      <button type="button" class="gthumb aspect-[3/4] reveal d1" data-gsrc="assets/img/gallery/g1.jpeg"><img src="assets/img/gallery/g1.jpeg" alt="Sanman kit contents" loading="lazy"></button>
+      <button type="button" class="gthumb aspect-[3/4] reveal d2" data-gsrc="assets/img/gallery/g10.jpeg"><img src="assets/img/gallery/g10.jpeg" alt="Family kit contents" loading="lazy"></button>
+      <button type="button" class="gthumb aspect-[3/4] reveal d1" data-gsrc="assets/img/gallery/g5.jpeg"><img src="assets/img/gallery/g5.jpeg" alt="Sanman certificate" loading="lazy"></button>
+      <button type="button" class="gthumb aspect-[3/4] reveal d2" data-gsrc="assets/img/gallery/g8.jpeg"><img src="assets/img/gallery/g8.jpeg" alt="Membership registration form" loading="lazy"></button>
+    </div>
+
+    <div class="mt-10 text-center">
+      <a href="gallery.html" class="inline-flex items-center gap-2 px-8 py-3.5 bg-white hover:bg-amber-50 text-amber-800 font-bold rounded-lg border-2 border-amber-300 transition hover:-translate-y-0.5">
+        <span data-i18n="home.gallery.btn">View Full Gallery</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     TESTIMONIALS
+     ============================================================ -->
+<section class="py-16 lg:py-24 bg-white border-y-2 border-amber-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="max-w-2xl mx-auto text-center">
+      <span class="reveal inline-flex items-center gap-2 rounded-full bg-amber-100 border border-amber-300 px-4 py-2 text-[13px] font-bold uppercase tracking-[0.12em] text-amber-800">
+        <span data-i18n="home.testi.badge">Families We've Helped</span>
+      </span>
+      <h2 class="reveal d1 mt-5 text-3xl sm:text-4xl font-bold text-stone-900" data-i18n="home.testi.title">What Families Say About Us</h2>
+    </div>
+
+    <div id="tSlider" class="mt-14 tslider">
+
+      <div class="rounded-2xl border border-stone-200 bg-stone-50 p-7">
+        <span class="quote-mark text-5xl text-amber-300">&ldquo;</span>
+        <p class="mt-2 text-stone-700 leading-relaxed" data-i18n="home.testi.q1">In our hardest moment, Sanman Yojana handled everything with so much care. We didn't have to worry about a single arrangement.</p>
+        <div class="mt-6 flex items-center gap-3">
+          <div class="w-11 h-11 rounded-full bg-amber-100 text-amber-700 grid place-items-center font-bold">R</div>
+          <div>
+            <p class="font-bold text-stone-900 text-sm" data-i18n="home.testi.n1">Ramesh Patil</p>
+            <p class="text-xs text-stone-500" data-i18n="home.testi.l1">Hadapsar, Pune</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-stone-200 bg-stone-50 p-7">
+        <span class="quote-mark text-5xl text-amber-300">&ldquo;</span>
+        <p class="mt-2 text-stone-700 leading-relaxed" data-i18n="home.testi.q2">They reached within minutes of our call, at 2 AM. Truly compassionate people who treated us like family.</p>
+        <div class="mt-6 flex items-center gap-3">
+          <div class="w-11 h-11 rounded-full bg-amber-100 text-amber-700 grid place-items-center font-bold">S</div>
+          <div>
+            <p class="font-bold text-stone-900 text-sm" data-i18n="home.testi.n2">Sunita Deshmukh</p>
+            <p class="text-xs text-stone-500" data-i18n="home.testi.l2">Kondhwa, Pune</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-stone-200 bg-stone-50 p-7">
+        <span class="quote-mark text-5xl text-amber-300">&ldquo;</span>
+        <p class="mt-2 text-stone-700 leading-relaxed" data-i18n="home.testi.q3">Transparent pricing, no surprises, and every ritual was done exactly as our family wished. Grateful for their support.</p>
+        <div class="mt-6 flex items-center gap-3">
+          <div class="w-11 h-11 rounded-full bg-amber-100 text-amber-700 grid place-items-center font-bold">V</div>
+          <div>
+            <p class="font-bold text-stone-900 text-sm" data-i18n="home.testi.n3">Vijay Kulkarni</p>
+            <p class="text-xs text-stone-500" data-i18n="home.testi.l3">Wagholi, Pune</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-stone-200 bg-stone-50 p-7">
+        <span class="quote-mark text-5xl text-amber-300">&ldquo;</span>
+        <p class="mt-2 text-stone-700 leading-relaxed" data-i18n="home.testi.q4">The freezer box and hearse van reached us before our relatives did. Everything was ready when the family gathered.</p>
+        <div class="mt-6 flex items-center gap-3">
+          <div class="w-11 h-11 rounded-full bg-amber-100 text-amber-700 grid place-items-center font-bold">A</div>
+          <div>
+            <p class="font-bold text-stone-900 text-sm" data-i18n="home.testi.n4">Anil Jadhav</p>
+            <p class="text-xs text-stone-500" data-i18n="home.testi.l4">Pimpri-Chinchwad</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-stone-200 bg-stone-50 p-7">
+        <span class="quote-mark text-5xl text-amber-300">&ldquo;</span>
+        <p class="mt-2 text-stone-700 leading-relaxed" data-i18n="home.testi.q5">They arranged the Guruji, the samagri and even the dashakriya rites. We only had to be present with our family.</p>
+        <div class="mt-6 flex items-center gap-3">
+          <div class="w-11 h-11 rounded-full bg-amber-100 text-amber-700 grid place-items-center font-bold">M</div>
+          <div>
+            <p class="font-bold text-stone-900 text-sm" data-i18n="home.testi.n5">Manisha Shinde</p>
+            <p class="text-xs text-stone-500" data-i18n="home.testi.l5">Katraj, Pune</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- slider controls -->
+    <div class="mt-8 flex items-center justify-center gap-5">
+      <button type="button" id="tPrev" aria-label="Previous testimonial" class="w-11 h-11 rounded-full border-2 border-amber-200 text-amber-700 hover:bg-amber-700 hover:text-white hover:border-amber-700 grid place-items-center transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>
+      </button>
+      <div id="tDots" class="flex items-center gap-2"></div>
+      <button type="button" id="tNext" aria-label="Next testimonial" class="w-11 h-11 rounded-full border-2 border-amber-200 text-amber-700 hover:bg-amber-700 hover:text-white hover:border-amber-700 grid place-items-center transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg>
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     AREAS WE SERVE
+     ============================================================ -->
+<section class="py-16 lg:py-24 bg-gradient-to-br from-amber-50 via-stone-50 to-yellow-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="max-w-2xl mx-auto text-center">
+      <span class="reveal inline-flex items-center gap-2 rounded-full bg-amber-100 border border-amber-300 px-4 py-2 text-[13px] font-bold uppercase tracking-[0.12em] text-amber-800">
+        <span data-i18n="home.areas.badge">Service Coverage</span>
+      </span>
+      <h2 class="reveal d1 mt-5 text-3xl sm:text-4xl font-bold text-stone-900" data-i18n="home.areas.title">Areas We Serve Across Pune</h2>
+      <p class="reveal d2 mt-4 text-lg text-stone-600" data-i18n="home.areas.desc">Free service up to 20 km from our Hadapsar office. Beyond that, distance is charged at actuals.</p>
+    </div>
+
+    <div class="reveal mt-12 flex flex-wrap justify-center gap-2.5 sm:gap-3">
+      <span class="area-pill rounded-full bg-white border border-stone-200 px-5 py-2.5 text-sm font-semibold text-stone-700">Hadapsar</span>
+      <span class="area-pill rounded-full bg-white border border-stone-200 px-5 py-2.5 text-sm font-semibold text-stone-700">Kondhwa</span>
+      <span class="area-pill rounded-full bg-white border border-stone-200 px-5 py-2.5 text-sm font-semibold text-stone-700">Wagholi</span>
+      <span class="area-pill rounded-full bg-white border border-stone-200 px-5 py-2.5 text-sm font-semibold text-stone-700">Kharadi</span>
+      <span class="area-pill rounded-full bg-white border border-stone-200 px-5 py-2.5 text-sm font-semibold text-stone-700">Katraj</span>
+      <span class="area-pill rounded-full bg-white border border-stone-200 px-5 py-2.5 text-sm font-semibold text-stone-700">Camp</span>
+      <span class="area-pill rounded-full bg-white border border-stone-200 px-5 py-2.5 text-sm font-semibold text-stone-700">Kothrud</span>
+      <span class="area-pill rounded-full bg-white border border-stone-200 px-5 py-2.5 text-sm font-semibold text-stone-700">Warje</span>
+      <span class="area-pill rounded-full bg-white border border-stone-200 px-5 py-2.5 text-sm font-semibold text-stone-700">Hinjewadi</span>
+      <span class="area-pill rounded-full bg-white border border-stone-200 px-5 py-2.5 text-sm font-semibold text-stone-700">Baner</span>
+      <span class="area-pill rounded-full bg-white border border-stone-200 px-5 py-2.5 text-sm font-semibold text-stone-700">Aundh</span>
+      <span class="area-pill rounded-full bg-white border border-stone-200 px-5 py-2.5 text-sm font-semibold text-stone-700">Pimpri-Chinchwad</span>
+      <span class="area-pill rounded-full bg-white border border-stone-200 px-5 py-2.5 text-sm font-semibold text-stone-700">Viman Nagar</span>
+      <span class="area-pill rounded-full bg-white border border-stone-200 px-5 py-2.5 text-sm font-semibold text-stone-700">Yerwada</span>
+      <span class="area-pill rounded-full bg-white border border-stone-200 px-5 py-2.5 text-sm font-semibold text-stone-700">Dhankawadi</span>
+      <span class="area-pill rounded-full bg-amber-700 border border-amber-700 px-5 py-2.5 text-sm font-semibold text-white" data-i18n="home.areas.more">+ all nearby areas</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     FAQ
+     ============================================================ -->
+<section class="py-16 lg:py-24 bg-white border-y-2 border-amber-100">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="text-center">
+      <span class="reveal inline-flex items-center gap-2 rounded-full bg-amber-100 border border-amber-300 px-4 py-2 text-[13px] font-bold uppercase tracking-[0.12em] text-amber-800">
+        <span data-i18n="home.faq.badge">Common Questions</span>
+      </span>
+      <h2 class="reveal d1 mt-5 text-3xl sm:text-4xl font-bold text-stone-900" data-i18n="home.faq.title">Frequently Asked Questions</h2>
+    </div>
+
+    <div class="reveal mt-12">
+
+      <div class="acc open">
+        <button type="button" class="acc-head">
+          <span data-i18n="home.faq.q1">How quickly can your team reach us?</span>
+          <span class="acc-icon"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg></span>
+        </button>
+        <div class="acc-body"><div data-i18n="home.faq.a1">Call our 24×7 helpline and our nearest team is dispatched immediately. Within Pune and Pimpri-Chinchwad limits we usually reach the family within 30 to 60 minutes, depending on traffic and time of day.</div></div>
+      </div>
+
+      <div class="acc">
+        <button type="button" class="acc-head">
+          <span data-i18n="home.faq.q2">Do I have to become a member before the need arises?</span>
+          <span class="acc-icon"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg></span>
+        </button>
+        <div class="acc-body"><div data-i18n="home.faq.a2">Membership is a one-time registration that secures the plan for your family in advance. If you are facing a loss right now, call us anyway — our team will guide you through the immediate arrangements first.</div></div>
+      </div>
+
+      <div class="acc">
+        <button type="button" class="acc-head">
+          <span data-i18n="home.faq.q3">Are there any hidden or extra charges?</span>
+          <span class="acc-icon"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg></span>
+        </button>
+        <div class="acc-body"><div data-i18n="home.faq.a3">No. Everything covered by your kit is listed upfront. Service is free up to 20 km from our office; only distance beyond that, and anything you request outside the kit, is charged separately and told to you in advance.</div></div>
+      </div>
+
+      <div class="acc">
+        <button type="button" class="acc-head">
+          <span data-i18n="home.faq.q4">Do you follow our family's own religious customs?</span>
+          <span class="acc-icon"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg></span>
+        </button>
+        <div class="acc-body"><div data-i18n="home.faq.a4">Yes. Rites are performed exactly as per your family's faith and tradition. We arrange the appropriate Guruji or religious authority and follow the customs you tell us to observe.</div></div>
+      </div>
+
+      <div class="acc">
+        <button type="button" class="acc-head">
+          <span data-i18n="home.faq.q5">What documents are needed for the death certificate?</span>
+          <span class="acc-icon"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg></span>
+        </button>
+        <div class="acc-body"><div data-i18n="home.faq.a5">Generally the hospital or medical certificate of death, plus the deceased person's Aadhaar and a family member's ID. Our staff handles the paperwork and the municipal follow-up for you in cases of natural death.</div></div>
+      </div>
+
+      <div class="acc">
+        <button type="button" class="acc-head">
+          <span data-i18n="home.faq.q6">How do I register or pay?</span>
+          <span class="acc-icon"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg></span>
+        </button>
+        <div class="acc-body"><div data-i18n="home.faq.a6">Fill the membership form at our Hadapsar office or ask us to send it on WhatsApp. Payment can be made by cash, UPI or bank transfer, and you receive a receipt and certificate for your records.</div></div>
+      </div>
+
+    </div>
+
+    <p class="mt-10 text-center text-stone-600">
+      <span data-i18n="home.faq.more">Still have a question?</span>
+      <a href="contact.html#enquiry" class="text-amber-700 font-bold underline underline-offset-4 hover:text-amber-800 ml-1" data-i18n="home.faq.morelink">Ask us here</a>
+    </p>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA BAND
+     ============================================================ -->
+<section class="cta-band py-16 lg:py-20">
+  <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl sm:text-4xl font-bold text-white leading-tight" data-i18n="home.cta.title">
+      We're Here for You, Any Time — Day or Night
+    </h2>
+    <p class="mt-4 text-lg text-amber-100 max-w-2xl mx-auto" data-i18n="home.cta.desc">
+      One call is all it takes. Our team will be with you within minutes to handle every arrangement with dignity and care.
+    </p>
+    <div class="mt-9 flex flex-wrap items-center justify-center gap-4">
+      <a data-link="phone" class="inline-flex items-center gap-2 px-8 py-3.5 bg-white hover:bg-amber-50 text-amber-800 font-bold rounded-lg shadow-lg transition hover:-translate-y-0.5">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg>
+        <span data-i18n="common.callnow">Call Now</span>
+      </a>
+      <a data-link="whatsapp" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-8 py-3.5 bg-transparent hover:bg-white/10 text-white font-bold rounded-lg border-2 border-white/50 hover:border-white transition hover:-translate-y-0.5">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-71.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+        <span data-i18n="contact.hero.whatsapp">WhatsApp</span>
+      </a>
+    </div>
+    <p class="mt-6 text-sm text-amber-200 font-semibold tracking-wide" data-i18n="home.cta.note">Available 24 × 7, every day of the year</p>
   </div>
 </section>
 
@@ -298,8 +1315,114 @@
   <svg fill="currentColor" viewBox="0 0 448 512" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-71.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
 </a>
 
+<!-- LIGHTBOX (gallery preview) -->
+<div id="hlBox" class="hl-box" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Image preview">
+  <button type="button" class="hl-btn hl-close" id="hlClose" aria-label="Close preview">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18 18 6M6 6l12 12"/></svg>
+  </button>
+  <button type="button" class="hl-btn hl-prev" id="hlPrev" aria-label="Previous image">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>
+  </button>
+  <button type="button" class="hl-btn hl-next" id="hlNext" aria-label="Next image">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg>
+  </button>
+  <img id="hlImg" src="" alt="">
+</div>
+
 <script src="assets/js/config.js"></script>
 <script src="assets/js/i18n.js"></script>
 <script src="assets/js/main.js"></script>
+
+<script>
+/* ---------- Home page interactions: lightbox + testimonial slider ---------- */
+(function () {
+  "use strict";
+
+  /* ---- Gallery lightbox ---- */
+  var thumbs = Array.prototype.slice.call(document.querySelectorAll(".gthumb"));
+  var box = document.getElementById("hlBox");
+  var img = document.getElementById("hlImg");
+  var idx = 0;
+
+  if (thumbs.length && box && img) {
+    var show = function (i) {
+      idx = (i + thumbs.length) % thumbs.length;
+      var t = thumbs[idx];
+      img.src = t.dataset.gsrc;
+      img.alt = t.querySelector("img") ? t.querySelector("img").alt : "";
+    };
+    var open = function (i) {
+      show(i);
+      box.classList.add("active");
+      box.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    };
+    var close = function () {
+      box.classList.remove("active");
+      box.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    };
+
+    thumbs.forEach(function (t, i) {
+      t.addEventListener("click", function () { open(i); });
+    });
+    document.getElementById("hlClose").addEventListener("click", close);
+    document.getElementById("hlPrev").addEventListener("click", function (e) { e.stopPropagation(); show(idx - 1); });
+    document.getElementById("hlNext").addEventListener("click", function (e) { e.stopPropagation(); show(idx + 1); });
+    box.addEventListener("click", function (e) { if (e.target === box || e.target === img) close(); });
+    document.addEventListener("keydown", function (e) {
+      if (!box.classList.contains("active")) return;
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowLeft") show(idx - 1);
+      if (e.key === "ArrowRight") show(idx + 1);
+    });
+  }
+
+  /* ---- Testimonial slider ---- */
+  var slider = document.getElementById("tSlider");
+  var dotWrap = document.getElementById("tDots");
+  if (slider && dotWrap) {
+    var cards = Array.prototype.slice.call(slider.children);
+
+    cards.forEach(function (_, i) {
+      var d = document.createElement("button");
+      d.type = "button";
+      d.className = "tdot" + (i === 0 ? " active" : "");
+      d.setAttribute("aria-label", "Go to testimonial " + (i + 1));
+      d.addEventListener("click", function () { goTo(i); });
+      dotWrap.appendChild(d);
+    });
+    var dots = Array.prototype.slice.call(dotWrap.children);
+
+    function goTo(i) {
+      var target = cards[Math.max(0, Math.min(i, cards.length - 1))];
+      if (target) slider.scrollTo({ left: target.offsetLeft - slider.offsetLeft, behavior: "smooth" });
+    }
+
+    function current() {
+      var mid = slider.scrollLeft + slider.clientWidth / 2;
+      var best = 0, bestDist = Infinity;
+      cards.forEach(function (c, i) {
+        var center = c.offsetLeft - slider.offsetLeft + c.offsetWidth / 2;
+        var dist = Math.abs(center - mid);
+        if (dist < bestDist) { bestDist = dist; best = i; }
+      });
+      return best;
+    }
+
+    var syncing;
+    slider.addEventListener("scroll", function () {
+      clearTimeout(syncing);
+      syncing = setTimeout(function () {
+        var c = current();
+        dots.forEach(function (d, i) { d.classList.toggle("active", i === c); });
+      }, 90);
+    }, { passive: true });
+
+    document.getElementById("tPrev").addEventListener("click", function () { goTo(current() - 1); });
+    document.getElementById("tNext").addEventListener("click", function () { goTo(current() + 1); });
+  }
+})();
+</script>
 </body>
 </html>
