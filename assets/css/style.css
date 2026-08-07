@@ -118,8 +118,8 @@ section[id],
   position: relative;
   font-weight: 600;
   font-size: 0.95rem;
-  color: #44403c;
-  opacity: 0.85;
+  color: #9a3412;
+  opacity: 0.92;
   padding: 0.5rem 0;
   transition: opacity 0.3s ease, color 0.3s ease;
 }
@@ -295,7 +295,8 @@ section[id],
 }
 
 #mobileMenu.open {
-  max-height: 34rem;
+  /* six nav links + CTA, with headroom for the longer Marathi/Hindi labels */
+  max-height: 42rem;
 }
 
 .mnav-link {

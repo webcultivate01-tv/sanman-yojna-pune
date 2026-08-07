@@ -269,6 +269,23 @@
     });
   }
 
+  /* ---------- 6b. Back to top ---------- */
+
+  function initToTop() {
+    var btn = document.getElementById("toTop");
+    if (!btn) return;
+
+    var onScroll = function () {
+      btn.classList.toggle("show", window.scrollY > 400);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    btn.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
   /* ---------- 7. Enquiry form ---------- */
 
   function initForm() {
@@ -295,7 +312,6 @@
       var name = form.fullname.value.trim();
       var phone = form.phone.value.trim();
       var email = form.email.value.trim();
-      var subject = form.subject.value;
       var message = form.message.value.trim();
       var ok = true;
 
@@ -306,8 +322,7 @@
       if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
         setErr("email", "Enter a valid email address."); ok = false;
       }
-      if (!subject) { setErr("subject", "Please choose a subject."); ok = false; }
-      if (message.length < 10) { setErr("message", "Please write at least 10 characters."); ok = false; }
+      if (message && message.length < 10) { setErr("message", "Please write at least 10 characters."); ok = false; }
 
       if (!ok) {
         var first = form.querySelector(".field.err");
