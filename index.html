@@ -527,27 +527,29 @@
      ============================================================ -->
 <section class="hero-video-wrap">
   <!-- muted + playsinline + autoplay = plays inline on iOS/Android too.
-       The source is held in data-src rather than a <source> tag: hero.mp4 is
-       28 MB, and preloading it saturated the connection and the main thread for
-       the whole first few seconds of the visit. The script below attaches it
-       only once the page has finished loading, on desktop and mobile alike —
-       the poster and the inline blur-up carry the hero until then, and on
-       Save-Data / 2G-3G links they carry it for the whole visit. -->
+       Both files are encoded with +faststart (moov atom ahead of mdat) so the
+       first frame decodes off the opening bytes instead of waiting for the
+       whole download — without that a phone just sat on the poster forever.
+       Sources stay in data-* rather than <source> tags so the fetch starts
+       after load and picks the right size for the viewport; the poster and the
+       inline blur-up carry the hero until the first frame is ready. -->
   <video autoplay muted loop playsinline preload="none" aria-hidden="true"
          poster="assets/img/hero-poster.jpg"
-         data-src="assets/video/hero.mp4"></video>
+         data-src="assets/video/hero.mp4"
+         data-src-mobile="assets/video/hero-mobile.mp4"></video>
   <script>
   (function () {
     "use strict";
     var v = document.querySelector(".hero-video-wrap video[data-src]");
     if (!v) return;
 
+    /* The only opt-out left is an explicit one. Data-Saver is a deliberate user
+       setting, so honour it; effectiveType is NOT checked, because Chrome on
+       Android reports "3g" on plenty of perfectly capable cellular links and
+       that alone kept the loop off every phone. */
     var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    /* Phones get the loop too, but never on a metered/slow link: Save-Data or a
-       2G/3G effectiveType still falls back to the poster. */
-    var slow = conn && (conn.saveData || /^(slow-)?2g$|^3g$/.test(conn.effectiveType || ""));
-    var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (slow || still) return;
+    if (conn && conn.saveData) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     /* iOS only honours these as properties — the attributes alone are not
        enough once the src is attached from script. */
@@ -555,29 +557,38 @@
     v.defaultMuted = true;
     v.setAttribute("muted", "");
     v.playsInline = true;
+    v.setAttribute("webkit-playsinline", "");
+
+    var kicked = false;
+    var kickOnGesture = function () {
+      if (kicked) return;
+      kicked = true;
+      /* Autoplay refused (iOS Low Power Mode, Android data-saver, strict media
+         settings). Start on the first gesture instead of leaving a frozen
+         poster for the whole visit. */
+      var kick = function () {
+        v.muted = true;
+        v.play().catch(function () {});
+      };
+      ["touchstart", "pointerdown", "click", "scroll"].forEach(function (evt) {
+        document.addEventListener(evt, kick, { once: true, passive: true });
+      });
+    };
 
     var tryPlay = function () {
       var p = v.play();
-      if (p && p.catch) {
-        p.catch(function () {
-          /* Autoplay refused (iOS Low Power Mode, Android data-saver, strict
-             media settings). Start on the first touch instead of leaving a
-             frozen poster for the whole visit. */
-          var kick = function () {
-            v.muted = true;
-            v.play().catch(function () {});
-          };
-          ["touchstart", "pointerdown", "click"].forEach(function (evt) {
-            document.addEventListener(evt, kick, { once: true, passive: true });
-          });
-        });
-      }
+      if (p && p.catch) p.catch(kickOnGesture);
     };
 
     var attach = function () {
-      v.src = v.dataset.src;
+      var mobile = window.matchMedia("(max-width: 1023px)").matches;
+      v.src = (mobile && v.dataset.srcMobile) || v.dataset.src;
       v.load();
       tryPlay();
+      /* Safari often is not ready to play at the moment src is attached, and
+         swallows the early play() without rejecting it. */
+      v.addEventListener("loadeddata", tryPlay, { once: true });
+      v.addEventListener("canplay", tryPlay, { once: true });
       /* Mobile browsers suspend decoding when the tab is backgrounded and do
          not always resume on return. */
       document.addEventListener("visibilitychange", function () {
