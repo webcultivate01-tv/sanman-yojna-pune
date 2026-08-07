@@ -1,7 +1,7 @@
 /* ============================================================
    SANMAN YOJANA — main.js (Funeral Scheme)
    Header, mobile nav, reveal-on-scroll, counters,
-   form validation, back-to-top, SITE-driven content.
+   form validation, SITE-driven content.
    English is the primary language (LANG = "en").
    ============================================================ */
 
@@ -236,7 +236,7 @@
     if (!els.length) return;
 
     var run = function (el) {
-      var target = +el.dataset.count, dur = 1500, t0 = performance.now();
+      var target = +el.dataset.count, dur = 700, t0 = performance.now();
       var step = function (now) {
         var p = Math.min((now - t0) / dur, 1);
         var eased = 1 - Math.pow(1 - p, 3);
@@ -251,7 +251,7 @@
       entries.forEach(function (en) {
         if (en.isIntersecting) { run(en.target); io.unobserve(en.target); }
       });
-    }, { threshold: 0.35 });
+    }, { threshold: 0.1 });
     els.forEach(function (e) { io.observe(e); });
   }
 
@@ -266,23 +266,6 @@
         document.querySelectorAll(".acc.open").forEach(function (o) { o.classList.remove("open"); });
         if (!open) acc.classList.add("open");
       });
-    });
-  }
-
-  /* ---------- 6b. Back to top ---------- */
-
-  function initToTop() {
-    var btn = document.getElementById("toTop");
-    if (!btn) return;
-
-    var onScroll = function () {
-      btn.classList.toggle("show", window.scrollY > 400);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-
-    btn.addEventListener("click", function () {
-      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
 
@@ -350,44 +333,6 @@
     });
   }
 
-  /* ---------- 8. Back-to-top button ---------- */
-
-  function initToTop() {
-    var btn = document.getElementById("toTop");
-    if (!btn) {
-      btn = document.createElement("button");
-      btn.id = "toTop";
-      btn.type = "button";
-      btn.className = "to-top";
-      btn.setAttribute("aria-label", "Back to top");
-      btn.innerHTML =
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">' +
-        '<path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"/></svg>';
-      document.body.appendChild(btn);
-    }
-    btn.addEventListener("click", function () {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-    var toggle = function () { btn.classList.toggle("show", window.scrollY > 500); };
-    window.addEventListener("scroll", toggle, { passive: true });
-    toggle();
-  }
-
-  /* ---------- 9. Reading progress bar ---------- */
-
-  function initProgress() {
-    var bar = document.createElement("div");
-    bar.className = "scroll-progress";
-    document.body.appendChild(bar);
-    var update = function () {
-      var h = document.documentElement.scrollHeight - window.innerHeight;
-      bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + "%";
-    };
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    update();
-  }
-
   /* ---------- Boot ---------- */
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -400,8 +345,6 @@
     initReveal();
     initCounters();
     initAccordion();
-    initToTop();
-    initProgress();
     initForm();
   });
 })();

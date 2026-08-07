@@ -17,13 +17,20 @@
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
+  /* `clip` keeps the sticky header working (it makes no scroll container);
+     `hidden` stays as the fallback for older engines. Declared on <html> too
+     so off-canvas reveal transforms can never widen the page on mobile. */
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
   font-family: "Poppins", "Noto Sans Devanagari", system-ui, sans-serif;
   color: var(--text);
   background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  max-width: 100%;
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -192,6 +199,166 @@ section[id],
 
 .nav-cta:hover::after {
   transform: translateX(120%);
+}
+
+/* ============================================================
+   EYEBROW / KICKER — small rule + uppercase label above a heading.
+   Lives here (not in a page's inline <style>) because the home,
+   services and about CTA bands all use it.
+   ============================================================ */
+.sx-rule {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #b45309, rgba(180, 83, 9, 0));
+}
+
+.sx-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #b45309;
+}
+
+.sx-kicker.is-light { color: #fbbf24; }
+
+/* ============================================================
+   PREMIUM HERO GLASS — badge pill + hero buttons
+   Shared by the home, gallery and packages hero sections so the
+   three photo/video heroes read as one system.
+   The fill stays almost fully transparent (the photo shows through);
+   the "premium" comes from the gradient hairline border, the inner
+   top highlight and the slow sheen sweep — not from a solid panel.
+   ============================================================ */
+.hero-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,.30);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  background: transparent;
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  backdrop-filter: blur(10px) saturate(150%);
+  box-shadow: 0 10px 30px -16px rgba(0,0,0,.8);
+  text-shadow: 0 1px 10px rgba(0,0,0,.45);
+  overflow: hidden;
+}
+
+.hero-pill > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-pill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,.26) 50%, transparent 62%);
+  transform: translateX(-130%);
+  animation: heroSheen 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes heroSheen {
+  0%, 70% { transform: translateX(-130%); }
+  100%    { transform: translateX(130%); }
+}
+
+/* Hero buttons — solid amber for the primary action, glass for the rest */
+.hero-btn,
+.hero-btn-ghost {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.95rem 2rem;
+  border-radius: 0.85rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #fff;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-image 0.3s ease;
+}
+
+.hero-btn > *,
+.hero-btn-ghost > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-btn::after,
+.hero-btn-ghost::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,.30) 50%, transparent 62%);
+  transform: translateX(-130%);
+  transition: transform 0.7s ease;
+  pointer-events: none;
+}
+
+.hero-btn:hover::after,
+.hero-btn-ghost:hover::after {
+  transform: translateX(130%);
+}
+
+.hero-btn {
+  border: 1px solid rgba(255,255,255,.18);
+  background-image: linear-gradient(135deg, #b45309 0%, #d97706 52%, #b45309 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.28),
+    0 16px 34px -16px rgba(180,83,9,.95);
+}
+
+.hero-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.36),
+    0 22px 44px -16px rgba(217,119,6,1);
+}
+
+.hero-btn-ghost {
+  border: 1px solid rgba(255,255,255,.35);
+  background: transparent;
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  backdrop-filter: blur(10px) saturate(150%);
+  box-shadow: 0 12px 30px -18px rgba(0,0,0,.85);
+  text-shadow: 0 1px 10px rgba(0,0,0,.4);
+}
+
+.hero-btn-ghost:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,.6);
+  box-shadow: 0 18px 38px -18px rgba(0,0,0,.9);
+}
+
+.hero-btn svg,
+.hero-btn-ghost svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+/* Pill sizing needs to shrink before the copy wraps awkwardly on phones */
+@media (max-width: 480px) {
+  .hero-pill {
+    font-size: 0.6875rem;
+    letter-spacing: 0.10em;
+    padding: 0.45rem 0.9rem;
+  }
 }
 
 /* ============================================================
@@ -374,62 +541,6 @@ section[id],
 }
 
 /* ============================================================
-   BACK TO TOP (created by main.js on every page)
-   ============================================================ */
-.to-top {
-  position: fixed;
-  right: 1.25rem;
-  bottom: 5.25rem;
-  z-index: 59;
-  display: grid;
-  place-items: center;
-  width: 2.9rem;
-  height: 2.9rem;
-  border-radius: 9999px;
-  border: 2px solid #fde68a;
-  background: #fff;
-  color: var(--primary);
-  box-shadow: 0 10px 24px -12px rgba(120, 53, 15, 0.55);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(12px);
-  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
-}
-
-.to-top.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.to-top:hover {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
-}
-
-.to-top svg { width: 1.3rem; height: 1.3rem; }
-
-@media (min-width: 640px) {
-  .to-top { right: 1.5rem; bottom: 5.75rem; width: 3.1rem; height: 3.1rem; }
-}
-
-/* ============================================================
-   SCROLL PROGRESS BAR (created by main.js)
-   ============================================================ */
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 3px;
-  width: 0;
-  z-index: 70;
-  background: linear-gradient(90deg, #b45309, #d97706 60%, #f0b256);
-  transition: width 0.1s linear;
-  pointer-events: none;
-}
-
-/* ============================================================
    ACCORDION / FAQ (wired by main.js initAccordion)
    ============================================================ */
 .acc {
@@ -571,8 +682,14 @@ section[id],
 }
 
 /* Directional variants — pair with .reveal */
-.reveal-left { transform: translateX(-40px); }
-.reveal-right { transform: translateX(40px); }
+.reveal-left { transform: translateX(-56px); }
+.reveal-right { transform: translateX(56px); }
+
+/* Smaller travel on phones so the slide stays inside the frame */
+@media (max-width: 640px) {
+  .reveal-left { transform: translateX(-28px); }
+  .reveal-right { transform: translateX(28px); }
+}
 
 /* Staggered delays */
 .d1 { transition-delay: 0.1s; }
