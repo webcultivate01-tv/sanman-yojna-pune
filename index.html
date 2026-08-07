@@ -530,8 +530,9 @@
        The source is held in data-src rather than a <source> tag: hero.mp4 is
        28 MB, and preloading it saturated the connection and the main thread for
        the whole first few seconds of the visit. The script below attaches it
-       only once the page has finished loading, and only where it is affordable
-       — the poster and the inline blur-up carry the hero everywhere else. -->
+       only once the page has finished loading, on desktop and mobile alike —
+       the poster and the inline blur-up carry the hero until then, and on
+       Save-Data / 2G-3G links they carry it for the whole visit. -->
   <video autoplay muted loop playsinline preload="none" aria-hidden="true"
          poster="assets/img/hero-poster.jpg"
          data-src="assets/video/hero.mp4"></video>
@@ -542,17 +543,46 @@
     if (!v) return;
 
     var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    /* Phones get the loop too, but never on a metered/slow link: Save-Data or a
+       2G/3G effectiveType still falls back to the poster. */
     var slow = conn && (conn.saveData || /^(slow-)?2g$|^3g$/.test(conn.effectiveType || ""));
-    var small = window.matchMedia("(max-width: 1023px)").matches;
     var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    /* a 28 MB background loop is not worth a phone's data plan */
-    if (slow || small || still) return;
+    if (slow || still) return;
+
+    /* iOS only honours these as properties — the attributes alone are not
+       enough once the src is attached from script. */
+    v.muted = true;
+    v.defaultMuted = true;
+    v.setAttribute("muted", "");
+    v.playsInline = true;
+
+    var tryPlay = function () {
+      var p = v.play();
+      if (p && p.catch) {
+        p.catch(function () {
+          /* Autoplay refused (iOS Low Power Mode, Android data-saver, strict
+             media settings). Start on the first touch instead of leaving a
+             frozen poster for the whole visit. */
+          var kick = function () {
+            v.muted = true;
+            v.play().catch(function () {});
+          };
+          ["touchstart", "pointerdown", "click"].forEach(function (evt) {
+            document.addEventListener(evt, kick, { once: true, passive: true });
+          });
+        });
+      }
+    };
 
     var attach = function () {
       v.src = v.dataset.src;
       v.load();
-      var p = v.play();
-      if (p && p.catch) p.catch(function () { /* autoplay blocked — poster stays */ });
+      tryPlay();
+      /* Mobile browsers suspend decoding when the tab is backgrounded and do
+         not always resume on return. */
+      document.addEventListener("visibilitychange", function () {
+        if (!document.hidden && v.paused) tryPlay();
+      });
     };
     if (document.readyState === "complete") attach();
     else window.addEventListener("load", attach, { once: true });
