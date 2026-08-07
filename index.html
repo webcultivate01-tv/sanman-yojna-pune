@@ -11,7 +11,11 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="assets/js/tw-config.js"></script>
 <link rel="stylesheet" href="assets/css/style.css">
-<link rel="icon" href="assets/img/logo.png">
+<!-- the .svg, not logo.png: that file is a 14222px master at 15.8 MB, and as a
+     favicon it was downloaded and decoded on every visit to this page -->
+<link rel="icon" href="assets/img/logo.svg">
+<!-- First paint of the hero: fetch the video still ahead of everything else -->
+<link rel="preload" as="image" href="assets/img/hero-poster.jpg" fetchpriority="high">
 
 <style>
   /* ===================== HERO (VIDEO) ===================== */
@@ -22,7 +26,13 @@
     align-items: center;
     overflow: hidden;
     isolation: isolate;
-    background: #1c1917;
+    /* Inline 32px blur-up of the first video frame — paints on the very first
+       render so the hero never shows a flat colour block while the poster
+       (and then the video itself) are still downloading. */
+    background-color: #1c1917;
+    background-image: url("data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAwJCQsJCAwLCgsODQwPEx8UExEREyYbHRcfLSgwLywoLCsyOEg9MjVENissPlU/REpMUFFQMDxYXldOXkhPUE3/2wBDAQ0ODhMQEyUUFCVNMywzTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU3/wAARCAASACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDDttXhIyLfOP1rasdUeTDQ2yAA4BauGFyVCo5KMGzz0+lX7TV2Vdu4DP8ACTgfnWNSPMjppycWejW2p3Y6W0T8dAQD+tU7rW9RXcDZsP8AdUGuaXWHjAYscHHPantrTNz5hHHXtXDHDyUr7r5/5nS60LdmcqVAE2ABgDH5VTYnB56H+lFFep0PPJoXYwMCx4x3qeNiRGSTmiioRUj/2Q==");
+    background-size: cover;
+    background-position: center;
   }
   @media (min-width: 1024px){
     .hero-video-wrap{ min-height: 92vh; }
@@ -290,9 +300,20 @@
     scroll-snap-type:x mandatory;
     scrollbar-width:none;
     padding-bottom:.5rem;
+    /* the track keeps its own horizontal scrolling to itself; the page keeps
+       vertical swipes that merely start on top of a card */
+    overscroll-behavior-x:contain;
+    touch-action:pan-x pan-y pinch-zoom;
+    -webkit-overflow-scrolling:touch;
   }
   .tslider::-webkit-scrollbar{ display:none; }
   .tslider > *{ scroll-snap-align:center; }
+  /* Phones: mandatory snapping makes mobile engines claim the whole gesture as
+     soon as a touch lands in the track, which leaves the page feeling stuck
+     over this section. Proximity still snaps the cards, without the lock-in. */
+  @media (max-width:767px){
+    .tslider{ scroll-snap-type:x proximity; }
+  }
   @media (min-width:768px){
     .tslider{ grid-auto-columns: 46%; }
   }
@@ -328,12 +349,15 @@
   .tcard.reveal.d2{ transition-delay:.24s; }
   .tcard.reveal.show{ opacity:1; transform:none; }
 
-  /* hover lift — kept more specific than the reveal end-state */
-  .tcard:hover,
-  .tcard.reveal.show:hover{
-    transform:translateY(-6px);
-    border-color:#fcd34d;
-    box-shadow:0 26px 50px -28px rgba(120,53,15,.6);
+  /* hover lift — kept more specific than the reveal end-state. Pointer-gated so
+     a tap on a phone does not leave a card stuck in the lifted state. */
+  @media (hover:hover){
+    .tcard:hover,
+    .tcard.reveal.show:hover{
+      transform:translateY(-6px);
+      border-color:#fcd34d;
+      box-shadow:0 26px 50px -28px rgba(120,53,15,.6);
+    }
   }
   .tdot{
     width:.55rem; height:.55rem;
@@ -442,7 +466,7 @@
     <div class="h-20 sm:h-24 flex items-center justify-between gap-3 sm:gap-4">
 
       <a href="index.html" class="shrink-0" aria-label="Sanman Yojana — Home">
-        <img data-logo src="assets/img/logo2.png" alt="Sanman Yojana" class="site-logo">
+        <img data-logo src="assets/img/logo2.webp" alt="Sanman Yojana" class="site-logo">
       </a>
 
       <nav class="hidden lg:flex items-center gap-6 xl:gap-8">
@@ -502,10 +526,38 @@
      HERO — full-screen video background
      ============================================================ -->
 <section class="hero-video-wrap">
-  <!-- muted + playsinline + autoplay = plays inline on iOS/Android too -->
-  <video autoplay muted loop playsinline preload="auto" aria-hidden="true">
-    <source src="assets/video/hero.mp4" type="video/mp4">
-  </video>
+  <!-- muted + playsinline + autoplay = plays inline on iOS/Android too.
+       The source is held in data-src rather than a <source> tag: hero.mp4 is
+       28 MB, and preloading it saturated the connection and the main thread for
+       the whole first few seconds of the visit. The script below attaches it
+       only once the page has finished loading, and only where it is affordable
+       — the poster and the inline blur-up carry the hero everywhere else. -->
+  <video autoplay muted loop playsinline preload="none" aria-hidden="true"
+         poster="assets/img/hero-poster.jpg"
+         data-src="assets/video/hero.mp4"></video>
+  <script>
+  (function () {
+    "use strict";
+    var v = document.querySelector(".hero-video-wrap video[data-src]");
+    if (!v) return;
+
+    var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    var slow = conn && (conn.saveData || /^(slow-)?2g$|^3g$/.test(conn.effectiveType || ""));
+    var small = window.matchMedia("(max-width: 1023px)").matches;
+    var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    /* a 28 MB background loop is not worth a phone's data plan */
+    if (slow || small || still) return;
+
+    var attach = function () {
+      v.src = v.dataset.src;
+      v.load();
+      var p = v.play();
+      if (p && p.catch) p.catch(function () { /* autoplay blocked — poster stays */ });
+    };
+    if (document.readyState === "complete") attach();
+    else window.addEventListener("load", attach, { once: true });
+  })();
+  </script>
 
   <div class="hero-copy relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-16 w-full">
     <div class="max-w-2xl">
@@ -528,7 +580,7 @@
         15 years of compassionate funeral assistance. Affordable, transparent, and respectful services for every family — day or night.
       </p>
 
-      <div class="reveal d3 mt-9 flex flex-wrap gap-4">
+      <div class="reveal d3 mt-9 hero-btn-row">
         <a data-link="phone" class="hero-btn">
           <svg fill="currentColor" viewBox="0 0 24 24"><path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg>
           <span data-i18n="common.callnow">Call Now</span>
@@ -567,25 +619,62 @@
 <section id="stats" class="py-6 sm:py-8 bg-white border-y-2 border-amber-200">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="reveal text-center">
+      <div class="text-center">
         <div class="text-2xl sm:text-3xl font-bold text-amber-700"><span data-count="4200">0</span>+</div>
         <p class="mt-1.5 text-sm text-stone-600 font-semibold" data-i18n="home.stats.families">Families served</p>
       </div>
-      <div class="reveal text-center">
+      <div class="text-center">
         <div class="text-2xl sm:text-3xl font-bold text-amber-700"><span data-count="150">0</span>+</div>
         <p class="mt-1.5 text-sm text-stone-600 font-semibold" data-i18n="home.stats.staff">Trained staff</p>
       </div>
-      <div class="reveal text-center">
+      <div class="text-center">
         <div class="text-2xl sm:text-3xl font-bold text-amber-700"><span data-count="24">0</span>+</div>
         <p class="mt-1.5 text-sm text-stone-600 font-semibold" data-i18n="home.stats.support">Hours support</p>
       </div>
-      <div class="reveal text-center">
+      <div class="text-center">
         <div class="text-2xl sm:text-3xl font-bold text-amber-700"><span data-count="25">0</span>+</div>
         <p class="mt-1.5 text-sm text-stone-600 font-semibold" data-i18n="home.stats.area">Area coverage</p>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+/* The counters are wired here, inline, instead of waiting for main.js at the
+   foot of the page — that costs three extra script fetches plus DOMContentLoaded
+   before the first digit moves, which reads as a two-second stall on a phone.
+   Elements handled here are flagged so main.js leaves them alone. */
+(function () {
+  "use strict";
+  var els = document.querySelectorAll("#stats [data-count]");
+  if (!els.length) return;
+
+  var run = function (el) {
+    if (el.dataset.counted) return;
+    el.dataset.counted = "1";
+    var target = +el.dataset.count, dur = 900, t0 = performance.now();
+    var step = function (now) {
+      var p = Math.min((now - t0) / dur, 1);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))).toLocaleString("en-IN");
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+
+  if (!("IntersectionObserver" in window)) {
+    Array.prototype.forEach.call(els, run);
+    return;
+  }
+  /* threshold 0, no margin: starts on the first pixel of the strip, so the
+     count is never pre-rolled off-screen and never waits for a scroll past it */
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { run(en.target); io.unobserve(en.target); }
+    });
+  }, { threshold: 0 });
+  Array.prototype.forEach.call(els, function (e) { io.observe(e); });
+})();
+</script>
 
 <!-- ============================================================
      EMERGENCY HELPLINE STRIP
@@ -687,22 +776,22 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <div class="max-w-3xl mx-auto text-center">
-      <span class="reveal inline-flex items-center gap-2 rounded-full bg-amber-100 border border-amber-300 px-4 py-2 text-[13px] font-bold uppercase tracking-[0.12em] text-amber-800">
+      <span class="reveal reveal-soft inline-flex items-center gap-2 rounded-full bg-amber-100 border border-amber-300 px-4 py-2 text-[13px] font-bold uppercase tracking-[0.12em] text-amber-800">
         <span data-i18n="home.services.badge">Our Services</span>
       </span>
-      <h2 class="reveal d1 mt-5 text-3xl sm:text-4xl font-bold text-stone-900" data-i18n="home.services.title">
+      <h2 class="reveal reveal-soft mt-5 text-3xl sm:text-4xl font-bold text-stone-900" data-i18n="home.services.title">
         Complete Funeral &amp; Ritual Services
       </h2>
-      <p class="reveal d2 mt-4 text-lg text-stone-600 leading-relaxed" data-i18n="home.services.desc">
+      <p class="reveal reveal-soft mt-4 text-lg text-stone-600 leading-relaxed" data-i18n="home.services.desc">
         We provide complete end-to-end funeral arrangements with dignity, compassion, and professionalism. From ambulance support and cremation assistance to ritual arrangements and post-funeral services, our experienced team is available 24/7.
       </p>
     </div>
 
     <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
 
-      <div class="reveal svc-teaser group">
-        <div class="relative rounded-[20px] overflow-hidden aspect-[16/10] shadow-[0_20px_45px_-20px_rgba(120,53,15,.35)] transition-all duration-500 ease-out group-hover:shadow-[0_28px_60px_-18px_rgba(120,53,15,.45)] group-hover:-translate-y-2">
-          <img class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.07]" src="image/Ambulance-Service.png" alt="24/7 ambulance service" loading="lazy" decoding="async">
+      <div class="reveal reveal-soft svc-teaser group">
+        <div class="relative rounded-[20px] overflow-hidden aspect-[16/10] shadow-[0_20px_45px_-20px_rgba(120,53,15,.35)] transition-all duration-300 ease-out group-hover:shadow-[0_28px_60px_-18px_rgba(120,53,15,.45)] group-hover:-translate-y-1">
+          <img class="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]" src="image/Ambulance-Service.png" alt="24/7 ambulance service" loading="lazy" decoding="async">
           <div class="absolute inset-0 bg-gradient-to-t from-stone-900/70 via-stone-900/10 to-transparent"></div>
         </div>
         <div class="mt-6">
@@ -716,9 +805,9 @@
         </div>
       </div>
 
-      <div class="reveal d1 svc-teaser group">
-        <div class="relative rounded-[20px] overflow-hidden aspect-[16/10] shadow-[0_20px_45px_-20px_rgba(120,53,15,.35)] transition-all duration-500 ease-out group-hover:shadow-[0_28px_60px_-18px_rgba(120,53,15,.45)] group-hover:-translate-y-2">
-          <img class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.07]" src="image/galleryHero.jpg" alt="Ritual and pandit arrangements" loading="lazy" decoding="async">
+      <div class="reveal reveal-soft svc-teaser group">
+        <div class="relative rounded-[20px] overflow-hidden aspect-[16/10] shadow-[0_20px_45px_-20px_rgba(120,53,15,.35)] transition-all duration-300 ease-out group-hover:shadow-[0_28px_60px_-18px_rgba(120,53,15,.45)] group-hover:-translate-y-1">
+          <img class="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]" src="image/galleryHero.jpg" alt="Ritual and pandit arrangements" loading="lazy" decoding="async">
           <div class="absolute inset-0 bg-gradient-to-t from-stone-900/70 via-stone-900/10 to-transparent"></div>
         </div>
         <div class="mt-6">
@@ -732,9 +821,9 @@
         </div>
       </div>
 
-      <div class="reveal d2 svc-teaser group">
-        <div class="relative rounded-[20px] overflow-hidden aspect-[16/10] shadow-[0_20px_45px_-20px_rgba(120,53,15,.35)] transition-all duration-500 ease-out group-hover:shadow-[0_28px_60px_-18px_rgba(120,53,15,.45)] group-hover:-translate-y-2">
-          <img class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.07]" src="image/Ash-Immersion.png" alt="Asthi Visarjan service" loading="lazy" decoding="async" style="filter:sepia(.5) saturate(1.5) hue-rotate(-8deg) brightness(.94) contrast(1.02);">
+      <div class="reveal reveal-soft svc-teaser group">
+        <div class="relative rounded-[20px] overflow-hidden aspect-[16/10] shadow-[0_20px_45px_-20px_rgba(120,53,15,.35)] transition-all duration-300 ease-out group-hover:shadow-[0_28px_60px_-18px_rgba(120,53,15,.45)] group-hover:-translate-y-1">
+          <img class="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]" src="image/Ash-Immersion.png" alt="Asthi Visarjan service" loading="lazy" decoding="async" style="filter:sepia(.5) saturate(1.5) hue-rotate(-8deg) brightness(.94) contrast(1.02);">
           <div class="absolute inset-0 bg-gradient-to-t from-stone-900/70 via-stone-900/10 to-transparent"></div>
         </div>
         <div class="mt-6">
@@ -773,7 +862,7 @@
     </div> -->
 
     <!-- View all services -->
-    <div class="reveal d3 mt-12 text-center">
+    <div class="reveal reveal-soft mt-12 text-center">
       <p class="text-stone-600" data-i18n="home.services.viewall.title">Looking for something more specific?</p>
       <a href="services.html" class="mt-4 inline-flex items-center gap-2 px-7 py-3 bg-amber-700 hover:bg-amber-800 text-white font-bold rounded-lg transition hover:-translate-y-0.5">
         <span data-i18n="home.services.viewall.btn">Explore All Services</span>
@@ -1368,7 +1457,7 @@
       <div>
         <h2 class="text-xl font-bold text-white mb-5" data-i18n="footer.aboutus">About Us</h2>
         <div class="mb-4">
-          <img data-logo src="assets/img/logo2.png" alt="Sanman Yojana" class="footer-logo">
+          <img data-logo src="assets/img/logo2.webp" alt="Sanman Yojana" class="footer-logo">
         </div>
         <p class="text-sm text-stone-400 leading-relaxed mb-6" data-i18n="footer.about">Compassionate funeral assistance for every family.</p>
         <div class="flex flex-wrap gap-2.5">
@@ -1576,13 +1665,25 @@
       idle = setTimeout(play, RESUME);
     }
 
-    ["pointerenter", "focusin"].forEach(function (ev) {
-      slider.parentNode.addEventListener(ev, function () { paused = true; });
-    });
-    ["pointerleave", "focusout"].forEach(function (ev) {
-      slider.parentNode.addEventListener(ev, function () { paused = false; });
-    });
+    /* hover-to-pause is for real pointers only — on a touch screen the enter
+       event fires on tap and the matching leave often never does, which would
+       park the carousel for good */
+    if (window.matchMedia("(hover: hover)").matches) {
+      ["pointerenter", "focusin"].forEach(function (ev) {
+        slider.parentNode.addEventListener(ev, function () { paused = true; });
+      });
+      ["pointerleave", "focusout"].forEach(function (ev) {
+        slider.parentNode.addEventListener(ev, function () { paused = false; });
+      });
+    } else {
+      slider.parentNode.addEventListener("focusin", function () { paused = true; });
+      slider.parentNode.addEventListener("focusout", function () { paused = false; });
+    }
     slider.addEventListener("touchstart", defer, { passive: true });
+    /* An autoplay step is a smooth scrollTo; if one lands while the visitor is
+       swiping the page, the browser hands the gesture to the track and the page
+       stops moving. Hold autoplay off for as long as the page is in motion. */
+    window.addEventListener("scroll", defer, { passive: true });
     document.addEventListener("visibilitychange", function () {
       if (document.hidden) stop(); else play();
     });

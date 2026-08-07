@@ -78,7 +78,10 @@ const SITE = {
     whatsapp:  "https://wa.me/918766945548"
   },
 
-  logo: "assets/img/logo2.png",
+  /* WebP: same 400x400 mark, a fifth of the PNG's weight. The PNG stays on
+     disk as logoFallback for browsers that cannot decode WebP. */
+  logo: "assets/img/logo2.webp",
+  logoFallback: "assets/img/logo2.png",
 
   /* ---- Counters shown on the home page ---- */
   stats: { years: 25, families: 4200, volunteers: 150, hours: 24 },

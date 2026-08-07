@@ -47,9 +47,15 @@
       });
     });
 
-    /* logo */
+    /* logo — WebP first, then the PNG for anything too old to decode it,
+       then the typed mark if neither file is reachable */
     document.querySelectorAll("[data-logo]").forEach(function (img) {
       img.onerror = function () {
+        if (SITE.logoFallback && !this.dataset.fellBack) {
+          this.dataset.fellBack = "1";
+          this.src = SITE.logoFallback;
+          return;
+        }
         var box = this.parentElement;
         this.remove();
         if (box && !box.querySelector(".logo-fallback")) {
@@ -236,7 +242,11 @@
     if (!els.length) return;
 
     var run = function (el) {
-      var target = +el.dataset.count, dur = 700, t0 = performance.now();
+      /* a page may start its own counters inline, long before this file runs —
+         those mark themselves and must not be restarted from zero here */
+      if (el.dataset.counted) return;
+      el.dataset.counted = "1";
+      var target = +el.dataset.count, dur = 900, t0 = performance.now();
       var step = function (now) {
         var p = Math.min((now - t0) / dur, 1);
         var eased = 1 - Math.pow(1 - p, 3);
@@ -247,11 +257,12 @@
     };
 
     if (!("IntersectionObserver" in window)) { els.forEach(run); return; }
+    /* threshold 0 — the count starts on the number's first visible pixel */
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (en.isIntersecting) { run(en.target); io.unobserve(en.target); }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0 });
     els.forEach(function (e) { io.observe(e); });
   }
 
