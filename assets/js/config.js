@@ -71,10 +71,9 @@ const SITE = {
 
   /* ---- Social ---- */
   social: {
-    facebook:  "#",   /* TODO */
-    instagram: "#",   /* TODO */
+    facebook:  "https://www.facebook.com/share/1DFLJSaLeT/",
+    instagram: "https://www.instagram.com/sanmanyojana/",
     youtube:   "#",   /* TODO */
-    threads:   "#",   /* TODO */
     whatsapp:  "https://wa.me/918766945548"
   },
 

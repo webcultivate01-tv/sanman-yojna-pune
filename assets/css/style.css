@@ -77,6 +77,17 @@ section[id],
 }
 
 /* ============================================================
+   TOP BAR — same white backdrop and link colour as the navbar
+   ============================================================ */
+.site-topbar {
+  color: #9a3412;              /* identical to .nav-link */
+}
+
+.topbar-link:hover {
+  color: var(--primary);
+}
+
+/* ============================================================
    BRAND LOGO (navbar) — image only, no frame or backdrop
    ============================================================ */
 .site-logo {
@@ -437,7 +448,7 @@ section[id],
 }
 
 /* Always light, regardless of the visitor's OS/browser dark-mode
-   preference — this chip sits on the white header, not the dark topbar. */
+   preference — the top bar and the header are both white. */
 .lang-toggle-light {
   background: #fef3c7;
   color: #78350f;

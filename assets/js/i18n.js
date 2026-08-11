@@ -113,6 +113,9 @@ const I18N = {
     "footer.svc3": "Ash Immersion (Asthi Visarjan)",
     "footer.svc4": "Religious Rituals by Priests",
     "footer.svc5": "Family Counseling & Coordination",
+    "footer.svc6": "Complete Funeral Ritual Services",
+    "footer.svc7": "Cremation Ground Booking",
+    "footer.svc8": "Complete Guidance for Final Rites",
     "footer.call.text": "24x7 Response Guaranteed",
 
     "home.hero.badge": "25 Years of Trusted Funeral Services",
@@ -841,6 +844,9 @@ const I18N = {
     "footer.svc3": "अस्थी विसर्जन",
     "footer.svc4": "पुरोहितांकडून धार्मिक विधी",
     "footer.svc5": "कुटुंब समुपदेशन व समन्वय",
+    "footer.svc6": "संपूर्ण अंत्यविधी सेवा",
+    "footer.svc7": "स्मशानभूमी बुकिंग",
+    "footer.svc8": "अंत्यविधीसाठी संपूर्ण मार्गदर्शन",
     "footer.call.text": "२४×७ प्रतिसादाची हमी",
 
     "home.hero.badge": "२५ वर्षांची विश्वासार्ह अंत्यसंस्कार सेवा",
@@ -1566,6 +1572,9 @@ const I18N = {
     "footer.svc3": "अस्थि विसर्जन",
     "footer.svc4": "पुरोहितों द्वारा धार्मिक अनुष्ठान",
     "footer.svc5": "परिवार परामर्श व समन्वय",
+    "footer.svc6": "संपूर्ण अंतिम संस्कार सेवा",
+    "footer.svc7": "श्मशान बुकिंग",
+    "footer.svc8": "अंतिम संस्कार के लिए संपूर्ण मार्गदर्शन",
     "footer.call.text": "24x7 प्रतिक्रिया की गारंटी",
 
     "home.hero.badge": "25 वर्षों की विश्वसनीय अंत्येष्टि सेवा",

@@ -41,7 +41,7 @@
     document.querySelectorAll('[data-link="map"]').forEach(function (a) {
       a.href = SITE.mapLink;
     });
-    ["whatsapp", "facebook", "instagram", "youtube", "threads"].forEach(function (k) {
+    ["whatsapp", "facebook", "instagram", "youtube"].forEach(function (k) {
       document.querySelectorAll('[data-link="' + k + '"]').forEach(function (a) {
         a.href = (SITE.social && SITE.social[k]) || "#";
       });
@@ -60,7 +60,7 @@
         this.remove();
         if (box && !box.querySelector(".logo-fallback")) {
           var s = document.createElement("span");
-          s.className = "logo-fallback font-head font-bold text-white text-xl leading-none";
+          s.className = "logo-fallback font-head font-bold text-amber-800 text-xl leading-none";
           s.textContent = "स"; /* स */
           box.appendChild(s);
         }
