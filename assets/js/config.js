@@ -149,7 +149,7 @@ const SITE = {
     },
     {
       id: "kutumb",
-      price: 111000,
+      price: 91000,
       featured: false,
       poster: "assets/img/poster-plan-4.jpeg",
       title: { en: "Basic + Sanman + Dashakriya + Family Kit", mr: "बेसिक + सन्मान + दशक्रिया + कुटुंब संच", hi: "बेसिक + सन्मान + दशक्रिया + कुटुंब संच" },
