@@ -617,9 +617,15 @@
     background:#fbf7ef;
     opacity:0;
     pointer-events:none;
-    transition:opacity .25s linear;
+    /* no transition: the script writes this value on every animation frame,
+       and a 250ms interpolation on top of that only made the wash lag the card */
   }
   .vframe{ position:absolute; inset:0; }
+  /* the outgoing player leaves the compositor the moment a swipe commits — a
+     playing video inside a card that is rotating, scaling and fading is the
+     most expensive thing on the page, and the thumbnail underneath stands in
+     for it. The iframe itself is removed later, once the deck is at rest. */
+  .vframe.is-off{ display:none; }
   .vframe iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
   /* a transparent sheet over the player: without it the iframe swallows every
      swipe and the stack cannot be dragged from the middle of the video */
@@ -1173,6 +1179,11 @@
   };
 
   /* ---------- build the cards ---------- */
+  /* one entry per card: the elements render() touches, resolved once, plus the
+     last value written to each of them. Re-querying and re-writing all of this
+     sixty times a second was most of the cost of a swipe. */
+  var meta = [];
+
   var cards = VIDEOS.map(function (v, i) {
     var el = document.createElement("div");
     el.className = "vcard";
@@ -1207,6 +1218,14 @@
     });
 
     stack.appendChild(el);
+    meta.push({
+      veil:  el.querySelector(".vveil"),
+      frame: el.querySelector(".vframe"),
+      sound: el.querySelector(".vsound"),
+      focus: Array.prototype.slice.call(el.querySelectorAll("button, a")),
+      /* last written — a frame that changes nothing writes nothing */
+      tf: "", op: "", z: 0, vis: "", veilOp: -1, front: null, tear: 0
+    });
     return el;
   });
 
@@ -1224,22 +1243,29 @@
      between the second and the third. Everything else is derived from it. */
   var pos = 0, vel = 0, targetPos = 0, raf = null, lastT = 0;
 
-  function steps() {
-    var cs = getComputedStyle(stage);
-    return {
-      x: parseFloat(cs.getPropertyValue("--vs-x")) || 40,
-      y: parseFloat(cs.getPropertyValue("--vs-y")) || 18
-    };
-  }
-  var step = steps();
-  window.addEventListener("resize", function () { step = steps(); render(); }, { passive: true });
+  /* The fan step and the card width are read from layout — so they are read
+     once here and kept, never inside render(). Asking for clientWidth after
+     writing a transform forces the browser to lay the page out again, and
+     doing that on every animation frame is what made the sweep feel sticky. */
+  var step = { x: 30, y: 14 }, stackW = 1, spanW = 200;
 
-  /* how far the finger travels for one full card change. The card is portrait
-     now, so its width is small — the floor is what keeps a phone swipe from
-     feeling twitchy, and the ceiling keeps a desktop drag from feeling heavy. */
-  function dragSpan() {
-    return Math.min(Math.max(stack.clientWidth * 0.62, 150), 260);
+  function measure() {
+    var cs = getComputedStyle(stage);
+    step.x = parseFloat(cs.getPropertyValue("--vs-x")) || 40;
+    step.y = parseFloat(cs.getPropertyValue("--vs-y")) || 18;
+    stackW = stack.clientWidth || 1;
+    /* how far the finger travels for one full card change. The card is
+       portrait, so its width is small — the floor keeps a phone swipe from
+       feeling twitchy, the ceiling keeps a desktop drag from feeling heavy. */
+    spanW = Math.min(Math.max(stackW * 0.62, 140), 240);
   }
+  measure();
+
+  var remeasure = function () { measure(); render(); };
+  window.addEventListener("resize", remeasure, { passive: true });
+  window.addEventListener("load", remeasure, { once: true });
+  /* fonts and images settling can change the column before the first swipe */
+  if ("ResizeObserver" in window) new ResizeObserver(remeasure).observe(stack);
 
   function wrap(raw) {
     /* maps a raw distance onto [-1, N-1): one card is always "leaving" to the
@@ -1283,7 +1309,7 @@
   }
 
   function render() {
-    var w = stack.clientWidth || 1;
+    var w = stackW;
     for (var i = 0; i < N; i++) {
       var o = wrap(i - pos);
       var x, y, s, r, op, z;
@@ -1319,34 +1345,55 @@
         op *= e;
       }
 
-      var c = cards[i];
-      c.style.transform = "translate3d(" + x.toFixed(2) + "px," + y.toFixed(2) + "px,0)" +
-                          " rotate(" + r.toFixed(2) + "deg) scale(" + s.toFixed(3) + ")";
-      c.style.opacity   = op.toFixed(3);
-      c.style.zIndex    = z;
-      c.style.visibility = op < 0.02 ? "hidden" : "visible";
-      c.querySelector(".vveil").style.opacity = Math.min(Math.max(o, 0) * 0.09, 0.28);
+      var c = cards[i], m = meta[i];
 
+      var tf = "translate3d(" + x.toFixed(2) + "px," + y.toFixed(2) + "px,0)" +
+               " rotate(" + r.toFixed(2) + "deg) scale(" + s.toFixed(3) + ")";
+      if (tf !== m.tf) { c.style.transform = tf; m.tf = tf; }
+
+      var ops = op.toFixed(3);
+      if (ops !== m.op) { c.style.opacity = ops; m.op = ops; }
+
+      if (z !== m.z) { c.style.zIndex = z; m.z = z; }
+
+      var vis = op < 0.02 ? "hidden" : "visible";
+      if (vis !== m.vis) { c.style.visibility = vis; m.vis = vis; }
+
+      var vo = Math.min(Math.max(o, 0) * 0.09, 0.28);
+      if (Math.abs(vo - m.veilOp) > 0.004) { m.veil.style.opacity = vo.toFixed(3); m.veilOp = vo; }
+
+      /* class and attribute writes invalidate style for the whole subtree, so
+         they happen on the two frames the front card actually changes on */
       var front = o > -0.5 && o < 0.5;
-      c.classList.toggle("is-front", front);
-      c.setAttribute("aria-hidden", front ? "false" : "true");
-      c.querySelectorAll("button, a").forEach(function (b) {
-        b.tabIndex = front ? 0 : -1;
-      });
+      if (front !== m.front) {
+        m.front = front;
+        c.classList.toggle("is-front", front);
+        c.setAttribute("aria-hidden", front ? "false" : "true");
+        for (var k = 0; k < m.focus.length; k++) m.focus[k].tabIndex = front ? 0 : -1;
+      }
     }
   }
 
   /* ---------- spring (stiffness / damping / mass) ---------- */
-  var STIFF = 210, DAMP = 26, MASS = 1;
+  /* Damping ratio ≈ 0.96 — just short of critical, so the card sweeps across
+     hard, arrives in about a third of a second and stops without wobbling.
+     The old 210/26 pair was both slower and looser: the slide kept crawling
+     the last few pixels long after it looked finished, and nothing may start
+     playing until it is done. */
+  var STIFF = 430, DAMP = 40, MASS = 1;
+  /* the eye cannot see 1/300th of a card — resting there rather than at
+     1/1600th ends the animation a good 150ms sooner */
+  var REST_P = 0.0035, REST_V = 0.06;
 
   function tick(now) {
     var dt = Math.min((now - lastT) / 1000, 1 / 30);
     lastT = now;
     vel += ((-STIFF * (pos - targetPos)) + (-DAMP * vel)) / MASS * dt;
     pos += vel * dt;
-    if (Math.abs(pos - targetPos) < 0.0006 && Math.abs(vel) < 0.02) {
+    if (Math.abs(pos - targetPos) < REST_P && Math.abs(vel) < REST_V) {
       pos = targetPos; vel = 0; raf = null;
       render();
+      reap();                            /* now, not mid-sweep */
       settle();
       return;
     }
@@ -1355,7 +1402,7 @@
   }
 
   function spring() {
-    if (reduce) { pos = targetPos; vel = 0; render(); settle(); return; }
+    if (reduce) { pos = targetPos; vel = 0; render(); reap(); settle(); return; }
     if (raf) return;
     lastT = performance.now();
     raf = requestAnimationFrame(tick);
@@ -1391,13 +1438,44 @@
     } catch (e) { /* cross-origin hiccup — the iframe swap below still covers us */ }
   }
 
+  function markSound(i, on) {
+    var sb = meta[i].sound;
+    sb.innerHTML = on ? ICON.sound : ICON.muted;
+    sb.setAttribute("aria-pressed", on ? "true" : "false");
+    sb.setAttribute("aria-label", on ? "Turn sound off" : "Turn sound on");
+  }
+
+  /* Leaving the front: go quiet and get out of the compositor this frame, but
+     leave the iframe in the tree. Deleting it tears down a whole nested
+     browsing context, which blocks the main thread for tens of milliseconds —
+     doing that on the first frame of the sweep is exactly what made the swipe
+     stutter before the card had moved. reap() collects it once the deck rests. */
   function unload(i) {
     var c = cards[i];
     c.classList.remove("is-playing");
-    c.querySelector(".vframe").innerHTML = "";
-    var sb = c.querySelector(".vsound");
-    sb.innerHTML = ICON.muted;
-    sb.setAttribute("aria-pressed", "false");
+    post(c, "pauseVideo");
+    post(c, "mute");
+    meta[i].frame.classList.add("is-off");
+    markSound(i, false);
+  }
+
+  /* drop the players that are no longer the front card. Called when the spring
+     has come to rest and when the section scrolls away — never during a move. */
+  function reap() {
+    for (var i = 0; i < N; i++) {
+      if (i === current) continue;
+      var m = meta[i];
+      if (m.frame.firstChild) m.frame.innerHTML = "";
+      m.frame.classList.remove("is-off");
+    }
+  }
+
+  /* coming back to a card whose iframe survived the trip: put it back on
+     screen rather than rebuilding it, which would restart and re-buffer */
+  function revive(i) {
+    var m = meta[i];
+    m.frame.classList.remove("is-off");
+    return !!m.frame.firstChild;
   }
 
   function load(i, withSound) {
@@ -1419,7 +1497,8 @@
     if (location.protocol === "http:" || location.protocol === "https:") {
       p.push("origin=" + encodeURIComponent(location.origin));
     }
-    c.querySelector(".vframe").innerHTML =
+    meta[i].frame.classList.remove("is-off");
+    meta[i].frame.innerHTML =
       '<iframe src="https://www.youtube-nocookie.com/embed/' + v.id + '?' + p.join("&") + '"' +
       ' title="' + v.title.replace(/"/g, "&quot;") + '"' +
       ' allow="autoplay; encrypted-media; picture-in-picture"' +
@@ -1431,9 +1510,7 @@
       ' referrerpolicy="origin" allowfullscreen></iframe>';
     c.classList.add("is-playing");
     sound = !!withSound;
-    var sb = c.querySelector(".vsound");
-    sb.innerHTML = withSound ? ICON.sound : ICON.muted;
-    sb.setAttribute("aria-pressed", withSound ? "true" : "false");
+    markSound(i, sound);
   }
 
   /* called every time the spring comes to rest, and when the section scrolls
@@ -1441,19 +1518,24 @@
   function settle() {
     if (!inView || reduce) return;                /* no unasked-for playback */
     if (!introDone) return;                       /* let the cards land first */
-    var c = cards[current];
+    var c = cards[current], i = current;
     if (paused) return;                           /* the user pressed pause */
     clearTimeout(loadTimer);
+    /* short enough that the next reel starts the moment the card lands, long
+       enough that flicking straight through the deck does not build a player
+       for every card on the way past */
     loadTimer = setTimeout(function () {
       /* an iframe that is merely paused is resumed rather than rebuilt —
          rebuilding would restart the video and re-buffer it */
-      if (c.querySelector("iframe")) {
+      if (revive(i)) {
         post(c, "playVideo");
+        post(c, sound ? "unMute" : "mute");
+        markSound(i, sound);
         c.classList.add("is-playing");
       } else {
-        load(current, sound);
+        load(i, sound);
       }
-    }, 120);
+    }, 60);
   }
 
   /* the front card changes the moment a new target is chosen, not when the
@@ -1476,7 +1558,17 @@
 
   /* ---------- drag / swipe ---------- */
   var dragging = false, pid = null, sx = 0, sy = 0, fromPos = 0,
-      axis = "", moved = 0, lastX = 0, lastMs = 0, vx = 0, swallowClick = false;
+      axis = "", moved = 0, lastX = 0, lastMs = 0, vx = 0, swallowClick = false,
+      dragRaf = null;
+
+  /* A phone reports pointer moves faster than it paints — 120Hz panels and
+     coalesced events both mean several moves per frame. Painting on each of
+     them is work the screen never shows, so the move handler only records the
+     position and the next frame draws it once. */
+  function queueDrag() {
+    if (dragRaf) return;
+    dragRaf = requestAnimationFrame(function () { dragRaf = null; render(); });
+  }
 
   stack.addEventListener("pointerdown", function (e) {
     if (e.pointerType === "mouse" && e.button !== 0) return;
@@ -1507,13 +1599,18 @@
     }
 
     var now = performance.now();
-    vx = (e.clientX - lastX) / Math.max(now - lastMs, 1) * 1000;
+    var gap = Math.max(now - lastMs, 1);
+    var inst = (e.clientX - lastX) / gap * 1000;
+    /* a single pair of events is noisy, and one slow sample at the end of an
+       otherwise quick flick used to read as "no throw at all". A short average
+       keeps the flick, and a long pause starts the reading over. */
+    vx = (gap > 80 || !vx) ? inst : vx * 0.35 + inst * 0.65;
     lastX = e.clientX; lastMs = now;
 
     /* clamped to a single card in either direction — one gesture, one video */
-    var d = Math.max(-1.15, Math.min(1.15, dx / dragSpan()));
+    var d = Math.max(-1.15, Math.min(1.15, dx / spanW));
     pos = fromPos - d;
-    render();
+    queueDrag();
   });
 
   /* touch-action: pan-y covers the common case, but iOS still hands a
@@ -1528,6 +1625,7 @@
     if (!dragging) return;
     dragging = false;
     stack.classList.remove("is-drag");
+    if (dragRaf) { cancelAnimationFrame(dragRaf); dragRaf = null; }
     try { stack.releasePointerCapture(pid); } catch (err) {}
 
     if (axis !== "x") {                            /* it was a tap */
@@ -1540,15 +1638,24 @@
     setTimeout(function () { swallowClick = false; }, 0);
 
     var off = pos - fromPos;
-    var v   = -vx / dragSpan();                    /* px/s → slides/s */
+    /* held still before letting go — no move events arrive while the finger
+       rests, so the last reading would otherwise still be the flick */
+    if (performance.now() - lastMs > 120) vx = 0;
+    var v   = -vx / spanW;                         /* px/s → slides/s */
     var s   = 0;
-    if (v > 1.1) s = 1;
-    else if (v < -1.1) s = -1;
-    else if (off > 0.26) s = 1;
-    else if (off < -0.26) s = -1;
+    /* a short, quick sweep is the natural gesture here, so the throw decides
+       first and it does not have to be a hard one: 0.5 slides/s is roughly
+       100px in a tenth of a second. Falling back on distance, a fifth of a
+       card is enough — anything less snaps back. */
+    if (v > 0.5) s = 1;
+    else if (v < -0.5) s = -1;
+    else if (off > 0.2) s = 1;
+    else if (off < -0.2) s = -1;
 
     targetPos = Math.round(fromPos) + s;
-    vel = Math.max(-6, Math.min(6, v));
+    /* the throw is carried into the spring, so a fast flick lands faster than
+       a slow drag instead of both taking the same time */
+    vel = Math.max(-9, Math.min(9, v));
     syncIndex();
     spring();
   }
@@ -1580,7 +1687,7 @@
       post(c, "pauseVideo");
     } else {
       paused = false;
-      if (c.querySelector("iframe")) { post(c, "playVideo"); c.classList.add("is-playing"); }
+      if (revive(i)) { post(c, "playVideo"); c.classList.add("is-playing"); }
       else load(i, sound);
     }
   }
@@ -1590,12 +1697,10 @@
     c.querySelector(".vsound").addEventListener("click", function (ev) {
       ev.stopPropagation();
       if (swallowClick) return;
-      if (!c.querySelector("iframe")) { paused = false; load(i, true); return; }
+      if (!revive(i)) { paused = false; load(i, true); return; }
       sound = !sound;
       post(c, sound ? "unMute" : "mute");
-      this.innerHTML = sound ? ICON.sound : ICON.muted;
-      this.setAttribute("aria-pressed", sound ? "true" : "false");
-      this.setAttribute("aria-label", sound ? "Turn sound off" : "Turn sound on");
+      markSound(i, sound);
     });
     c.querySelector(".vplay").addEventListener("click", function (ev) {
       ev.stopPropagation();
