@@ -111,6 +111,28 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- ===== AMPERSAND GLYPH OVERRIDE =====
+     Playfair Display draws "&" as a decorative Et-ligature. These faces remap
+     only U+0026 to the plain sans ampersand, so every "&" on the site matches. -->
+<style>
+@font-face{
+  font-family:'Playfair Display';
+  src:local('Poppins SemiBold'),local('Poppins'),local('Segoe UI Semibold'),local('Segoe UI'),local('Roboto'),local('Helvetica Neue'),local('Arial'),local('Liberation Sans'),local('Noto Sans');
+  unicode-range:U+0026;
+  font-weight:100 900;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:'Playfair Display';
+  src:local('Poppins SemiBold'),local('Poppins'),local('Segoe UI Semibold'),local('Segoe UI'),local('Roboto'),local('Helvetica Neue'),local('Arial'),local('Liberation Sans'),local('Noto Sans');
+  unicode-range:U+0026;
+  font-weight:100 900;
+  font-style:italic;
+  font-display:swap;
+}
+</style>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="assets/js/tw-config.js"></script>
 <link rel="stylesheet" href="assets/css/style.css">
@@ -540,6 +562,7 @@
   .vstage{
     --vs-x: 30px;   /* horizontal step between two stacked cards */
     --vs-y: 14px;   /* vertical step                            */
+    --vs-r: 1.15;   /* degrees of tilt per card behind the front */
     position: relative;
     display: flex;
     justify-content: center;
@@ -549,12 +572,14 @@
     padding-bottom: calc(var(--vs-y) * 2.4);
   }
   @media (max-width:1279px){ .vstage{ --vs-x:24px; --vs-y:12px; } }
-  /* on a phone the stack has to give most of the width back to the video */
+  /* On a phone the stack has to give most of the width back to the video, so
+     the cards behind barely peek out. The tilt does the work the offset cannot:
+     a steeper fan reads as a deck at a glance even when only a sliver shows. */
   @media (max-width:640px){
     .vstage{
-      --vs-x:16px; --vs-y:9px;
-      padding-right: calc(var(--vs-x) * 2);
-      padding-bottom: calc(var(--vs-y) * 2);
+      --vs-x:15px; --vs-y:9px; --vs-r:2.9;
+      padding-right: calc(var(--vs-x) * 2.2);
+      padding-bottom: calc(var(--vs-y) * 2.4);
     }
   }
 
@@ -580,6 +605,17 @@
     cursor: grab;
   }
   .vstack.is-drag{ cursor: grabbing; }
+  /* While the deck is in motion every card is a moving, rotating layer, and a
+     backdrop blur inside one has to re-sample the pixels underneath on every
+     frame — on a phone that alone is the difference between a sweep that
+     tracks the finger and one that lurches. The panels keep their tint; only
+     the blur pauses, and it is back before the card has settled. */
+  .vstack.is-moving .vplay,
+  .vstack.is-moving .vtitle,
+  .vstack.is-moving .vbtn{
+    -webkit-backdrop-filter:none;
+    backdrop-filter:none;
+  }
   .vstack:focus-visible{ outline:3px solid #d97706; outline-offset:16px; border-radius:34px; }
   @supports not (aspect-ratio: 9 / 16){
     .vstack::before{ content:""; display:block; padding-top:177.78%; }
@@ -1248,12 +1284,13 @@
      once here and kept, never inside render(). Asking for clientWidth after
      writing a transform forces the browser to lay the page out again, and
      doing that on every animation frame is what made the sweep feel sticky. */
-  var step = { x: 30, y: 14 }, stackW = 1, spanW = 200;
+  var step = { x: 30, y: 14, r: 1.15 }, stackW = 1, spanW = 200;
 
   function measure() {
     var cs = getComputedStyle(stage);
     step.x = parseFloat(cs.getPropertyValue("--vs-x")) || 40;
     step.y = parseFloat(cs.getPropertyValue("--vs-y")) || 18;
+    step.r = parseFloat(cs.getPropertyValue("--vs-r")) || 1.15;
     stackW = stack.clientWidth || 1;
     /* how far the finger travels for one full card change. The card is
        portrait, so its width is small — the floor keeps a phone swipe from
@@ -1328,7 +1365,7 @@
         x  = d * step.x;
         y  = d * step.y;
         s  = 1 - d * 0.055;
-        r  = d * 1.15;
+        r  = d * step.r;
         op = o > DEPTH ? Math.max(0, (DEPTH + 0.5 - o) * 2) * (1 - DEPTH * 0.15)
                        : 1 - d * 0.15;
         z  = 110 - Math.round(d * 10);
@@ -1386,6 +1423,11 @@
      1/1600th ends the animation a good 150ms sooner */
   var REST_P = 0.0035, REST_V = 0.06;
 
+  /* the deck is in motion — the class strips the per-frame blur work off the
+     cards for as long as they are travelling (see .vstack.is-moving) */
+  function startMove() { stack.classList.add("is-moving"); }
+  function endMove()   { stack.classList.remove("is-moving"); }
+
   function tick(now) {
     var dt = Math.min((now - lastT) / 1000, 1 / 30);
     lastT = now;
@@ -1394,6 +1436,7 @@
     if (Math.abs(pos - targetPos) < REST_P && Math.abs(vel) < REST_V) {
       pos = targetPos; vel = 0; raf = null;
       render();
+      endMove();
       reap();                            /* now, not mid-sweep */
       settle();
       return;
@@ -1403,8 +1446,9 @@
   }
 
   function spring() {
-    if (reduce) { pos = targetPos; vel = 0; render(); reap(); settle(); return; }
+    if (reduce) { pos = targetPos; vel = 0; render(); endMove(); reap(); settle(); return; }
     if (raf) return;
+    startMove();
     lastT = performance.now();
     raf = requestAnimationFrame(tick);
   }
@@ -1458,6 +1502,20 @@
     post(c, "mute");
     meta[i].frame.classList.add("is-off");
     markSound(i, false);
+  }
+
+  /* A swipe has just committed. Whatever happens next — the card leaves or it
+     snaps back — the reel stops and comes off the screen for the whole move.
+     Waiting until the gesture ends meant a playing video was being rotated,
+     scaled and faded for the entire sweep, which is the single most expensive
+     thing this page can ask a phone to do, and the reason the drag lagged the
+     finger. settle() puts it back the moment the deck rests. */
+  function shelve() {
+    var m = meta[current];
+    if (!m.frame.firstChild || m.frame.classList.contains("is-off")) return;
+    post(cards[current], "pauseVideo");
+    m.frame.classList.add("is-off");
+    cards[current].classList.remove("is-playing");
   }
 
   /* drop the players that are no longer the front card. Called when the spring
@@ -1596,6 +1654,11 @@
       }
       axis = "x";
       stack.classList.add("is-drag");
+      startMove();
+      /* the gesture is a swipe, not a tap — close the reel before the first
+         frame of it moves, and cancel any player that was about to be built */
+      clearTimeout(loadTimer);
+      shelve();
       try { stack.setPointerCapture(pid); } catch (err) {}
     }
 

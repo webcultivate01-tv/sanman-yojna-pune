@@ -89,7 +89,7 @@
       var v = t(el.dataset.i18n); if (v) el.textContent = v;
     });
     document.querySelectorAll("[data-i18n-html]").forEach(function (el) {
-      var v = t(el.dataset.i18nHtml); if (v) el.innerHTML = v.replace(/\n/g, "<br>");
+      var v = t(el.dataset.i18nHtml); if (v) el.innerHTML = v.replace(/\n\n/g, '<br><span class="block h-2" aria-hidden="true"></span>').replace(/\n/g, "<br>");
     });
     document.querySelectorAll("[data-i18n-ph]").forEach(function (el) {
       var v = t(el.dataset.i18nPh); if (v) el.setAttribute("placeholder", v);

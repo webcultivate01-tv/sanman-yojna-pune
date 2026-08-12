@@ -3,46 +3,543 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title data-i18n="page.title.about">About Us | 25 Years of Funeral Service in Pune — Sanman Yojana</title>
-<meta name="description" content="Sanman Yojana, run by Shahid Bhagat Singh Pratishthan, has served Pune families for 25 years with dignified, transparent and affordable funeral arrangements.">
+<title data-i18n="page.title.about">About Sanman Yojana | Our Mission, Vision & Founder</title>
+<meta name="description" content="Sanman Yojana — 25 years of dignified funeral services in Pune. Meet our founder, learn our mission, and discover how we serve families with compassion and transparency.">
 <link rel="canonical" href="https://sanmanyojana.com/about.html">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="Sanman Yojana — Shahid Bhagat Singh Pratishthan, Pune">
 <meta name="theme-color" content="#b45309">
 
-<!-- Open Graph / WhatsApp / Facebook -->
+<!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sanman Yojana">
-<meta property="og:locale" content="en_IN">
-<meta property="og:locale:alternate" content="mr_IN">
-<meta property="og:locale:alternate" content="hi_IN">
 <meta property="og:url" content="https://sanmanyojana.com/about.html">
-<meta property="og:title" content="About Us | 25 Years of Funeral Service in Pune — Sanman Yojana">
-<meta property="og:description" content="Sanman Yojana, run by Shahid Bhagat Singh Pratishthan, has served Pune families for 25 years with dignified, transparent and affordable funeral arrangements.">
+<meta property="og:title" content="About Sanman Yojana">
+<meta property="og:description" content="25 years of dignified funeral services in Pune — Our mission, vision, and the story of our founder.">
 <meta property="og:image" content="https://sanmanyojana.com/assets/img/hero-poster.jpg">
-<meta property="og:image:width" content="1600">
-<meta property="og:image:height" content="900">
-<meta property="og:image:alt" content="Sanman Yojana — dignified funeral services in Pune">
-
-<!-- Twitter / X -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="About Us | 25 Years of Funeral Service in Pune — Sanman Yojana">
-<meta name="twitter:description" content="Sanman Yojana, run by Shahid Bhagat Singh Pratishthan, has served Pune families for 25 years with dignified, transparent and affordable funeral arrangements.">
-<meta name="twitter:image" content="https://sanmanyojana.com/assets/img/hero-poster.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<!-- ===== AMPERSAND GLYPH OVERRIDE =====
+     Playfair Display draws "&" as a decorative Et-ligature. These faces remap
+     only U+0026 to the plain sans ampersand, so every "&" on the site matches. -->
+<style>
+@font-face{
+  font-family:'Playfair Display';
+  src:local('Poppins SemiBold'),local('Poppins'),local('Segoe UI Semibold'),local('Segoe UI'),local('Roboto'),local('Helvetica Neue'),local('Arial'),local('Liberation Sans'),local('Noto Sans');
+  unicode-range:U+0026;
+  font-weight:100 900;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:'Playfair Display';
+  src:local('Poppins SemiBold'),local('Poppins'),local('Segoe UI Semibold'),local('Segoe UI'),local('Roboto'),local('Helvetica Neue'),local('Arial'),local('Liberation Sans'),local('Noto Sans');
+  unicode-range:U+0026;
+  font-weight:100 900;
+  font-style:italic;
+  font-display:swap;
+}
+</style>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="assets/js/tw-config.js"></script>
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="icon" type="image/png" sizes="128x128" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
+
+<style>
+  /* ============================================================
+     ABOUT PAGE
+     Three blocks, three different rhythms so the page never reads
+     as the same layout stacked four times:
+       1. Purpose  — full-bleed alternating image/copy splits
+       2. Founder  — a formal, records-style profile card
+       3. Our work — a photo card grid
+     Everything animates through the site-wide .reveal observer in
+     main.js; nothing here depends on scroll hijacking.
+     ============================================================ */
+
+  /* ===================== PAGE INTRO ===================== */
+  .about-intro {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #faf7f1 0%, #fffdf8 50%, #f4e8d6 100%);
+  }
+
+  .about-intro::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 18% 30%, rgba(217, 119, 6, 0.10) 0%, transparent 55%),
+                radial-gradient(circle at 82% 85%, rgba(180, 83, 9, 0.08) 0%, transparent 55%);
+  }
+
+  /* Slow drifting glow so the intro is alive without moving any text */
+  .about-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    pointer-events: none;
+    animation: orbDrift 18s ease-in-out infinite;
+  }
+
+  @keyframes orbDrift {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50%      { transform: translate3d(24px, -28px, 0) scale(1.08); }
+  }
+
+  /* ===================== MISSION / VISION SPLITS ===================== */
+  .mv-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.75rem;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .mv-row { grid-template-columns: 1fr 1fr; gap: 4.5rem; }
+    /* the copy leads on the second row, but the photo still comes
+       first in the DOM so phones always open on the image */
+    .mv-row.is-reverse .mv-media { order: 2; }
+    .mv-row.is-reverse .mv-body  { order: 1; }
+  }
+
+  .mv-media { position: relative; }
+
+  /* soft tinted panel offset behind the photo — desktop only, it would clip on phones */
+  .mv-outline {
+    display: none;
+    position: absolute;
+    inset: 1.75rem -1.75rem -1.75rem 1.75rem;
+    border-radius: 2.25rem;
+    background: linear-gradient(140deg, rgba(253, 230, 138, 0.55) 0%, rgba(217, 119, 6, 0.18) 100%);
+    z-index: 0;
+  }
+
+  @media (min-width: 1024px) { .mv-outline { display: block; } }
+
+  .mv-row.is-reverse .mv-outline {
+    inset: 1.75rem 1.75rem -1.75rem -1.75rem;
+    background: linear-gradient(220deg, rgba(253, 230, 138, 0.55) 0%, rgba(217, 119, 6, 0.18) 100%);
+  }
+
+  .mv-frame {
+    position: relative;
+    z-index: 1;
+    aspect-ratio: 4 / 3;
+    border-radius: 1.9rem;
+    overflow: hidden;
+    border: 1px solid rgba(180, 83, 9, 0.16);
+    box-shadow: 0 34px 70px -34px rgba(120, 53, 15, 0.55);
+  }
+
+  /* inset hairline over the photo — the detail that makes it read as a framed print */
+  .mv-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0.6rem;
+    z-index: 2;
+    pointer-events: none;
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    border-radius: 1.4rem;
+  }
+
+  .mv-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.09);
+    transition: transform 1.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* the photo settles out of its zoom as the block reveals */
+  .mv-media.show .mv-frame img { transform: scale(1); }
+  .mv-media.show .mv-frame:hover img { transform: scale(1.045); }
+
+  .mv-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(to top, rgba(68, 32, 7, 0.34) 0%, rgba(68, 32, 7, 0.04) 48%, rgba(68, 32, 7, 0) 70%);
+  }
+
+  /* a lettered eyebrow carries the section now that the numerals and
+     icon tiles are gone — same rule-and-caps language as .sx-kicker */
+  .mv-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #b45309;
+  }
+
+  .mv-eyebrow::before {
+    content: "";
+    width: 2.5rem;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #d97706 0%, rgba(217, 119, 6, 0) 100%);
+  }
+
+  .mv-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #431407;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  @media (min-width: 640px) { .mv-title { font-size: 2.35rem; } }
+
+  .mv-text {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: #57534e;
+  }
+
+  .mv-list { display: grid; gap: 0.85rem; }
+
+  .mv-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    color: #44403c;
+    line-height: 1.6;
+  }
+
+  .mv-tick {
+    margin-top: 0.15rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    flex: none;
+    border-radius: 9999px;
+    background: #fef3c7;
+    color: #b45309;
+    display: grid;
+    place-items: center;
+    font-size: 0.7rem;
+    font-weight: 800;
+  }
+
+  /* ===================== FOUNDER — PROFILE ===================== */
+  /* no overflow clip here — it would stop .gov-photo from sticking */
+  .gov-section {
+    position: relative;
+    background: linear-gradient(180deg, #fff8f0 0%, #fffdf8 45%, #faf7f1 100%);
+  }
+
+  /* the section runs at 80% of the page rather than edge to edge */
+  .gov-wrap {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  @media (min-width: 640px) { .gov-wrap { padding: 0 1.5rem; } }
+
+  @media (min-width: 1024px) {
+    .gov-wrap { width: 80%; max-width: 78rem; padding: 0; }
+  }
+
+  /* portrait 30% of the row, copy 70% — both sit straight on the
+     section background, there is no card around them */
+  .gov-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.75rem;
+  }
+
+  @media (min-width: 1024px) {
+    .gov-layout { grid-template-columns: 30% 70%; gap: 0; align-items: start; }
+    .gov-content { padding-left: 3.5rem; }
+  }
+
+  /* small, fixed in place — it does not travel with the scroll */
+  .gov-portrait {
+    position: relative;
+    width: 100%;
+    max-width: 17rem;
+    margin: 0.5rem auto;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #f6ecdd;
+    box-shadow: 0 22px 48px -24px rgba(120, 53, 15, 0.6);
+    outline: 6px solid rgba(255, 255, 255, 0.9);
+    outline-offset: -1px;
+  }
+
+  @media (min-width: 1024px) { .gov-portrait { margin: 1.75rem auto 0; } }
+
+  /* the source photo is a full standing shot — anchoring to the top keeps
+     the face centred once it is cropped square */
+  .gov-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  /* shown only when assets/img/founder.jpg is missing */
+  .gov-portrait-ph {
+    display: none;
+    position: absolute;
+    inset: 0;
+    place-content: center;
+    justify-items: center;
+    gap: 0.6rem;
+    color: #b08553;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .gov-portrait.is-empty .gov-portrait-ph { display: grid; }
+
+  /* same width as the circle above it and always centered under it,
+     so the name block reads as its caption at every size */
+  .gov-id {
+    margin-top: 1.5rem;
+    max-width: 17rem;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .gov-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #431407;
+    line-height: 1.2;
+  }
+
+  .gov-desig {
+    margin-top: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #b45309;
+  }
+
+  .gov-org {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: #78716c;
+  }
+
+  .gov-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #431407;
+    line-height: 1.25;
+  }
+
+  @media (min-width: 640px) { .gov-heading { font-size: 2rem; } }
+
+  .gov-quote {
+    margin-top: 1.5rem;
+    padding: 0.15rem 0 0.15rem 1.5rem;
+    border-left: 2px solid #d97706;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    line-height: 1.7;
+    font-style: italic;
+    color: #78350f;
+  }
+
+  @media (min-width: 640px) { .gov-quote { font-size: 1.45rem; } }
+
+  .gov-para {
+    margin-top: 1.25rem;
+    font-size: 1rem;
+    line-height: 1.85;
+    color: #57534e;
+  }
+
+  .gov-sign {
+    margin-top: 1.75rem;
+    padding-top: 1.35rem;
+    border-top: 1px solid #ecdcc2;
+  }
+
+  .gov-sign-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    color: #b45309;
+    line-height: 1.2;
+  }
+
+  .gov-sign-role {
+    margin-top: 0.3rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #78716c;
+  }
+
+  /* the record reads as ruled rows on the page, not a boxed table */
+  .gov-facts {
+    margin-top: 2.25rem;
+    border-top: 1px solid #ecdcc2;
+  }
+
+  .gov-fact {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f2e7d6;
+  }
+
+  @media (min-width: 640px) {
+    .gov-fact { grid-template-columns: 13rem 1fr; gap: 1.5rem; align-items: baseline; }
+  }
+
+  .gov-fact dt {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #b45309;
+  }
+
+  .gov-fact dd {
+    font-size: 0.95rem;
+    color: #44403c;
+  }
+
+  /* ===================== OUR WORK — CARD GRID ===================== */
+  .wk-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #fff;
+    border: 1px solid #f0e1c8;
+    border-radius: 1.15rem;
+    overflow: hidden;
+    box-shadow: 0 20px 45px -30px rgba(120, 53, 15, 0.5);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .wk-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 32px 64px -28px rgba(120, 53, 15, 0.55);
+  }
+
+  .wk-media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+  }
+
+  .wk-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .wk-card:hover .wk-media img { transform: scale(1.05); }
+
+  .wk-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(68, 32, 7, 0.55) 0%, rgba(68, 32, 7, 0) 60%);
+  }
+
+  .wk-badge {
+    position: absolute;
+    z-index: 1;
+    top: 0.9rem;
+    left: 0.9rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.92);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #b45309;
+  }
+
+  .wk-body { padding: 1.5rem 1.4rem 1.65rem; }
+
+  .wk-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #431407;
+    line-height: 1.3;
+  }
+
+  .wk-text {
+    margin-top: 0.7rem;
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #57534e;
+  }
+
+  /* ===================== SOCIAL WORK ACHIEVEMENTS ===================== */
+  .sw-title br {
+    content: "";
+    display: block;
+    margin-top: 0.35em;
+  }
+
+  .sw-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    color: #44403c;
+    font-size: 1rem;
+    line-height: 1.75;
+    font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+  }
+
+  .sw-bullet {
+    flex: none;
+    margin-top: 0.1em;
+    color: #b45309;
+    font-weight: 800;
+  }
+
+  /* ===================== DIVIDER ===================== */
+  .divider-section {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, #d97706 50%, transparent 100%);
+  }
+
+  /* ===================== REDUCED MOTION ===================== */
+  @media (prefers-reduced-motion: reduce) {
+    .about-orb { animation: none; }
+    .mv-frame img { transform: none; }
+  }
+</style>
 </head>
 
 <body class="font-body bg-gradient-to-br from-amber-50 via-stone-50 to-yellow-50">
-
 <a href="#main" class="sr-only focus:not-sr-only" data-i18n="common.skip">Skip to main content</a>
 
 <!-- TOP BAR -->
@@ -62,7 +559,6 @@
         <span data-site="serviceArea">Pune, Maharashtra</span>
       </span>
     </div>
-
     <div class="hidden md:flex items-center gap-4">
       <div class="flex items-center gap-2">
         <a data-link="facebook" target="_blank" rel="noopener" aria-label="Facebook" class="w-7 h-7 rounded-full bg-amber-50 hover:bg-amber-100 grid place-items-center transition">
@@ -94,27 +590,22 @@
 <header id="siteHeader" class="sticky top-0 z-50 bg-white/95 backdrop-blur transition-all border-b-2 border-amber-200">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="h-20 sm:h-24 flex items-center justify-between gap-3 sm:gap-4">
-
-      <!-- Logo only — no frame, ring or backdrop -->
       <a href="index.html" class="shrink-0" aria-label="Sanman Yojana — Home">
         <img data-logo src="assets/img/logo2.webp" alt="Sanman Yojana" class="site-logo">
       </a>
-
       <nav class="hidden lg:flex items-center gap-6 xl:gap-8">
         <a href="index.html" class="nav-link" data-i18n="nav.home">Home</a>
-        <a href="about.html" class="nav-link" data-i18n="nav.about">About</a>
+        <a href="about.html" class="nav-link active" data-i18n="nav.about">About</a>
         <a href="services.html" class="nav-link" data-i18n="nav.services">Services</a>
         <a href="packages.html" class="nav-link" data-i18n="nav.packages">Packages</a>
         <a href="gallery.html" class="nav-link" data-i18n="nav.gallery">Gallery</a>
         <a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a>
       </nav>
-
       <div class="flex items-center gap-2 sm:gap-3">
         <a href="contact.html#enquiry" class="nav-cta hidden sm:inline-flex">
           <span data-i18n="nav.contactnow">Contact Now</span>
           <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
         </a>
-
         <div class="lang-switch md:hidden">
           <button type="button" class="lang-toggle lang-toggle-light" aria-haspopup="true" aria-expanded="false" aria-label="Change language">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"/></svg>
@@ -126,7 +617,6 @@
             <button type="button" class="lang-btn" data-lang="hi">हिंदी</button>
           </div>
         </div>
-
         <button id="menuBtn" aria-expanded="false" aria-label="Open menu" class="lg:hidden w-12 h-12 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 grid place-items-center">
           <svg class="ico-open w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
           <svg class="ico-close hidden w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18 18 6M6 6l12 12"/></svg>
@@ -134,7 +624,6 @@
       </div>
     </div>
   </div>
-
   <div id="mobileMenu" class="lg:hidden bg-white border-t border-stone-200">
     <nav class="px-4 py-3 flex flex-col gap-1">
       <a href="index.html" class="mnav-link px-4 py-3 rounded-lg font-semibold" data-i18n="nav.home">Home</a>
@@ -151,10 +640,247 @@
   </div>
 </header>
 
-<main id="main" class="relative">
+<main id="main">
 
 <!-- ============================================================
-     CTA BAND — same treatment as the home page
+     MISSION & VISION
+     ============================================================ -->
+<section class="about-intro pt-10 lg:pt-14 pb-20 lg:pb-28">
+  <div class="about-orb" style="width:26rem;height:26rem;top:-6rem;left:-8rem;background:rgba(217,119,6,.16);" aria-hidden="true"></div>
+  <div class="about-orb" style="width:22rem;height:22rem;bottom:-7rem;right:-6rem;background:rgba(180,83,9,.13);animation-delay:-9s;" aria-hidden="true"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- page heading -->
+    <div class="max-w-3xl mx-auto text-center">
+      <span class="reveal reveal-soft sx-kicker justify-center">
+        <span class="sx-rule"></span>
+        <span data-i18n="about.intro.kicker">About Sanman Yojana</span>
+        <span class="sx-rule" style="transform:scaleX(-1)"></span>
+      </span>
+      <h1 class="reveal reveal-soft mt-5 text-4xl sm:text-5xl lg:text-[3.4rem] font-bold text-stone-900 leading-[1.15]" style="font-family:'Playfair Display',serif;" data-i18n="about.intro.title">
+        Our Purpose &amp; Values
+      </h1>
+      <p class="reveal reveal-soft mt-5 text-lg text-stone-600 leading-relaxed" data-i18n="about.intro.desc">
+        For 25 years we have been guided by one mission and one vision — to stand beside families in Pune when
+        they need it most, and to make a dignified farewell something no household has to worry about.
+      </p>
+    </div>
+
+    <!-- ---------- MISSION ---------- -->
+    <div class="mv-row mt-16 lg:mt-24">
+      <figure class="mv-media reveal reveal-left m-0">
+        <span class="mv-outline" aria-hidden="true"></span>
+        <div class="mv-frame">
+          <img src="image/homeSection2.png" alt="The Sanman Yojana team supporting a family through the final rites in Pune" loading="lazy" decoding="async">
+        </div>
+      </figure>
+
+      <div class="mv-body reveal reveal-right">
+        <span class="mv-eyebrow" data-i18n="about.mission.eyebrow">What we promise</span>
+
+        <h2 class="mv-title mt-4" data-i18n="about.mission.title">Our Mission</h2>
+
+        <p class="mv-text mt-4" data-i18n="about.mission.text">
+          To provide dignified, transparent and compassionate funeral services that honour the deceased while
+          supporting grieving families through their most difficult hours. Every person deserves respect, and
+          every family deserves honest, accessible service — without a single hidden charge.
+        </p>
+
+        <ul class="mv-list mt-7">
+          <li><span class="mv-tick" aria-hidden="true">✓</span><span data-i18n="about.mission.pt1">One phone call brings the vehicle, the priest and the materials together</span></li>
+          <li><span class="mv-tick" aria-hidden="true">✓</span><span data-i18n="about.mission.pt2">Every cost explained in writing before anything is arranged</span></li>
+          <li><span class="mv-tick" aria-hidden="true">✓</span><span data-i18n="about.mission.pt3">Rituals performed exactly as the family's faith and tradition require</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ---------- VISION ---------- -->
+    <div class="mv-row is-reverse mt-20 lg:mt-28">
+      <figure class="mv-media reveal reveal-right m-0">
+        <span class="mv-outline" aria-hidden="true"></span>
+        <div class="mv-frame">
+          <img src="image/packageHero2.png" alt="Final rites performed at sunrise on a riverside ghat" loading="lazy" decoding="async">
+        </div>
+      </figure>
+
+      <div class="mv-body reveal reveal-left">
+        <span class="mv-eyebrow" data-i18n="about.vision.eyebrow">Where we are headed</span>
+
+        <h2 class="mv-title mt-4" data-i18n="about.vision.title">Our Vision</h2>
+
+        <p class="mv-text mt-4" data-i18n="about.vision.text">
+          To be the most trusted funeral service in Maharashtra — the organisation that sets the standard for
+          compassion, transparency and cultural sensitivity. We are working towards a Pune where no family,
+          of any faith or income, faces a loss alone or unprepared.
+        </p>
+
+        <ul class="mv-list mt-7">
+          <li><span class="mv-tick" aria-hidden="true">✓</span><span data-i18n="about.vision.pt1">A dignified farewell within reach of every household budget</span></li>
+          <li><span class="mv-tick" aria-hidden="true">✓</span><span data-i18n="about.vision.pt2">Equal respect for every faith, community and tradition we serve</span></li>
+          <li><span class="mv-tick" aria-hidden="true">✓</span><span data-i18n="about.vision.pt3">Support that continues well past the funeral day itself</span></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     FOUNDER — PROFILE (30 / 70, straight on the section background)
+     ============================================================ -->
+<section class="gov-section py-16 lg:py-24">
+  <div class="gov-wrap">
+
+    <div class="reveal reveal-soft max-w-3xl">
+      <span class="sx-kicker">
+        <span class="sx-rule"></span>
+        <span data-i18n="about.founder.kicker">Leadership</span>
+      </span>
+      <h2 class="mt-4 text-3xl sm:text-4xl lg:text-[2.75rem] font-bold text-stone-900 leading-tight" style="font-family:'Playfair Display',serif;" data-i18n="about.founder.title">
+        Founder's Profile
+      </h2>
+      <p class="mt-4 text-lg text-stone-600 leading-relaxed" data-i18n="about.founder.desc">
+        Sanman Yojana is run under Shahid Bhagat Singh Pratishthan, Pune — a registered public trust working
+        in community welfare and last-rites assistance.
+      </p>
+    </div>
+
+    <div class="gov-layout mt-12 lg:mt-16">
+
+      <!-- portrait + identity — 30% of the row -->
+      <figure class="gov-photo reveal reveal-soft m-0">
+        <div class="gov-portrait" id="founderPortrait">
+          <img src="assets/img/founder.jpg"
+               alt="Vijay More, Founder and President of Sanman Yojana"
+               loading="lazy" decoding="async"
+               onerror="this.remove();document.getElementById('founderPortrait').classList.add('is-empty');">
+          <div class="gov-portrait-ph" aria-hidden="true">
+            <svg class="w-14 h-14" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/></svg>
+            <span class="text-xs font-semibold tracking-[0.14em] uppercase" data-i18n="about.founder.photoph">Photograph</span>
+          </div>
+        </div>
+
+        <figcaption class="gov-id">
+          <p class="gov-name">Vijay More</p>
+          <p class="gov-desig" data-i18n="about.founder.role">Founder &amp; President</p>
+          <p class="gov-org" data-i18n-html="about.founder.org">Shahid Bhagat Singh Pratishthan<br>Pune, Maharashtra</p>
+        </figcaption>
+      </figure>
+
+      <!-- message + record — 70% of the row -->
+      <div class="gov-content reveal reveal-right">
+        <h3 class="gov-heading" data-i18n="about.founder.msgtitle">Message from the Founder</h3>
+
+        <blockquote class="gov-quote" data-i18n="about.founder.quote">
+          “No family should have to bargain over a farewell. That belief is the whole reason this
+          organisation exists.”
+        </blockquote>
+
+        <p class="gov-para" data-i18n="about.founder.p1">
+          Vijay More established Sanman Yojana in 2004 with a simple conviction — that compassion and
+          transparency should be the foundation of funeral services. What began as an effort to help a
+          handful of neighbouring families has grown into a trusted institution serving more than 4,200
+          households across Pune and Pimpri-Chinchwad.
+        </p>
+
+        <p class="gov-para" data-i18n="about.founder.p2">
+          With deep roots in community service and a lifelong commitment to cultural respect, he has built
+          the organisation on three principles that have never changed: dignity for the departed, honesty
+          with the family, and help that arrives before it is asked for. Under his leadership Sanman Yojana
+          has become a name families across the district pass on to one another.
+        </p>
+        <dl class="gov-facts">
+          <div class="gov-fact">
+            <dt data-i18n="about.founder.f1">Established</dt>
+            <dd data-i18n="about.founder.f1v">2004, Pune</dd>
+          </div>
+          <div class="gov-fact">
+            <dt data-i18n="about.founder.f2">Operated under</dt>
+            <dd data-i18n="about.founder.f2v">Shahid Bhagat Singh Pratishthan, Pune</dd>
+          </div>
+          <div class="gov-fact">
+            <dt data-i18n="about.founder.f3">Service area</dt>
+            <dd data-i18n="about.founder.f3v">Pune district &amp; Pimpri-Chinchwad</dd>
+          </div>
+        </dl>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<div class="divider-section max-w-7xl mx-auto"></div>
+
+
+<div class="divider-section max-w-7xl mx-auto"></div>
+
+<!-- ============================================================
+     SOCIAL WORK ACHIEVEMENTS — Shahid Bhagat Singh Pratishthan
+     ============================================================ -->
+<section class="py-20 lg:py-28 bg-gradient-to-br from-amber-50 via-stone-50 to-yellow-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="max-w-3xl mx-auto text-center">
+      <span class="reveal reveal-soft sx-kicker justify-center">
+        <span class="sx-rule"></span>
+        <span data-i18n="about.social.kicker">Social Service</span>
+        <span class="sx-rule" style="transform:scaleX(-1)"></span>
+      </span>
+      <h2 class="sw-title reveal reveal-soft mt-5 text-3xl sm:text-4xl lg:text-[2.75rem] font-bold text-stone-900 leading-tight" style="font-family:'Playfair Display',serif;" data-i18n-html="about.social.title">
+        Shahid Bhagat Singh Pratishthan<br><span class="block h-2" aria-hidden="true"></span>Community Welfare Initiatives
+      </h2>
+      
+      <p class="reveal reveal-soft mt-4 text-lg text-stone-600 leading-relaxed" data-i18n="about.social.desc">
+        For many years, the Pratishthan has worked for thousands of families across Pune in healthcare, education, employment and during times of disaster.
+      </p>
+    </div>
+
+    <ul class="reveal reveal-soft mt-14 grid sm:grid-cols-2 gap-x-10 gap-y-3.5 max-w-5xl mx-auto">
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i1">Pune's first free hearse service launched in Hadapsar.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i2">8 ambulance services.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i3">7 hearse vehicles in operation.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i4">Umesh Multispeciality Hospital — treating 70+ patients every day.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i5">15,000+ Ayushman Bharat card registrations.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i6">Free consultancy service, medical supplies and treatment for patients.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i7">Free jumbo drinking water supply.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i8">Social service is our true identity.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i9">Immediate relief and rehabilitation during natural disasters.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i10">Ration, vegetables and oxygen supplied during the COVID period.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i11">Disinfectant / medicine spraying during the COVID period.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i12">On-site oxygen service at Andhulsa.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i13">Shaktipeeth darshan trips for women during Navratri.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i14">Ujjwala gas and water connections.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i15">Shed facility built at the Hadapsar ST bus stop.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i16">Help with school and college admissions for students.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i17">Over 1,000 cataract surgeries.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i18">50 years of blood donation drives and hundreds of camps.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i19">Free gynaecological services.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i20">Health check-up camps for women and the elderly.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i21">Planting and conservation of thousands of trees.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i22">Free bus service and educational sponsorship for students.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i23">Job guidance for the youth.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i24">Resolving family disputes and rehabilitation.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i25">Life-saving service through Andhulsa.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i26">Smart Skilling Career Academy — the first pre-police-recruitment training centre in Hadapsar.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i27">3,000+ students placed in administrative services.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i28">"School for the Failed" — a new direction for students whose education had stopped.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i29">First MPSC-UPSC guidance centre — 450+ Class One and Class Two officers.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i30">Women's study hall and library — a centre for career and job guidance.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i31">A state-of-the-art hall built at the school for the deaf and mute in memory of Umesh Vijay More.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i32">Free lodging, meals and Faral (festive food) distribution for Warkari pilgrims every year.</span></li>
+    </ul>
+
+    <p class="reveal reveal-soft mt-10 text-center text-stone-600">
+      <span class="font-bold text-amber-700" data-i18n="about.social.creditlabel">Credit Co-operative Society:</span> <span data-i18n="about.social.creditvalue">Nagar Nagari Sahakari Patsanstha</span>
+    </p>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA BAND
      ============================================================ -->
 <section class="relative py-20 lg:py-28 overflow-hidden bg-amber-900">
   <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('image/packageCTA1.png');" aria-hidden="true"></div>
@@ -275,5 +1001,6 @@
 <script src="assets/js/config.js"></script>
 <script src="assets/js/i18n.js"></script>
 <script src="assets/js/main.js"></script>
+
 </body>
 </html>

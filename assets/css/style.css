@@ -81,6 +81,10 @@ section[id],
    ============================================================ */
 .site-topbar {
   color: #9a3412;              /* identical to .nav-link */
+  /* the sticky header below is z-50 — without a stacking context of its own
+     the language dropdown would open *behind* the navbar on desktop */
+  position: relative;
+  z-index: 60;
 }
 
 .topbar-link:hover {

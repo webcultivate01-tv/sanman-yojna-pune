@@ -54,6 +54,28 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<!-- ===== AMPERSAND GLYPH OVERRIDE =====
+     Playfair Display draws "&" as a decorative Et-ligature. These faces remap
+     only U+0026 to the plain sans ampersand, so every "&" on the site matches. -->
+<style>
+@font-face{
+  font-family:'Playfair Display';
+  src:local('Poppins SemiBold'),local('Poppins'),local('Segoe UI Semibold'),local('Segoe UI'),local('Roboto'),local('Helvetica Neue'),local('Arial'),local('Liberation Sans'),local('Noto Sans');
+  unicode-range:U+0026;
+  font-weight:100 900;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:'Playfair Display';
+  src:local('Poppins SemiBold'),local('Poppins'),local('Segoe UI Semibold'),local('Segoe UI'),local('Roboto'),local('Helvetica Neue'),local('Arial'),local('Liberation Sans'),local('Noto Sans');
+  unicode-range:U+0026;
+  font-weight:100 900;
+  font-style:italic;
+  font-display:swap;
+}
+</style>
+
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="assets/js/tw-config.js"></script>
 <link rel="stylesheet" href="assets/css/style.css">
