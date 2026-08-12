@@ -605,17 +605,12 @@
     cursor: grab;
   }
   .vstack.is-drag{ cursor: grabbing; }
-  /* While the deck is in motion every card is a moving, rotating layer, and a
-     backdrop blur inside one has to re-sample the pixels underneath on every
-     frame — on a phone that alone is the difference between a sweep that
-     tracks the finger and one that lurches. The panels keep their tint; only
-     the blur pauses, and it is back before the card has settled. */
-  .vstack.is-moving .vplay,
-  .vstack.is-moving .vtitle,
-  .vstack.is-moving .vbtn{
-    -webkit-backdrop-filter:none;
-    backdrop-filter:none;
-  }
+  /* The glass panels (.vplay / .vtitle / .vbtn) only carry a backdrop blur on
+     pointer devices — see the desktop block further down. Toggling the blur on
+     and off per gesture used to build and tear down a compositor layer for
+     twelve elements on the first and last frame of every swipe, which is the
+     stutter it was meant to prevent. Phones get a solid tint instead: nothing
+     to promote, nothing to re-sample, and the sweep is layer-stable end to end. */
   .vstack:focus-visible{ outline:3px solid #d97706; outline-offset:16px; border-radius:34px; }
   @supports not (aspect-ratio: 9 / 16){
     .vstack::before{ content:""; display:block; padding-top:177.78%; }
@@ -654,8 +649,16 @@
     background:#fbf7ef;
     opacity:0;
     pointer-events:none;
-    /* no transition: the script writes this value on every animation frame,
-       and a 250ms interpolation on top of that only made the wash lag the card */
+    /* No transition: the script writes this value on every animation frame,
+       and a 250ms interpolation on top of that only made the wash lag the card.
+       But because the script writes it — rather than a CSS transition, which
+       the browser would accelerate on its own — the wash needs its own layer.
+       Without one, changing this opacity re-rasters the card that contains it:
+       rounded clip, border, shadow and the upscaled thumbnail, four cards deep,
+       sixty times a second. It is a flat colour, so the layer costs almost
+       nothing and the per-frame work becomes a compositor blend. */
+    transform: translateZ(0);
+    will-change: opacity;
   }
   .vframe{ position:absolute; inset:0; }
   /* the outgoing player leaves the compositor the moment a swipe commits — a
@@ -674,10 +677,10 @@
     display:grid; place-items:center;
     border-radius:50%;
     color:#fff;
-    background: rgba(255,255,255,.18);
+    /* darker than the glass version below on purpose — with no blur behind it
+       a 18% white wash disappears over a bright frame */
+    background: rgba(26,18,10,.36);
     border:1px solid rgba(255,255,255,.55);
-    -webkit-backdrop-filter: blur(10px) saturate(140%);
-    backdrop-filter: blur(10px) saturate(140%);
     box-shadow:0 14px 34px -12px rgba(0,0,0,.65);
     transform: translate(-50%,-50%) scale(1);
     transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .4s ease, background-color .3s ease;
@@ -715,10 +718,8 @@
     font-weight:600;
     letter-spacing:.01em;
     color:#fff;
-    background:rgba(24,16,8,.42);
+    background:rgba(24,16,8,.62);
     border:1px solid rgba(255,255,255,.28);
-    -webkit-backdrop-filter: blur(8px) saturate(140%);
-    backdrop-filter: blur(8px) saturate(140%);
     overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
   }
   .vacts{ display:flex; align-items:center; gap:8px; pointer-events:auto; }
@@ -727,15 +728,38 @@
     display:grid; place-items:center;
     border-radius:50%;
     color:#fff;
-    background:rgba(24,16,8,.42);
+    background:rgba(24,16,8,.62);
     border:1px solid rgba(255,255,255,.28);
-    -webkit-backdrop-filter: blur(8px) saturate(140%);
-    backdrop-filter: blur(8px) saturate(140%);
     transition: background-color .25s ease, transform .25s ease;
   }
   .vbtn svg{ width:17px; height:17px; }
   .vbtn:hover{ background:rgba(217,119,6,.85); transform:translateY(-1px); }
   .vcard:not(.is-front) .vbar{ opacity:0; }
+
+  /* ---------- glass, desktop only ----------
+     A backdrop blur inside a card that is rotating, scaling and fading has to
+     re-sample the pixels underneath on every frame. A laptop absorbs that; a
+     phone spends the whole frame budget on it. Pointer devices get the glass
+     and the paused-while-moving rule, touch devices keep the solid tint above. */
+  @media (min-width:1024px) and (hover:hover){
+    .vplay{
+      background: rgba(255,255,255,.18);
+      -webkit-backdrop-filter: blur(10px) saturate(140%);
+      backdrop-filter: blur(10px) saturate(140%);
+    }
+    .vtitle, .vbtn{
+      background:rgba(24,16,8,.42);
+      -webkit-backdrop-filter: blur(8px) saturate(140%);
+      backdrop-filter: blur(8px) saturate(140%);
+    }
+    /* the panels keep their tint while the deck travels; only the blur pauses */
+    .vstack.is-moving .vplay,
+    .vstack.is-moving .vtitle,
+    .vstack.is-moving .vbtn{
+      -webkit-backdrop-filter:none;
+      backdrop-filter:none;
+    }
+  }
 
   /* under-stack controls */
   .vnav{
@@ -1368,7 +1392,12 @@
         r  = d * step.r;
         op = o > DEPTH ? Math.max(0, (DEPTH + 0.5 - o) * 2) * (1 - DEPTH * 0.15)
                        : 1 - d * 0.15;
-        z  = 110 - Math.round(d * 10);
+        /* rounded to whole cards, not to tenths of one. Every card's `o` is an
+           integer apart from every other, so rounding cannot reorder the deck —
+           but `Math.round(d * 10)` stepped ten times per card per swipe, and a
+           z-index write re-sorts the stacking context and can drop the layers
+           the deck is riding on. Once per card, at the crossing, is enough. */
+        z  = 110 - Math.round(d) * 10;
       }
 
       /* still travelling up the fan line — push the card further out along the
