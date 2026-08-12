@@ -635,6 +635,13 @@ const I18N = {
     "common.skip": "Skip to main content",
     "footer.credit": "Designed & Managed by",
 
+    /* SCREEN-READER LABELS */
+    "a11y.langchange": "Change language",
+    "a11y.home": "Sanman Yojana — Home",
+    "a11y.openmenu": "Open menu",
+    "a11y.wachat": "Chat with us on WhatsApp",
+    "a11y.maptitle": "Sanman Yojana office location",
+
     /* GALLERY GRID */
     "gallery.grid.title": "Moments & Rituals We Honour",
     "gallery.grid.desc": "From sacred rites on the riverbank to the families we walk beside — a look at the traditions and care behind every service we arrange across Pune.",
@@ -802,6 +809,13 @@ const I18N = {
     "about.founder.f2v": "Shahid Bhagat Singh Pratishthan, Pune",
     "about.founder.f3": "Service area",
     "about.founder.f3v": "Pune district & Pimpri-Chinchwad",
+    "about.founder.name": "Vijay More",
+
+    /* About page — image alt text & meta description */
+    "page.desc.about": "Sanman Yojana — 25 years of dignified funeral services in Pune. Meet our founder, learn our mission, and discover how we serve families with compassion and transparency.",
+    "about.mission.alt": "The Sanman Yojana team supporting a family through the final rites in Pune",
+    "about.vision.alt": "Final rites performed at sunrise on a riverside ghat",
+    "about.founder.alt": "Vijay More, Founder and President of Sanman Yojana",
 
   },
 
@@ -1433,6 +1447,13 @@ const I18N = {
     "common.skip": "मुख्य मजकुराकडे जा",
     "footer.credit": "डिझाइन व व्यवस्थापन",
 
+    /* स्क्रीन-रीडर लेबल */
+    "a11y.langchange": "भाषा बदला",
+    "a11y.home": "सन्मान योजना — मुख्यपृष्ठ",
+    "a11y.openmenu": "मेनू उघडा",
+    "a11y.wachat": "व्हॉट्सॲपवर आमच्याशी संपर्क साधा",
+    "a11y.maptitle": "सन्मान योजना कार्यालयाचे ठिकाण",
+
     /* गॅलरी */
     "gallery.grid.title": "आम्ही जपलेले क्षण व विधी",
     "gallery.grid.desc": "नदीकाठच्या पवित्र विधींपासून ते ज्या कुटुंबांसोबत आम्ही चालतो त्यांच्यापर्यंत — पुणे परिसरात आम्ही करत असलेल्या प्रत्येक सेवेमागील परंपरा आणि काळजी यांची एक झलक.",
@@ -1600,6 +1621,13 @@ const I18N = {
     "about.founder.f2v": "शहीद भगतसिंह प्रतिष्ठान, पुणे",
     "about.founder.f3": "सेवा क्षेत्र",
     "about.founder.f3v": "पुणे जिल्हा व पिंपरी-चिंचवड",
+    "about.founder.name": "विजय मोरे",
+
+    /* आमच्याविषयी पान — प्रतिमांचे वर्णन व मेटा वर्णन */
+    "page.desc.about": "सन्मान योजना — पुण्यात २५ वर्षांची सन्मानपूर्वक अंत्यसंस्कार सेवा. आमचे संस्थापक, आमचे ध्येय आणि सहानुभूती व पारदर्शकतेने कुटुंबांची सेवा कशी करतो हे जाणून घ्या.",
+    "about.mission.alt": "पुण्यातील एका कुटुंबाला अंत्यविधीमध्ये साथ देणारा सन्मान योजनेचा संघ",
+    "about.vision.alt": "नदीकाठच्या घाटावर सूर्योदयाच्या वेळी पार पडणारे अंत्यविधी",
+    "about.founder.alt": "विजय मोरे — सन्मान योजनेचे संस्थापक व अध्यक्ष",
 
   },
 
@@ -2229,6 +2257,13 @@ const I18N = {
     "common.skip": "मुख्य सामग्री पर जाएँ",
     "footer.credit": "डिज़ाइन व प्रबंधन",
 
+    /* स्क्रीन-रीडर लेबल */
+    "a11y.langchange": "भाषा बदलें",
+    "a11y.home": "सन्मान योजना — मुख्य पृष्ठ",
+    "a11y.openmenu": "मेनू खोलें",
+    "a11y.wachat": "व्हाट्सऐप पर हमसे बात करें",
+    "a11y.maptitle": "सन्मान योजना कार्यालय का स्थान",
+
     /* गैलरी */
     "gallery.grid.title": "हमारे संजोए हुए क्षण व अनुष्ठान",
     "gallery.grid.desc": "नदी किनारे के पवित्र अनुष्ठानों से लेकर उन परिवारों तक जिनके साथ हम चलते हैं — पुणे भर में हमारी हर सेवा के पीछे की परंपरा और देखभाल की एक झलक।",
@@ -2396,6 +2431,13 @@ const I18N = {
     "about.founder.f2v": "शहीद भगत सिंह प्रतिष्ठान, पुणे",
     "about.founder.f3": "सेवा क्षेत्र",
     "about.founder.f3v": "पुणे जिला व पिंपरी-चिंचवड",
+    "about.founder.name": "विजय मोरे",
+
+    /* हमारे बारे में पृष्ठ — छवि विवरण व मेटा विवरण */
+    "page.desc.about": "सन्मान योजना — पुणे में 25 वर्षों से सम्मानपूर्ण अंत्येष्टि सेवाएँ। हमारे संस्थापक, हमारा ध्येय और हम करुणा व पारदर्शिता के साथ परिवारों की सेवा कैसे करते हैं, जानिए।",
+    "about.mission.alt": "पुणे में एक परिवार को अंत्येष्टि के दौरान सहयोग देती सन्मान योजना की टीम",
+    "about.vision.alt": "नदी किनारे घाट पर सूर्योदय के समय संपन्न होते अंत्येष्टि संस्कार",
+    "about.founder.alt": "विजय मोरे — सन्मान योजना के संस्थापक व अध्यक्ष",
 
   }
 };

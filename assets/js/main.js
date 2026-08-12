@@ -94,6 +94,19 @@
     document.querySelectorAll("[data-i18n-ph]").forEach(function (el) {
       var v = t(el.dataset.i18nPh); if (v) el.setAttribute("placeholder", v);
     });
+
+    /* attribute-only strings — alt text, screen-reader labels, tooltips and
+       the <meta name="description"> content, none of which are text nodes */
+    [
+      ["data-i18n-alt",     "i18nAlt",     "alt"],
+      ["data-i18n-aria",    "i18nAria",    "aria-label"],
+      ["data-i18n-title",   "i18nTitle",   "title"],
+      ["data-i18n-content", "i18nContent", "content"]
+    ].forEach(function (map) {
+      document.querySelectorAll("[" + map[0] + "]").forEach(function (el) {
+        var v = t(el.dataset[map[1]]); if (v) el.setAttribute(map[2], v);
+      });
+    });
   }
 
   function setLang(lang) {
