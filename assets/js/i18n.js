@@ -638,9 +638,9 @@ const I18N = {
     "svc.cta.btnPackages": "View Packages",
     /* PAGE TITLES */
         "home.about.yearsbadge": "25+ Years",
-    "page.title.home": "Sanman Yojana | Funeral Services & Dead Body Transport in Pune",
-    "page.title.about": "About Us | 25 Years of Funeral Service in Pune — Sanman Yojana",
-    "page.title.services": "Funeral Services in Pune | Dead Body Transport, Pandit & Rituals",
+    "page.title.home": "Funeral Services & Dead Body Transport Pune | Sanman Yojana",
+    "page.title.about": "About Sanman Yojana | 25 Years of Funeral Service in Pune",
+    "page.title.services": "Funeral Services in Pune | Body Transport, Pandit & Rituals",
     "page.title.packages": "Funeral Packages in Pune from ₹11,000 | Sanman Yojana",
     "page.title.gallery": "Gallery | Funeral Services & Rituals in Pune — Sanman Yojana",
     "page.title.contact": "Contact Us 24x7 | Funeral Helpline Pune — Sanman Yojana",
@@ -649,6 +649,20 @@ const I18N = {
     "page.title.pkgsanman": "Basic + Sanman Package ₹21,000 in Pune | Sanman Yojana",
     "page.title.pkgdashakriya": "Dashakriya Funeral Package ₹51,000 in Pune | Sanman Yojana",
     "page.title.pkgfamily": "Family Funeral Package ₹91,000 in Pune | Sanman Yojana",
+
+    /* PAGE META DESCRIPTIONS — these fill <meta name="description"> on language
+       switch. Keep each under ~160 characters or Google truncates it. */
+    "page.desc.home": "Complete funeral services in Pune — 24x7 dead body transport, pandit and ritual arrangements, funeral materials and asthi visarjan. Call +91 8766945548.",
+    "page.desc.about": "25 years of dignified funeral service in Pune, registered under Shahid Bhagat Singh Pratishthan. Meet our founder, our vision, and how we work with families.",
+    "page.desc.services": "Every funeral service in one place for Pune & Pimpri-Chinchwad — 24x7 dead body transport, rituals, pandit arrangements, asthi visarjan and materials.",
+    "page.desc.packages": "Compare our four funeral plans for Pune families — Basic ₹11,000, Sanman ₹21,000, Dashakriya ₹51,000 and Family ₹91,000. Transparent, no hidden charges.",
+    "page.desc.gallery": "Photographs from our work across Pune — funeral rituals, asthi visarjan on the riverbank, dead body transport and the families we have stood beside.",
+    "page.desc.contact": "Call Sanman Yojana on +91 8766945548 any hour of the day for funeral help in Pune. Office at Mantri Market, Hadapsar — send an enquiry, we call back.",
+    "page.desc.terms": "Registration, membership transfer, service area, included services and dispute terms for the Sanman Yojana funeral scheme in Pune & Pimpri-Chinchwad.",
+    "page.desc.pkgbasic": "Basic Package, a one-time ₹11,000 — hearse vehicle within Pune & Pimpri-Chinchwad, crematorium booking and all 18 funeral ritual materials.",
+    "page.desc.pkgsanman": "Everything in Basic plus a 24-hour freezer box, guruji/purohit for the rites, crematorium booking and 10 days of family counselling in Pune — ₹21,000 one time.",
+    "page.desc.pkgdashakriya": "Adds the Dashakriya (10th day) and Terava (13th day) rites, priest honorarium, asthi visarjan with vehicle and priest, and a meal for 100 — ₹51,000.",
+    "page.desc.pkgfamily": "Our most complete plan — Dashakriya rites, asthi visarjan with vehicle and priest, priest honorarium, family counselling and a meal for 50. ₹91,000.",
 
     /* SHARED */
     "common.skip": "Skip to main content",
@@ -717,6 +731,31 @@ const I18N = {
     "pkgs.p4.i3": "Meal Arrangement for Up to 100 People",
     "pkgs.cta.title": "Need a Custom Plan? Have Questions?",
     "pkgs.cta.desc": "Our team is here to guide you and your family with compassion, whenever you need us.",
+
+    /* PACKAGES PAGE — premium cards (v2) */
+    "pkgs2.heading": "Our Packages",
+    "pkgs2.subtitle": "We are your peace of mind — your final journey will always be honored with dignity.",
+    "pkgs2.p1.title": "Basic Package",
+    "pkgs2.p1.f1": "Hearse Vehicle (Within Pune & Pimpri-Chinchwad City Limits)",
+    "pkgs2.p1.f2": "Authentic Government Death Certificate",
+    "pkgs2.p1.f3": "Crematorium Booking",
+    "pkgs2.p2.title": "Basic + Sanman Package",
+    "pkgs2.p2.f1": "Freezer Box (24 Hours)",
+    "pkgs2.p2.f2": "Priest (Guruji/Purohit)",
+    "pkgs2.p2.f3": "Crematorium Booking",
+    "pkgs2.p2.f4": "10 Days of Family Counseling",
+    "pkgs2.p3.title": "Basic + Sanman + Dashakriya Package",
+    "pkgs2.p3.f1": "Dashakriya Ritual",
+    "pkgs2.p3.f2": "Ritual Materials (Puja Samagri)",
+    "pkgs2.p3.f3": "Priest Honorarium",
+    "pkgs2.p3.f4": "Meal Arrangement for 100 People",
+    "pkgs2.p3.f5": "Ash Immersion + Vehicle + Priest + Support for 5 Family Members",
+    "pkgs2.p4.title": "Basic + Sanman + Dashakriya + Kumbh Package",
+    "pkgs2.p4.f1": "Husband-Wife Coverage",
+    "pkgs2.p4.f2": "10th / 13th Day Ritual — with Priest",
+    "pkgs2.p4.f3": "Meal Arrangement for 100 People",
+    "pkgs2.cta.primary": "Learn More",
+    "pkgs2.cta.secondary": "Download Brochure",
 
     /* SERVICES PAGE — extras */
     "svc.hero.all": "All",
@@ -824,8 +863,7 @@ const I18N = {
     "about.founder.f3v": "Pune district & Pimpri-Chinchwad",
     "about.founder.name": "Vijay More",
 
-    /* About page — image alt text & meta description */
-    "page.desc.about": "Sanman Yojana — 25 years of dignified funeral services in Pune. Meet our founder, learn our vision, and discover how we serve families with compassion and transparency.",
+    /* About page — image alt text */
     "about.vision.alt": "Final rites performed at sunrise on a riverside ghat",
     "about.founder.alt": "Vijay More, Founder and President of Sanman Yojana",
 
@@ -1474,6 +1512,18 @@ const I18N = {
     "page.title.pkgdashakriya": "दशक्रिया अंत्यसंस्कार संच ₹५१,००० — पुणे | सन्मान योजना",
     "page.title.pkgfamily": "कुटुंब अंत्यसंस्कार संच ₹९१,००० — पुणे | सन्मान योजना",
 
+    /* पानांचे मेटा वर्णन (meta description) */
+    "page.desc.home": "सन्मान योजना — पुण्यातील संपूर्ण अंत्यसंस्कार सेवा. २४×७ शव वाहतूक, पंडित व विधी व्यवस्था, अंत्यसंस्कार साहित्य, अस्थी विसर्जन आणि कुटुंबाला आधार. फोन +91 8766945548.",
+    "page.desc.services": "पुणे व पिंपरी-चिंचवडमध्ये सर्व अंत्यसंस्कार सेवा एकाच ठिकाणी — २४×७ शव वाहतूक, संपूर्ण विधी, पंडित व्यवस्था, अस्थी विसर्जन, साहित्य, स्मशानभूमी बुकिंग आणि कुटुंब समुपदेशन.",
+    "page.desc.packages": "सन्मान योजनेचे चार अंत्यसंस्कार संच — बेसिक (₹११,०००), सन्मान (₹२१,०००), दशक्रिया (₹५१,०००) आणि कुटुंब (₹९१,०००). पारदर्शक दर, कोणतेही छुपे शुल्क नाही.",
+    "page.desc.gallery": "पुण्यातील आमच्या कामाची छायाचित्रे — अंत्यसंस्कार विधी, नदीकाठी अस्थी विसर्जन, शव वाहतूक, विधी साहित्य आणि आम्ही साथ दिलेली कुटुंबे.",
+    "page.desc.contact": "पुण्यात अंत्यसंस्कार मदतीसाठी कोणत्याही वेळी +91 8766945548 वर कॉल करा. कार्यालय: मंत्री मार्केट, हडपसर. चौकशी पाठवा, आम्ही परत कॉल करू.",
+    "page.desc.terms": "सन्मान योजना अंत्यसंस्कार योजनेचे नियम — नोंदणी, सदस्यत्व हस्तांतरण, सेवा क्षेत्र, समाविष्ट सेवा आणि वाद निवारण (पुणे व पिंपरी-चिंचवड).",
+    "page.desc.pkgbasic": "बेसिक संच — एकवेळ ₹११,०००. पुणे व पिंपरी-चिंचवड शहर मर्यादेत शववाहिका, स्मशानभूमी बुकिंग आणि १८ अंत्यसंस्कार साहित्य वस्तू.",
+    "page.desc.pkgsanman": "बेसिकमधील सर्व, तसेच २४ तास फ्रीजर बॉक्स, गुरुजी/पुरोहित, स्मशानभूमी बुकिंग आणि १० दिवस कुटुंब समुपदेशन — एकवेळ ₹२१,०००.",
+    "page.desc.pkgdashakriya": "दशक्रिया (१०वा) व तेरावा (१३वा) विधी, गुरुजी मानधन, वाहन व पुरोहितासह अस्थी विसर्जन आणि १०० लोकांपर्यंत भोजन व्यवस्था — एकवेळ ₹५१,०००.",
+    "page.desc.pkgfamily": "आमचा सर्वात परिपूर्ण संच — दशक्रिया विधी, वाहन व पुरोहितासह अस्थी विसर्जन, गुरुजी मानधन, १० दिवस कुटुंब समुपदेशन आणि ५० लोकांपर्यंत भोजन. एकवेळ ₹९१,०००.",
+
     /* सामायिक */
     "common.skip": "मुख्य मजकुराकडे जा",
     "footer.credit": "डिझाइन व व्यवस्थापन",
@@ -1541,6 +1591,31 @@ const I18N = {
     "pkgs.p4.i3": "१०० लोकांपर्यंत भोजन व्यवस्था",
     "pkgs.cta.title": "स्वतंत्र योजना हवी आहे? प्रश्न आहेत?",
     "pkgs.cta.desc": "जेव्हा गरज असेल तेव्हा आमची टीम तुम्हाला व तुमच्या कुटुंबाला सहानुभूतीने मार्गदर्शन करण्यासाठी येथे आहे.",
+
+    /* पॅकेजेस पृष्ठ — प्रीमियम कार्ड्स (v2) */
+    "pkgs2.heading": "योजनेतील संच",
+    "pkgs2.subtitle": "आम्ही तुमची निवांत जागा, तुमचा अंतिम प्रवास सन्मानानेच होईल.",
+    "pkgs2.p1.title": "बेसिक संच",
+    "pkgs2.p1.f1": "शववाहिका (पुणे आणि पिंपरी चिंचवड शहर मर्यादित)",
+    "pkgs2.p1.f2": "मृत्यूचा अस्सल सरकारी दाखला",
+    "pkgs2.p1.f3": "स्मशानभूमी बुकिंग",
+    "pkgs2.p2.title": "बेसिक + सन्मान संच",
+    "pkgs2.p2.f1": "Freezer Box (24 तास)",
+    "pkgs2.p2.f2": "गुरुजी / पुरोहित",
+    "pkgs2.p2.f3": "स्मशानभूमी बुकिंग",
+    "pkgs2.p2.f4": "10 दिवस कुटुंबीयांना समुपदेशन (कौन्सिलिंग)",
+    "pkgs2.p3.title": "बेसिक + सन्मान + दशक्रिया संच",
+    "pkgs2.p3.f1": "दशक्रिया विधी",
+    "pkgs2.p3.f2": "पूजासाहित्य",
+    "pkgs2.p3.f3": "गुरुजी मानधन",
+    "pkgs2.p3.f4": "100 लोकांसाठी भोजन व्यवस्था",
+    "pkgs2.p3.f5": "अस्थी विसर्जन + वाहन + पुरोहित + 5 नावाड्यांचे प्रवर्तन",
+    "pkgs2.p4.title": "बेसिक + सन्मान + दशक्रिया संच + कुंभ संच",
+    "pkgs2.p4.f1": "पती-पत्नी संरक्षण",
+    "pkgs2.p4.f2": "१०वा / १३वा (तेरावा) विधी – गुरुजीसह",
+    "pkgs2.p4.f3": "100 लोकांसाठी भोजनाची व्यवस्था",
+    "pkgs2.cta.primary": "अधिक माहिती",
+    "pkgs2.cta.secondary": "ब्रॉशर डाउनलोड करा",
 
     /* सेवा पृष्ठ — अतिरिक्त */
     "svc.hero.all": "सर्व",
@@ -2296,6 +2371,18 @@ const I18N = {
     "page.title.pkgdashakriya": "दशक्रिया अंत्येष्टि पैकेज ₹51,000 — पुणे | सन्मान योजना",
     "page.title.pkgfamily": "परिवार अंत्येष्टि पैकेज ₹91,000 — पुणे | सन्मान योजना",
 
+    /* पृष्ठों का मेटा विवरण (meta description) */
+    "page.desc.home": "सन्मान योजना — पुणे में संपूर्ण अंत्येष्टि सेवाएँ। 24×7 शव वाहन, पंडित व अनुष्ठान व्यवस्था, अंत्येष्टि सामग्री, अस्थि विसर्जन और परिवार को सहारा। कॉल करें +91 8766945548.",
+    "page.desc.services": "पुणे व पिंपरी-चिंचवड में सभी अंत्येष्टि सेवाएँ एक ही जगह — 24×7 शव वाहन, संपूर्ण अनुष्ठान, पंडित व्यवस्था, अस्थि विसर्जन, सामग्री, श्मशान बुकिंग और परिवार परामर्श।",
+    "page.desc.packages": "सन्मान योजना के चार अंत्येष्टि पैकेज — बेसिक (₹11,000), सन्मान (₹21,000), दशक्रिया (₹51,000) और परिवार (₹91,000)। पारदर्शी दर, कोई छिपा शुल्क नहीं।",
+    "page.desc.gallery": "पुणे में हमारे कार्य की तस्वीरें — अंत्येष्टि अनुष्ठान, नदी तट पर अस्थि विसर्जन, शव वाहन, अनुष्ठान सामग्री और वे परिवार जिनके साथ हम खड़े रहे।",
+    "page.desc.contact": "पुणे में अंत्येष्टि सहायता के लिए किसी भी समय +91 8766945548 पर कॉल करें। कार्यालय: मंत्री मार्केट, हडपसर। पूछताछ भेजें, हम वापस कॉल करेंगे।",
+    "page.desc.terms": "सन्मान योजना अंत्येष्टि योजना की शर्तें — पंजीकरण, सदस्यता हस्तांतरण, सेवा क्षेत्र, सम्मिलित सेवाएँ और विवाद समाधान (पुणे व पिंपरी-चिंचवड)।",
+    "page.desc.pkgbasic": "बेसिक पैकेज — एकमुश्त ₹11,000। पुणे व पिंपरी-चिंचवड शहर सीमा में शव वाहिका, श्मशान बुकिंग और 18 अंत्येष्टि सामग्री वस्तुएँ।",
+    "page.desc.pkgsanman": "बेसिक की सभी सेवाएँ, साथ में 24 घंटे फ़्रीज़र बॉक्स, गुरुजी/पुरोहित, श्मशान बुकिंग और 10 दिन परिवार परामर्श — एकमुश्त ₹21,000।",
+    "page.desc.pkgdashakriya": "दशक्रिया (10वाँ) व तेरहवीं (13वाँ) विधि, गुरुजी मानदेय, वाहन व पुरोहित सहित अस्थि विसर्जन और 100 लोगों तक भोजन व्यवस्था — एकमुश्त ₹51,000।",
+    "page.desc.pkgfamily": "हमारा सबसे संपूर्ण पैकेज — दशक्रिया विधि, वाहन व पुरोहित सहित अस्थि विसर्जन, गुरुजी मानदेय, 10 दिन परिवार परामर्श और 50 लोगों तक भोजन। एकमुश्त ₹91,000।",
+
     /* साझा */
     "common.skip": "मुख्य सामग्री पर जाएँ",
     "footer.credit": "डिज़ाइन व प्रबंधन",
@@ -2363,6 +2450,31 @@ const I18N = {
     "pkgs.p4.i3": "100 लोगों तक भोजन व्यवस्था",
     "pkgs.cta.title": "अलग योजना चाहिए? कोई प्रश्न है?",
     "pkgs.cta.desc": "जब भी आपको ज़रूरत हो, हमारी टीम आपको और आपके परिवार को सहानुभूति के साथ मार्गदर्शन देने के लिए यहाँ है।",
+
+    /* पैकेज पृष्ठ — प्रीमियम कार्ड्स (v2) */
+    "pkgs2.heading": "योजना के पैकेज",
+    "pkgs2.subtitle": "हम आपकी शांति हैं — आपकी अंतिम यात्रा सदैव सम्मान के साथ होगी।",
+    "pkgs2.p1.title": "बेसिक पैकेज",
+    "pkgs2.p1.f1": "शव वाहन (पुणे और पिंपरी-चिंचवड शहर सीमा तक)",
+    "pkgs2.p1.f2": "मृत्यु का असली सरकारी प्रमाणपत्र",
+    "pkgs2.p1.f3": "श्मशान बुकिंग",
+    "pkgs2.p2.title": "बेसिक + सम्मान पैकेज",
+    "pkgs2.p2.f1": "फ़्रीज़र बॉक्स (24 घंटे)",
+    "pkgs2.p2.f2": "गुरुजी / पुरोहित",
+    "pkgs2.p2.f3": "श्मशान बुकिंग",
+    "pkgs2.p2.f4": "परिवार के लिए 10 दिनों का परामर्श",
+    "pkgs2.p3.title": "बेसिक + सम्मान + दशक्रिया पैकेज",
+    "pkgs2.p3.f1": "दशक्रिया विधि",
+    "pkgs2.p3.f2": "पूजा सामग्री",
+    "pkgs2.p3.f3": "पुरोहित मानदेय",
+    "pkgs2.p3.f4": "100 लोगों के लिए भोजन व्यवस्था",
+    "pkgs2.p3.f5": "अस्थि विसर्जन + वाहन + पुरोहित + 5 परिवारजनों की सहायता",
+    "pkgs2.p4.title": "बेसिक + सम्मान + दशक्रिया + कुंभ पैकेज",
+    "pkgs2.p4.f1": "पति-पत्नी सुरक्षा कवरेज",
+    "pkgs2.p4.f2": "10वें / 13वें दिन का विधि — पुरोहित सहित",
+    "pkgs2.p4.f3": "100 लोगों के लिए भोजन व्यवस्था",
+    "pkgs2.cta.primary": "अधिक जानकारी",
+    "pkgs2.cta.secondary": "ब्रोशर डाउनलोड करें",
 
     /* सेवा पृष्ठ — अतिरिक्त */
     "svc.hero.all": "सभी",

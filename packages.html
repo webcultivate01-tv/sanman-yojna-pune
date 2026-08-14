@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title data-i18n="page.title.packages">Funeral Packages in Pune from ₹11,000 | Sanman Yojana</title>
-<meta name="description" content="Compare Sanman Yojana funeral assistance plans for Pune families — Basic (₹11,000), Sanman (₹21,000), Dashakriya (₹51,000) and Family (₹91,000). Transparent pricing, no hidden charges.">
-<link rel="canonical" href="https://sanmanyojana.com/packages.html">
+<meta name="description" data-i18n-content="page.desc.packages" content="Compare our four funeral plans for Pune families — Basic ₹11,000, Sanman ₹21,000, Dashakriya ₹51,000 and Family ₹91,000. Transparent, no hidden charges.">
+<link rel="canonical" href="https://sanmanyojana.org/packages.html">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="Sanman Yojana — Shahid Bhagat Singh Pratishthan, Pune">
 <meta name="theme-color" content="#b45309">
@@ -16,10 +16,10 @@
 <meta property="og:locale" content="en_IN">
 <meta property="og:locale:alternate" content="mr_IN">
 <meta property="og:locale:alternate" content="hi_IN">
-<meta property="og:url" content="https://sanmanyojana.com/packages.html">
+<meta property="og:url" content="https://sanmanyojana.org/packages.html">
 <meta property="og:title" content="Funeral Packages in Pune from ₹11,000 | Sanman Yojana">
-<meta property="og:description" content="Compare Sanman Yojana funeral assistance plans for Pune families — Basic (₹11,000), Sanman (₹21,000), Dashakriya (₹51,000) and Family (₹91,000). Transparent pricing, no hidden charges.">
-<meta property="og:image" content="https://sanmanyojana.com/assets/img/hero-poster.jpg">
+<meta property="og:description" content="Compare our four funeral plans for Pune families — Basic ₹11,000, Sanman ₹21,000, Dashakriya ₹51,000 and Family ₹91,000. Transparent, no hidden charges.">
+<meta property="og:image" content="https://sanmanyojana.org/assets/img/hero-poster.jpg">
 <meta property="og:image:width" content="1600">
 <meta property="og:image:height" content="900">
 <meta property="og:image:alt" content="Sanman Yojana — dignified funeral services in Pune">
@@ -27,12 +27,97 @@
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Funeral Packages in Pune from ₹11,000 | Sanman Yojana">
-<meta name="twitter:description" content="Compare Sanman Yojana funeral assistance plans for Pune families — Basic (₹11,000), Sanman (₹21,000), Dashakriya (₹51,000) and Family (₹91,000). Transparent pricing, no hidden charges.">
-<meta name="twitter:image" content="https://sanmanyojana.com/assets/img/hero-poster.jpg">
+<meta name="twitter:description" content="Compare our four funeral plans for Pune families — Basic ₹11,000, Sanman ₹21,000, Dashakriya ₹51,000 and Family ₹91,000. Transparent, no hidden charges.">
+<meta name="twitter:image" content="https://sanmanyojana.org/assets/img/hero-poster.jpg">
+
+<!-- Structured data: the four plans as a priced list. Keep prices in sync with
+     assets/js/config.js and the individual package pages. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://sanmanyojana.org/packages.html#webpage",
+      "url": "https://sanmanyojana.org/packages.html",
+      "name": "Funeral Packages in Pune from ₹11,000 | Sanman Yojana",
+      "description": "Compare the four Sanman Yojana funeral assistance plans for Pune and Pimpri-Chinchwad families — transparent one-time pricing, no hidden charges.",
+      "inLanguage": "en-IN",
+      "isPartOf": { "@id": "https://sanmanyojana.org/#website" },
+      "about": { "@id": "https://sanmanyojana.org/#organization" }
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://sanmanyojana.org/packages.html#plans",
+      "name": "Sanman Yojana funeral assistance plans",
+      "itemListOrder": "https://schema.org/ItemListOrderAscending",
+      "numberOfItems": 4,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "Service",
+            "@id": "https://sanmanyojana.org/package-basic.html#service",
+            "name": "Basic Funeral Package",
+            "url": "https://sanmanyojana.org/package-basic.html",
+            "provider": { "@id": "https://sanmanyojana.org/#organization" },
+            "offers": { "@type": "Offer", "price": "11000", "priceCurrency": "INR" }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "Service",
+            "@id": "https://sanmanyojana.org/package-sanman.html#service",
+            "name": "Basic + Sanman Funeral Package",
+            "url": "https://sanmanyojana.org/package-sanman.html",
+            "provider": { "@id": "https://sanmanyojana.org/#organization" },
+            "offers": { "@type": "Offer", "price": "21000", "priceCurrency": "INR" }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "Service",
+            "@id": "https://sanmanyojana.org/package-dashakriya.html#service",
+            "name": "Basic + Sanman + Dashakriya Funeral Package",
+            "url": "https://sanmanyojana.org/package-dashakriya.html",
+            "provider": { "@id": "https://sanmanyojana.org/#organization" },
+            "offers": { "@type": "Offer", "price": "51000", "priceCurrency": "INR" }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "Service",
+            "@id": "https://sanmanyojana.org/package-family.html#service",
+            "name": "Basic + Sanman + Dashakriya + Family Funeral Package",
+            "url": "https://sanmanyojana.org/package-family.html",
+            "provider": { "@id": "https://sanmanyojana.org/#organization" },
+            "offers": { "@type": "Offer", "price": "91000", "priceCurrency": "INR" }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://sanmanyojana.org/packages.html#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://sanmanyojana.org/" },
+        { "@type": "ListItem", "position": 2, "name": "Packages", "item": "https://sanmanyojana.org/packages.html" }
+      ]
+    }
+  ]
+}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- ===== AMPERSAND GLYPH OVERRIDE =====
      Playfair Display draws "&" as a decorative Et-ligature. These faces remap
@@ -114,6 +199,210 @@
   .pkg-reveal{
     transition: opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1),
                 transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* ================================================================
+     PACKAGES SECTION — premium redesign
+     ================================================================ */
+  .pkgs2-section{
+    position:relative;
+    overflow:hidden;
+    padding:40px 0 100px;
+    background:linear-gradient(160deg, #FFFDF9 0%, #FFF4F7 100%);
+  }
+  @media (max-width:640px){ .pkgs2-section{ padding-top:28px; } }
+
+  /* white-lily line art flanking the heading — sits in the same row, so it
+     adds nothing to the section height */
+  .pk2-lily{
+    flex:0 0 auto;
+    width:230px; height:230px;
+    color:#C89B3C; opacity:.55;
+    pointer-events:none;
+  }
+  .pk2-lily-l{ transform:rotate(-8deg); }
+  .pk2-lily-r{ transform:scaleX(-1) rotate(-8deg); }
+
+  .pkgs2-inner{ position:relative; z-index:1; max-width:1400px; margin:0 auto; padding:0 24px; }
+
+  /* heading row: lily — text column — lily */
+  .pkgs2-head{
+    position:relative;
+    display:flex; align-items:center; justify-content:center; gap:28px;
+    max-width:1180px; margin:0 auto 36px;
+    text-align:center;
+  }
+  .pkgs2-headtext{ flex:0 1 740px; min-width:0; }
+
+  /* lotus emblem crowning the heading */
+  .pkgs2-headwm{
+    display:block;
+    width:86px; height:auto;
+    margin:0 auto 8px;
+    opacity:0;
+    transform:translateY(8px) scale(.94);
+    transition:opacity 1.3s ease .15s, transform 1.3s cubic-bezier(.16,1,.3,1) .15s;
+  }
+  .pkgs2-head.show .pkgs2-headwm{ opacity:1; transform:none; }
+  @media (max-width:640px){ .pkgs2-headwm{ width:68px; margin-bottom:6px; } }
+  @media (prefers-reduced-motion:reduce){
+    .pkgs2-headwm{ opacity:1; transform:none; transition:none; }
+  }
+
+  /* narrow screens: the lilies tuck into the corners behind the text instead
+     of stealing width from it */
+  @media (max-width:900px){
+    .pkgs2-head{ display:block; }
+    .pkgs2-head .pk2-lily{
+      position:absolute; top:-10px; z-index:0;
+      width:130px; height:130px; opacity:.34;
+    }
+    .pkgs2-head .pk2-lily-l{ left:-34px; }
+    .pkgs2-head .pk2-lily-r{ right:-34px; }
+  }
+  @media (max-width:640px){
+    .pkgs2-head .pk2-lily{ width:104px; height:104px; top:-4px; }
+    .pkgs2-head .pk2-lily-l{ left:-30px; }
+    .pkgs2-head .pk2-lily-r{ right:-30px; }
+  }
+
+  .pkgs2-title{
+    position:relative; z-index:1;
+    font-family:"Playfair Display","Noto Serif Devanagari",Georgia,serif;
+    color:#B01257;
+    font-weight:800;
+    font-size:38px;
+    line-height:1.2;
+    margin-bottom:8px;
+  }
+  @media (min-width:1024px){ .pkgs2-title{ font-size:56px; } }
+
+  /* premium divider under the heading */
+  .pkgs2-divider{
+    position:relative; z-index:1;
+    display:block; width:100%; max-width:430px; height:auto;
+    margin:0 auto 10px;
+    opacity:0;
+    transition:opacity 1.2s ease .2s;
+  }
+  @media (max-width:640px){ .pkgs2-divider{ max-width:310px; } }
+  .pkgs2-head.show .pkgs2-divider{ opacity:1; }
+
+  /* the lotus settles in a touch after the rules have faded up */
+  .pkgs2-divider .pk2-lotus{
+    opacity:0;
+    transform:scale(.9);
+    transform-origin:280px 40px;
+    transition:opacity 1.6s ease .5s, transform 1.6s cubic-bezier(.16,1,.3,1) .5s;
+  }
+  .pkgs2-head.show .pkgs2-divider .pk2-lotus{ opacity:1; transform:scale(1); }
+
+  /* very slow shimmer, masked to the two gold rules; long pause between passes */
+  .pkgs2-head.show .pkgs2-divider .pk2-shimmer{ animation:pk2Shine 11s ease-in-out 1.4s infinite; }
+  @keyframes pk2Shine{
+    0%{ transform:translateX(0); }
+    42%{ transform:translateX(760px); }
+    100%{ transform:translateX(760px); }
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .pkgs2-divider,
+    .pkgs2-divider .pk2-lotus{ opacity:1; transform:none; transition:none; }
+    .pkgs2-head.show .pkgs2-divider .pk2-shimmer{ animation:none; }
+  }
+
+  .pkgs2-subtitle{
+    position:relative; z-index:1;
+    font-family:"Poppins","Noto Sans Devanagari",system-ui,sans-serif;
+    color:#7a4a55;
+    font-size:17px;
+    line-height:1.75;
+  }
+  @media (min-width:1024px){ .pkgs2-subtitle{ font-size:19px; } }
+
+  .pkgs2-grid{ display:grid; grid-template-columns:1fr; gap:32px; }
+  @media (min-width:768px){ .pkgs2-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (min-width:1024px){ .pkgs2-grid{ grid-template-columns:repeat(4,1fr); } }
+
+  .pkgs2-card-wrap{ position:relative; padding-top:28px; }
+
+  .pkgs2-badge{
+    position:absolute; top:0; left:50%; transform:translateX(-50%);
+    width:56px; height:56px; border-radius:50%;
+    background:var(--pkg-grad); border:3px solid #fff;
+    box-shadow:0 8px 20px -4px rgba(0,0,0,.28);
+    display:flex; align-items:center; justify-content:center;
+    line-height:1;
+    font-family:"Playfair Display",Georgia,serif; font-weight:800; font-size:15px;
+    color:#fff;
+    z-index:2;
+  }
+
+  .pkgs2-card{
+    position:relative; height:100%;
+    display:flex; flex-direction:column;
+    background:#fff;
+    border-radius:28px;
+    border:1px solid #F3E7E7;
+    box-shadow:0 4px 18px rgba(176,18,87,.07);
+    overflow:hidden;
+    transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .pkgs2-card:hover,
+  .pkgs2-card:focus-within{
+    transform:translateY(-10px);
+    box-shadow:0 30px 60px -14px rgba(176,18,87,.3), 0 14px 28px -12px rgba(0,0,0,.14);
+    border-color:var(--pkg-color, #B01257);
+  }
+
+  .pkgs2-cardhead{
+    height:170px; padding:28px 20px 0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; gap:10px;
+    background:var(--pkg-grad);
+  }
+  .pkgs2-pkgtitle{
+    color:#fff; font-weight:700; font-size:15px; line-height:1.3;
+    font-family:"Playfair Display","Noto Serif Devanagari",Georgia,serif;
+    text-shadow:0 2px 10px rgba(0,0,0,.15);
+  }
+  @media (min-width:1280px){ .pkgs2-pkgtitle{ font-size:18px; } }
+  .pkgs2-price{
+    color:#fff; font-weight:800; font-size:24px;
+    font-family:"Poppins","Noto Sans Devanagari",sans-serif;
+    text-shadow:0 2px 10px rgba(0,0,0,.18);
+  }
+  @media (min-width:1280px){ .pkgs2-price{ font-size:30px; } }
+
+  .pkgs2-body{ flex:1; display:flex; flex-direction:column; padding:26px 22px 22px; }
+
+  .pkgs2-features{ flex:1; margin:0 0 24px; }
+  .pkgs2-features li{
+    display:flex; align-items:flex-start; gap:8px;
+    font-family:"Inter","Noto Sans Devanagari",sans-serif;
+    font-size:13px; color:#3f2a30; line-height:1.45;
+  }
+  .pkgs2-features li + li{ margin-top:14px; }
+  .pkgs2-features svg{ flex-shrink:0; width:16px; height:16px; margin-top:1px; color:var(--pkg-color, #B01257); }
+  @media (min-width:1280px){ .pkgs2-features li{ font-size:14px; } }
+
+  .pkgs2-actions{ display:flex; gap:8px; }
+  .pkgs2-btn{
+    flex:1; min-width:0; display:inline-flex; align-items:center; justify-content:center; gap:4px;
+    padding:8px 6px; border-radius:8px; font-weight:700; font-size:10px;
+    text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    font-family:"Poppins","Noto Sans Devanagari",sans-serif;
+    transition:transform .2s ease, box-shadow .2s ease, background-color .2s ease, color .2s ease;
+  }
+  .pkgs2-btn-primary{ background:var(--pkg-color, #B01257); color:#fff; box-shadow:0 6px 14px -6px var(--pkg-color, #B01257); }
+  .pkgs2-btn-primary:hover{ transform:scale(1.03); background:var(--pkg-color-dark, #7d0b2e); }
+  .pkgs2-btn-secondary{ border:1.5px solid var(--pkg-color, #B01257); color:var(--pkg-color, #B01257); background:#fff; }
+  .pkgs2-btn-secondary:hover{ transform:scale(1.03); background:rgba(176,18,87,.06); }
+  .pkgs2-btn svg{ width:11px; height:11px; flex-shrink:0; }
+  .pkgs2-btn:focus-visible{ outline:3px solid var(--pkg-color, #B01257); outline-offset:2px; }
+
+  @media (prefers-reduced-motion: reduce){
+    .pkgs2-card, .pkgs2-btn{ transition:none; }
   }
 </style>
 </head>
@@ -287,231 +576,332 @@
 </section>
 
 <!-- SANMAN YOJNA PACKAGES SECTION -->
-<section id="packages" class="py-24 lg:py-28 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section id="packages" class="pkgs2-section" aria-labelledby="pkgs2-heading">
+
+  <div class="pkgs2-inner">
 
     <!-- Section header -->
-    <div class="text-center max-w-2xl mx-auto mb-16 reveal">
-      <p class="text-amber-700 text-xs font-bold uppercase tracking-[0.25em] mb-4" data-i18n="footer.disclaimer">Shahid Bhagat Singh Pratishthan, Pune</p>
-      <h2 class="text-4xl sm:text-5xl font-bold text-stone-900 mb-4" data-i18n="pkgs.brand">Sanman Yojna</h2>
-      <div class="flex items-center justify-center gap-3 mb-8">
-        <span class="w-8 h-px bg-amber-300"></span>
-        <span class="text-amber-700 text-sm font-semibold tracking-wide" data-i18n="pkgs.years">25 Years of Dedicated Public Service</span>
-        <span class="w-8 h-px bg-amber-300"></span>
-      </div>
-      <p class="text-xl sm:text-2xl font-semibold text-stone-800 leading-snug">
-        <span data-i18n="svc.why.sub1">Live with Peace of Mind Today,</span>
-        <span class="block text-amber-700 mt-1" data-i18n="svc.why.sub2">Your Final Journey Will Be Honored with Dignity.</span>
-      </p>
+    <div class="pkgs2-head reveal">
+
+      <!-- white-lily line art flanking the heading, so it costs no extra height -->
+      <svg class="pk2-lily pk2-lily-l" viewBox="0 0 200 200" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(100 112)" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M0 0C-7 -14 -6 -30 0 -44C6 -30 7 -14 0 0Z" transform="rotate(-74) scale(.78)"/>
+          <path d="M0 0C-7 -14 -6 -30 0 -44C6 -30 7 -14 0 0Z" transform="rotate(-38) scale(.92)"/>
+          <path d="M0 0C-7 -14 -6 -30 0 -44C6 -30 7 -14 0 0Z"/>
+          <path d="M0 0C-7 -14 -6 -30 0 -44C6 -30 7 -14 0 0Z" transform="rotate(38) scale(.92)"/>
+          <path d="M0 0C-7 -14 -6 -30 0 -44C6 -30 7 -14 0 0Z" transform="rotate(74) scale(.78)"/>
+          <path d="M-1 -4C-4 -16 -6 -24 -5 -32"/>
+          <path d="M0 -4C0 -17 0 -26 1 -35"/>
+          <path d="M1 -4C4 -16 6 -24 6 -32"/>
+          <circle cx="-5" cy="-33" r="1.4"/>
+          <circle cx="1" cy="-36" r="1.4"/>
+          <circle cx="6" cy="-33" r="1.4"/>
+          <path d="M0 0C3 18 -3 40 4 68"/>
+          <path d="M0 24C-12 29 -21 40 -24 53C-11 50 -2 38 0 24Z"/>
+          <path d="M-1 33C-8 39 -14 45 -18 51"/>
+          <path d="M2 46C13 50 20 59 22 70C12 67 4 57 2 46Z"/>
+          <path d="M3 53C8 58 13 62 17 66"/>
+        </g>
+      </svg>
+
+      <div class="pkgs2-headtext">
+
+      <!-- lotus emblem crowning the heading -->
+      <svg class="pkgs2-headwm" viewBox="0 0 140 100" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(70 74)" stroke="#C89B3C" stroke-width="2" stroke-linejoin="round">
+          <path d="M0 0C-13 -13 -15 -33 0 -48C15 -33 13 -13 0 0Z" transform="rotate(-78) scale(.62)"/>
+          <path d="M0 0C-13 -13 -15 -33 0 -48C15 -33 13 -13 0 0Z" transform="rotate(78) scale(.62)"/>
+          <path d="M0 0C-13 -13 -15 -33 0 -48C15 -33 13 -13 0 0Z" transform="rotate(-52) scale(.8)"/>
+          <path d="M0 0C-13 -13 -15 -33 0 -48C15 -33 13 -13 0 0Z" transform="rotate(52) scale(.8)"/>
+          <path d="M0 0C-13 -13 -15 -33 0 -48C15 -33 13 -13 0 0Z" transform="rotate(-26) scale(.92)"/>
+          <path d="M0 0C-13 -13 -15 -33 0 -48C15 -33 13 -13 0 0Z" transform="rotate(26) scale(.92)"/>
+          <path d="M0 0C-13 -13 -15 -33 0 -48C15 -33 13 -13 0 0Z"/>
+        </g>
+        <path d="M36 79C50 88 90 88 104 79" stroke="#C89B3C" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+        <path d="M22 86C28 90 36 91 43 89" stroke="#C89B3C" stroke-width="1.2" stroke-linecap="round" opacity=".45"/>
+        <path d="M118 86C112 90 104 91 97 89" stroke="#C89B3C" stroke-width="1.2" stroke-linecap="round" opacity=".45"/>
+        <circle cx="70" cy="74" r="2.6" fill="#B01257" opacity=".5"/>
+      </svg>
+
+      <h2 id="pkgs2-heading" class="pkgs2-title" data-i18n="pkgs2.heading">Our Packages</h2>
+
+      <!-- Premium divider: gold rules, ornamental florets, vine accents, centre lotus -->
+      <svg class="pkgs2-divider" viewBox="0 0 560 56" fill="none" role="presentation" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="pk2-ruleL" gradientUnits="userSpaceOnUse" x1="26" y1="30" x2="206" y2="30">
+            <stop offset="0" stop-color="#C89B3C" stop-opacity="0"/>
+            <stop offset=".38" stop-color="#E6D2A8" stop-opacity=".85"/>
+            <stop offset="1" stop-color="#C89B3C" stop-opacity=".95"/>
+          </linearGradient>
+          <linearGradient id="pk2-ruleR" gradientUnits="userSpaceOnUse" x1="534" y1="30" x2="354" y2="30">
+            <stop offset="0" stop-color="#C89B3C" stop-opacity="0"/>
+            <stop offset=".38" stop-color="#E6D2A8" stop-opacity=".85"/>
+            <stop offset="1" stop-color="#C89B3C" stop-opacity=".95"/>
+          </linearGradient>
+          <linearGradient id="pk2-shine" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#FFFDF8" stop-opacity="0"/>
+            <stop offset=".5" stop-color="#FFFDF8" stop-opacity=".95"/>
+            <stop offset="1" stop-color="#FFFDF8" stop-opacity="0"/>
+          </linearGradient>
+          <mask id="pk2-rulemask" maskUnits="userSpaceOnUse" x="0" y="0" width="560" height="56">
+            <rect x="0" y="0" width="560" height="56" fill="#000"/>
+            <path d="M26 30H206M354 30H534" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+          </mask>
+        </defs>
+
+        <!-- thin gold rules -->
+        <path d="M26 30H206" stroke="url(#pk2-ruleL)" stroke-width="1.1" stroke-linecap="round"/>
+        <path d="M354 30H534" stroke="url(#pk2-ruleR)" stroke-width="1.1" stroke-linecap="round"/>
+
+        <!-- very slow shimmer travelling along the rules -->
+        <g mask="url(#pk2-rulemask)">
+          <rect class="pk2-shimmer" x="-200" y="0" width="200" height="56" fill="url(#pk2-shine)"/>
+        </g>
+
+        <!-- tiny dots near the ends -->
+        <g fill="#C89B3C">
+          <circle cx="16" cy="30" r="1.9" opacity=".75"/>
+          <circle cx="7" cy="30" r="1.1" opacity=".45"/>
+          <circle cx="544" cy="30" r="1.9" opacity=".75"/>
+          <circle cx="553" cy="30" r="1.1" opacity=".45"/>
+        </g>
+
+        <!-- ornamental florets -->
+        <g stroke="#C89B3C" stroke-width=".9" stroke-linejoin="round" opacity=".85">
+          <g transform="translate(214 30) scale(.72)">
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(60)"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(120)"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(180)"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(240)"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(300)"/>
+          </g>
+          <g transform="translate(236 30)">
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(60)"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(120)"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(180)"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(240)"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(300)"/>
+          </g>
+          <g transform="translate(324 30)">
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(60)"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(120)"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(180)"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(240)"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(300)"/>
+          </g>
+          <g transform="translate(346 30) scale(.72)">
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(60)"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(120)"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(180)"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(240)"/>
+            <path d="M0 -7C3 -4 3 -3 0 0C-3 -3 -3 -4 0 -7Z" transform="rotate(300)"/>
+          </g>
+        </g>
+
+        <!-- soft curved vine accents sweeping out from the lotus base -->
+        <g stroke="#C89B3C" stroke-width=".9" stroke-linecap="round" stroke-linejoin="round" opacity=".6">
+          <path d="M262 41C249 45 233 43 224 37"/>
+          <path d="M241 44C237 48 231 48 228 45C232 41 238 41 241 44Z"/>
+          <path d="M298 41C311 45 327 43 336 37"/>
+          <path d="M319 44C323 48 329 48 332 45C328 41 322 41 319 44Z"/>
+        </g>
+
+        <!-- centre lotus -->
+        <g class="pk2-lotus">
+          <g transform="translate(280 40)" stroke="#C89B3C" stroke-width="1.25" stroke-linejoin="round">
+            <path d="M0 0C-9 -9 -10 -22 0 -32C10 -22 9 -9 0 0Z" transform="rotate(-78) scale(.62)"/>
+            <path d="M0 0C-9 -9 -10 -22 0 -32C10 -22 9 -9 0 0Z" transform="rotate(78) scale(.62)"/>
+            <path d="M0 0C-9 -9 -10 -22 0 -32C10 -22 9 -9 0 0Z" transform="rotate(-52) scale(.8)"/>
+            <path d="M0 0C-9 -9 -10 -22 0 -32C10 -22 9 -9 0 0Z" transform="rotate(52) scale(.8)"/>
+            <path d="M0 0C-9 -9 -10 -22 0 -32C10 -22 9 -9 0 0Z" transform="rotate(-26) scale(.92)"/>
+            <path d="M0 0C-9 -9 -10 -22 0 -32C10 -22 9 -9 0 0Z" transform="rotate(26) scale(.92)"/>
+            <path d="M0 0C-9 -9 -10 -22 0 -32C10 -22 9 -9 0 0Z"/>
+          </g>
+          <path d="M258 43C268 49 292 49 302 43" stroke="#C89B3C" stroke-width=".9" stroke-linecap="round" opacity=".55"/>
+          <circle cx="280" cy="40" r="1.7" fill="#B01257" opacity=".45"/>
+        </g>
+      </svg>
+
+      <p class="pkgs2-subtitle" data-i18n="pkgs2.subtitle">We are your peace of mind — your final journey will always be honored with dignity.</p>
+
+      </div><!-- /.pkgs2-headtext -->
+
+      <svg class="pk2-lily pk2-lily-r" viewBox="0 0 200 200" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(100 112)" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M0 0C-7 -14 -6 -30 0 -44C6 -30 7 -14 0 0Z" transform="rotate(-74) scale(.78)"/>
+          <path d="M0 0C-7 -14 -6 -30 0 -44C6 -30 7 -14 0 0Z" transform="rotate(-38) scale(.92)"/>
+          <path d="M0 0C-7 -14 -6 -30 0 -44C6 -30 7 -14 0 0Z"/>
+          <path d="M0 0C-7 -14 -6 -30 0 -44C6 -30 7 -14 0 0Z" transform="rotate(38) scale(.92)"/>
+          <path d="M0 0C-7 -14 -6 -30 0 -44C6 -30 7 -14 0 0Z" transform="rotate(74) scale(.78)"/>
+          <path d="M-1 -4C-4 -16 -6 -24 -5 -32"/>
+          <path d="M0 -4C0 -17 0 -26 1 -35"/>
+          <path d="M1 -4C4 -16 6 -24 6 -32"/>
+          <circle cx="-5" cy="-33" r="1.4"/>
+          <circle cx="1" cy="-36" r="1.4"/>
+          <circle cx="6" cy="-33" r="1.4"/>
+          <path d="M0 0C3 18 -3 40 4 68"/>
+          <path d="M0 24C-12 29 -21 40 -24 53C-11 50 -2 38 0 24Z"/>
+          <path d="M-1 33C-8 39 -14 45 -18 51"/>
+          <path d="M2 46C13 50 20 59 22 70C12 67 4 57 2 46Z"/>
+          <path d="M3 53C8 58 13 62 17 66"/>
+        </g>
+      </svg>
     </div>
 
     <!-- Package cards -->
-    <div class="grid md:grid-cols-2 gap-7 lg:gap-8 items-stretch">
+    <div class="pkgs2-grid">
 
       <!-- Package 1 -->
-      <div class="reveal reveal-left pkg-reveal h-full flex flex-col bg-white rounded-2xl p-8 sm:p-9 border border-stone-200 shadow-sm hover:shadow-xl hover:border-amber-200 hover:-translate-y-1 transition-all duration-300">
-        <div class="flex items-center gap-4 mb-6">
-          <span class="shrink-0 w-11 h-11 rounded-full bg-stone-50 border border-stone-200 text-stone-700 grid place-items-center text-sm font-bold">01</span>
-          <h3 class="text-lg sm:text-xl font-bold text-stone-900 leading-snug" data-i18n="pkg.basic.title">Basic Package</h3>
-        </div>
-
-        <div class="flex items-baseline gap-2 pb-6 mb-6 border-b border-stone-100">
-          <span class="text-3xl sm:text-[2.25rem] font-bold text-stone-900">₹11,000</span>
-          <span class="text-xs text-stone-400 uppercase tracking-wide" data-i18n="home.plans.onetime">one-time</span>
-        </div>
-
-        <ul class="space-y-3.5 flex-1 mb-8">
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-5 h-5 rounded-full border border-amber-300 text-amber-600 grid place-items-center mt-0.5">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-            </span>
-            <span class="text-slate-600 text-sm sm:text-[0.95rem]" data-i18n="pkgs.p1.i1">Death Certificate (Natural Death)</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-5 h-5 rounded-full border border-amber-300 text-amber-600 grid place-items-center mt-0.5">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-            </span>
-            <span class="text-slate-600 text-sm sm:text-[0.95rem]" data-i18n="pkgs.p1.i2">Hearse Vehicle Service (Within Pune &amp; Pimpri-Chinchwad City Limits)</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-5 h-5 rounded-full border border-amber-300 text-amber-600 grid place-items-center mt-0.5">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-            </span>
-            <span class="text-slate-600 text-sm sm:text-[0.95rem]" data-i18n="pkgs.p1.i3">Floral Garland &amp; Funeral Materials</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-5 h-5 rounded-full border border-amber-300 text-amber-600 grid place-items-center mt-0.5">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-            </span>
-            <span class="text-slate-600 text-sm sm:text-[0.95rem]" data-i18n="pkgs.item.cremation">Crematorium Booking</span>
-          </li>
-        </ul>
-
-        <div class="flex flex-col sm:flex-row gap-3 pt-2">
-          <a href="package-basic.html" class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 bg-amber-700 hover:bg-amber-800 text-white text-sm font-bold rounded-lg transition">
-            <span data-i18n="home.plans.cta">Learn More</span>
-          </a>
-          <a href="#" class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 border border-stone-300 hover:border-amber-400 hover:bg-amber-50 text-stone-700 text-sm font-bold rounded-lg transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M7.5 12 12 16.5m0 0L16.5 12M12 16.5V3"/></svg>
-            <span data-i18n="pkgs.brochure">Download Brochure</span>
-          </a>
-        </div>
+      <div class="pkgs2-card-wrap reveal d1" style="--pkg-color:#8E2AA0; --pkg-color-dark:#4D004F; --pkg-grad:linear-gradient(135deg, #8E2AA0 0%, #4D004F 100%);">
+        <div class="pkgs2-badge" aria-hidden="true">01</div>
+        <article class="pkgs2-card" aria-labelledby="pkg1-title">
+          <div class="pkgs2-cardhead">
+            <h3 id="pkg1-title" class="pkgs2-pkgtitle" data-i18n="pkgs2.p1.title">Basic Package</h3>
+            <p class="pkgs2-price">₹11,000</p>
+          </div>
+          <div class="pkgs2-body">
+            <ul class="pkgs2-features">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span data-i18n="pkgs2.p1.f1">Hearse Vehicle (Within Pune &amp; Pimpri-Chinchwad City Limits)</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span data-i18n="pkgs2.p1.f2">Authentic Government Death Certificate</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span data-i18n="pkgs2.p1.f3">Crematorium Booking</span>
+              </li>
+            </ul>
+            <div class="pkgs2-actions">
+              <a href="package-basic.html" class="pkgs2-btn pkgs2-btn-primary" data-i18n="pkgs2.cta.primary" data-i18n-aria="pkgs2.cta.primary" aria-label="Learn More">Learn More</a>
+              <a href="#" class="pkgs2-btn pkgs2-btn-secondary" data-i18n-aria="pkgs2.cta.secondary" aria-label="Download Brochure">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span data-i18n="pkgs2.cta.secondary">Download Brochure</span>
+              </a>
+            </div>
+          </div>
+        </article>
       </div>
 
       <!-- Package 2 -->
-      <div class="reveal reveal-right pkg-reveal h-full flex flex-col bg-white rounded-2xl p-8 sm:p-9 border border-stone-200 shadow-sm hover:shadow-xl hover:border-amber-200 hover:-translate-y-1 transition-all duration-300">
-        <div class="flex items-center gap-4 mb-6">
-          <span class="shrink-0 w-11 h-11 rounded-full bg-stone-50 border border-stone-200 text-stone-700 grid place-items-center text-sm font-bold">02</span>
-          <h3 class="text-lg sm:text-xl font-bold text-stone-900 leading-snug" data-i18n="pkg.sanman.title">Basic + Sanman Package</h3>
-        </div>
-
-        <div class="flex items-baseline gap-2 pb-6 mb-6 border-b border-stone-100">
-          <span class="text-3xl sm:text-[2.25rem] font-bold text-stone-900">₹21,000</span>
-          <span class="text-xs text-stone-400 uppercase tracking-wide" data-i18n="home.plans.onetime">one-time</span>
-        </div>
-
-        <ul class="space-y-3.5 flex-1 mb-8">
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-5 h-5 rounded-full border border-amber-300 text-amber-600 grid place-items-center mt-0.5">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-            </span>
-            <span class="text-slate-600 text-sm sm:text-[0.95rem]" data-i18n="pkgs.p2.i1">Freezer Box (24 Hours)</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-5 h-5 rounded-full border border-amber-300 text-amber-600 grid place-items-center mt-0.5">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-            </span>
-            <span class="text-slate-600 text-sm sm:text-[0.95rem]" data-i18n="pkgs.p2.i2">Hindu Priest (Guruji/Purohit)</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-5 h-5 rounded-full border border-amber-300 text-amber-600 grid place-items-center mt-0.5">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-            </span>
-            <span class="text-slate-600 text-sm sm:text-[0.95rem]" data-i18n="pkgs.item.cremation">Crematorium Booking</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-5 h-5 rounded-full border border-amber-300 text-amber-600 grid place-items-center mt-0.5">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-            </span>
-            <span class="text-slate-600 text-sm sm:text-[0.95rem]" data-i18n="pkgs.p2.i4">10 Days of Family Counseling</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-5 h-5 rounded-full border border-amber-300 text-amber-600 grid place-items-center mt-0.5">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-            </span>
-            <span class="text-slate-600 text-sm sm:text-[0.95rem]" data-i18n="pkgs.p2.i5">Grief Counseling Support</span>
-          </li>
-        </ul>
-
-        <div class="flex flex-col sm:flex-row gap-3 pt-2">
-          <a href="package-sanman.html" class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 bg-amber-700 hover:bg-amber-800 text-white text-sm font-bold rounded-lg transition">
-            <span data-i18n="home.plans.cta">Learn More</span>
-          </a>
-          <a href="#" class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 border border-stone-300 hover:border-amber-400 hover:bg-amber-50 text-stone-700 text-sm font-bold rounded-lg transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M7.5 12 12 16.5m0 0L16.5 12M12 16.5V3"/></svg>
-            <span data-i18n="pkgs.brochure">Download Brochure</span>
-          </a>
-        </div>
+      <div class="pkgs2-card-wrap reveal d2" style="--pkg-color:#E01B70; --pkg-color-dark:#A4003C; --pkg-grad:linear-gradient(135deg, #E01B70 0%, #A4003C 100%);">
+        <div class="pkgs2-badge" aria-hidden="true">02</div>
+        <article class="pkgs2-card" aria-labelledby="pkg2-title">
+          <div class="pkgs2-cardhead">
+            <h3 id="pkg2-title" class="pkgs2-pkgtitle" data-i18n="pkgs2.p2.title">Basic + Sanman Package</h3>
+            <p class="pkgs2-price">₹21,000</p>
+          </div>
+          <div class="pkgs2-body">
+            <ul class="pkgs2-features">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span data-i18n="pkgs2.p2.f1">Freezer Box (24 Hours)</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span data-i18n="pkgs2.p2.f2">Priest (Guruji/Purohit)</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span data-i18n="pkgs2.p2.f3">Crematorium Booking</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span data-i18n="pkgs2.p2.f4">10 Days of Family Counseling</span>
+              </li>
+            </ul>
+            <div class="pkgs2-actions">
+              <a href="package-sanman.html" class="pkgs2-btn pkgs2-btn-primary" data-i18n="pkgs2.cta.primary" data-i18n-aria="pkgs2.cta.primary" aria-label="Learn More">Learn More</a>
+              <a href="#" class="pkgs2-btn pkgs2-btn-secondary" data-i18n-aria="pkgs2.cta.secondary" aria-label="Download Brochure">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span data-i18n="pkgs2.cta.secondary">Download Brochure</span>
+              </a>
+            </div>
+          </div>
+        </article>
       </div>
 
       <!-- Package 3 -->
-      <div class="reveal reveal-left pkg-reveal h-full flex flex-col bg-white rounded-2xl p-8 sm:p-9 border border-stone-200 shadow-sm hover:shadow-xl hover:border-amber-200 hover:-translate-y-1 transition-all duration-300">
-        <div class="flex items-center gap-4 mb-6">
-          <span class="shrink-0 w-11 h-11 rounded-full bg-stone-50 border border-stone-200 text-stone-700 grid place-items-center text-sm font-bold">03</span>
-          <h3 class="text-lg sm:text-xl font-bold text-stone-900 leading-snug" data-i18n="pkg.dashakriya.title">Basic + Sanman + Dashakriya Package</h3>
-        </div>
-
-        <div class="flex items-baseline gap-2 pb-6 mb-6 border-b border-stone-100">
-          <span class="text-3xl sm:text-[2.25rem] font-bold text-stone-900">₹51,000</span>
-          <span class="text-xs text-stone-400 uppercase tracking-wide" data-i18n="home.plans.onetime">one-time</span>
-        </div>
-
-        <ul class="space-y-3.5 flex-1 mb-8">
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-5 h-5 rounded-full border border-amber-300 text-amber-600 grid place-items-center mt-0.5">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-            </span>
-            <span class="text-slate-600 text-sm sm:text-[0.95rem]" data-i18n="pkgs.p3.i1">Dashakriya (10th Day Funeral Rituals)</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-5 h-5 rounded-full border border-amber-300 text-amber-600 grid place-items-center mt-0.5">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-            </span>
-            <span class="text-slate-600 text-sm sm:text-[0.95rem]" data-i18n="pkgs.p3.i2">Ritual Materials (Puja Samagri)</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-5 h-5 rounded-full border border-amber-300 text-amber-600 grid place-items-center mt-0.5">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-            </span>
-            <span class="text-slate-600 text-sm sm:text-[0.95rem]" data-i18n="pkgs.p3.i3">Priest Honorarium</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-5 h-5 rounded-full border border-amber-300 text-amber-600 grid place-items-center mt-0.5">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-            </span>
-            <span class="text-slate-600 text-sm sm:text-[0.95rem]" data-i18n="pkgs.p3.i4">Meal Arrangement for Up to 50 People</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-5 h-5 rounded-full border border-amber-300 text-amber-600 grid place-items-center mt-0.5">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-            </span>
-            <span class="text-slate-600 text-sm sm:text-[0.95rem]" data-i18n="pkgs.p3.i5">Ash Immersion (Asthi Visarjan) with Vehicle, Priest, and Support for 5 Family Members</span>
-          </li>
-        </ul>
-
-        <div class="flex flex-col sm:flex-row gap-3 pt-2">
-          <a href="package-dashakriya.html" class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 bg-amber-700 hover:bg-amber-800 text-white text-sm font-bold rounded-lg transition">
-            <span data-i18n="home.plans.cta">Learn More</span>
-          </a>
-          <a href="#" class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 border border-stone-300 hover:border-amber-400 hover:bg-amber-50 text-stone-700 text-sm font-bold rounded-lg transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M7.5 12 12 16.5m0 0L16.5 12M12 16.5V3"/></svg>
-            <span data-i18n="pkgs.brochure">Download Brochure</span>
-          </a>
-        </div>
+      <div class="pkgs2-card-wrap reveal d3" style="--pkg-color:#D48A16; --pkg-color-dark:#A35A00; --pkg-grad:linear-gradient(135deg, #D48A16 0%, #A35A00 100%);">
+        <div class="pkgs2-badge" aria-hidden="true">03</div>
+        <article class="pkgs2-card" aria-labelledby="pkg3-title">
+          <div class="pkgs2-cardhead">
+            <h3 id="pkg3-title" class="pkgs2-pkgtitle" data-i18n="pkgs2.p3.title">Basic + Sanman + Dashakriya Package</h3>
+            <p class="pkgs2-price">₹51,000</p>
+          </div>
+          <div class="pkgs2-body">
+            <ul class="pkgs2-features">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span data-i18n="pkgs2.p3.f1">Dashakriya Ritual</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span data-i18n="pkgs2.p3.f2">Ritual Materials (Puja Samagri)</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span data-i18n="pkgs2.p3.f3">Priest Honorarium</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span data-i18n="pkgs2.p3.f4">Meal Arrangement for 100 People</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span data-i18n="pkgs2.p3.f5">Ash Immersion + Vehicle + Priest + Support for 5 Family Members</span>
+              </li>
+            </ul>
+            <div class="pkgs2-actions">
+              <a href="package-dashakriya.html" class="pkgs2-btn pkgs2-btn-primary" data-i18n="pkgs2.cta.primary" data-i18n-aria="pkgs2.cta.primary" aria-label="Learn More">Learn More</a>
+              <a href="#" class="pkgs2-btn pkgs2-btn-secondary" data-i18n-aria="pkgs2.cta.secondary" aria-label="Download Brochure">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span data-i18n="pkgs2.cta.secondary">Download Brochure</span>
+              </a>
+            </div>
+          </div>
+        </article>
       </div>
 
       <!-- Package 4 -->
-      <div class="reveal reveal-right pkg-reveal h-full flex flex-col bg-white rounded-2xl p-8 sm:p-9 border border-stone-200 shadow-sm hover:shadow-xl hover:border-amber-200 hover:-translate-y-1 transition-all duration-300">
-        <div class="flex items-center gap-4 mb-6">
-          <span class="shrink-0 w-11 h-11 rounded-full bg-stone-50 border border-stone-200 text-stone-700 grid place-items-center text-sm font-bold">04</span>
-          <h3 class="text-lg sm:text-xl font-bold text-stone-900 leading-snug" data-i18n="pkg.family.title">Basic + Sanman + Dashakriya + Family Package</h3>
-        </div>
-
-        <div class="flex items-baseline gap-2 pb-6 mb-6 border-b border-stone-100">
-          <span class="text-3xl sm:text-[2.25rem] font-bold text-stone-900">₹91,000</span>
-          <span class="text-xs text-stone-400 uppercase tracking-wide" data-i18n="home.plans.onetime">one-time</span>
-        </div>
-
-        <ul class="space-y-3.5 flex-1 mb-8">
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-5 h-5 rounded-full border border-amber-300 text-amber-600 grid place-items-center mt-0.5">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-            </span>
-            <span class="text-slate-600 text-sm sm:text-[0.95rem]" data-i18n="pkgs.p4.i1">Husband &amp; Wife Coverage</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-5 h-5 rounded-full border border-amber-300 text-amber-600 grid place-items-center mt-0.5">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-            </span>
-            <span class="text-slate-600 text-sm sm:text-[0.95rem]" data-i18n="pkgs.p4.i2">10th / 13th Day Funeral Rituals with Priest</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="flex-shrink-0 w-5 h-5 rounded-full border border-amber-300 text-amber-600 grid place-items-center mt-0.5">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-            </span>
-            <span class="text-slate-600 text-sm sm:text-[0.95rem]" data-i18n="pkgs.p4.i3">Meal Arrangement for Up to 100 People</span>
-          </li>
-        </ul>
-
-        <div class="flex flex-col sm:flex-row gap-3 pt-2">
-          <a href="package-family.html" class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 bg-amber-700 hover:bg-amber-800 text-white text-sm font-bold rounded-lg transition">
-            <span data-i18n="home.plans.cta">Learn More</span>
-          </a>
-          <a href="#" class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 border border-stone-300 hover:border-amber-400 hover:bg-amber-50 text-stone-700 text-sm font-bold rounded-lg transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M7.5 12 12 16.5m0 0L16.5 12M12 16.5V3"/></svg>
-            <span data-i18n="pkgs.brochure">Download Brochure</span>
-          </a>
-        </div>
+      <div class="pkgs2-card-wrap reveal d4" style="--pkg-color:#C21F58; --pkg-color-dark:#7D0B2E; --pkg-grad:linear-gradient(135deg, #C21F58 0%, #7D0B2E 100%);">
+        <div class="pkgs2-badge" aria-hidden="true">04</div>
+        <article class="pkgs2-card" aria-labelledby="pkg4-title">
+          <div class="pkgs2-cardhead">
+            <h3 id="pkg4-title" class="pkgs2-pkgtitle" data-i18n="pkgs2.p4.title">Basic + Sanman + Dashakriya + Kumbh Package</h3>
+            <p class="pkgs2-price">₹91,000</p>
+          </div>
+          <div class="pkgs2-body">
+            <ul class="pkgs2-features">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span data-i18n="pkgs2.p4.f1">Husband-Wife Coverage</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span data-i18n="pkgs2.p4.f2">10th / 13th Day Ritual — with Priest</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span data-i18n="pkgs2.p4.f3">Meal Arrangement for 100 People</span>
+              </li>
+            </ul>
+            <div class="pkgs2-actions">
+              <a href="package-family.html" class="pkgs2-btn pkgs2-btn-primary" data-i18n="pkgs2.cta.primary" data-i18n-aria="pkgs2.cta.primary" aria-label="Learn More">Learn More</a>
+              <a href="#" class="pkgs2-btn pkgs2-btn-secondary" data-i18n-aria="pkgs2.cta.secondary" aria-label="Download Brochure">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span data-i18n="pkgs2.cta.secondary">Download Brochure</span>
+              </a>
+            </div>
+          </div>
+        </article>
       </div>
 
     </div>
@@ -524,7 +914,7 @@
      ============================================================ -->
 <section class="relative py-20 lg:py-28 overflow-hidden bg-amber-900">
   <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('image/packageCTA1.png');" aria-hidden="true"></div>
-  <div class="absolute inset-0 bg-gradient-to-br from-amber-950/85 via-amber-900/75 to-stone-950/85" aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-gradient-to-br from-amber-950/55 via-amber-900/45 to-stone-950/55" aria-hidden="true"></div>
 
   <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <span class="sx-kicker is-light justify-center mb-6 reveal">

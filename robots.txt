@@ -1,4 +1,10 @@
+# https://sanmanyojana.org/robots.txt
+# Every page here is meant to be indexed — there is no private area.
+
 User-agent: *
 Allow: /
 
-Sitemap: https://sanmanyojana.com/sitemap.xml
+# The raw partial template is markup fragments, not a page anyone should land on.
+Disallow: /assets/partials.txt
+
+Sitemap: https://sanmanyojana.org/sitemap.xml
