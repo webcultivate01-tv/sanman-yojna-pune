@@ -97,12 +97,27 @@
     position: relative;
     overflow: hidden;
     isolation: isolate;
-    min-height: 100vh;
-    min-height: 100dvh;
+    /* The top bar and header sit above the hero in normal flow, so a plain
+       100dvh would push the bottom of the hero past the fold. --gh-chrome is
+       their combined height, measured per breakpoint. */
+    --gh-chrome: 141px;
+    min-height: calc(100vh - var(--gh-chrome));
+    min-height: calc(100dvh - var(--gh-chrome));
     display: flex;
-    align-items: center;
+    /* The hero photo carries its own "Gallery" wordmark and the photo collage
+       across its upper half, so the copy sits in the calm band at the bottom
+       instead of floating over the artwork. */
+    align-items: flex-end;
   }
-  @media (max-width: 640px){ .gh-hero{ min-height: 100vh; min-height: 100dvh; } }
+  @media (min-width: 640px){ .gh-hero{ --gh-chrome: 150px; } }
+
+  /* Legibility scrim under the hero copy — independent of the even overlay so
+     the top of the photo stays bright. */
+  .gh-scrim{
+    position:absolute; left:0; right:0; bottom:0; height:62%;
+    background:linear-gradient(to top, rgba(18,12,6,.92) 0%, rgba(18,12,6,.72) 34%, rgba(18,12,6,.22) 70%, rgba(18,12,6,0) 100%);
+    pointer-events:none;
+  }
 
   .gh-bg{
     position: absolute;
@@ -115,12 +130,6 @@
     background-position: center top;
   }
   @media (max-width: 640px){ .gh-bg{ background-position: center top; } }
-
-  .gh-badge{ animation: ghFloat 5s ease-in-out infinite; }
-  @keyframes ghFloat{
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-6px); }
-  }
 
   .gh-orb{ filter: blur(70px); animation: ghDrift 12s ease-in-out infinite alternate; }
   @keyframes ghDrift{
@@ -136,68 +145,46 @@
 
   .gh-text-shadow{ text-shadow: 0 3px 18px rgba(0,0,0,.55), 0 1px 4px rgba(0,0,0,.4); }
 
-  /* ---- Gallery grid: modern bento layout + lightbox ---- */
+  /* ---- Gallery grid: 4:5 poster cards + lightbox ----
+     The photos are 1024×1280 posters with their own artwork and text baked in,
+     so each card matches that 4:5 ratio exactly — nothing is cropped, and no
+     caption is layered over the image. ---- */
   .gg-grid{
     display:grid;
-    grid-template-columns:repeat(4, 1fr);
-    grid-auto-rows:230px;
-    grid-auto-flow:dense;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
     gap:1.5rem;
   }
-  .gg-big{ grid-column:span 2; grid-row:span 2; }
-  .gg-tall{ grid-row:span 2; }
-  .gg-wide{ grid-column:span 2; }
-
   @media (max-width:1023px){
-    .gg-grid{ grid-template-columns:repeat(2, 1fr); }
+    .gg-grid{ grid-template-columns:repeat(2, minmax(0, 1fr)); gap:1.15rem; }
   }
   @media (max-width:639px){
-    .gg-grid{ grid-template-columns:repeat(2, 1fr); grid-auto-rows:auto; gap:.85rem; }
-    .gg-card{ grid-column:span 1 !important; grid-row:span 1 !important; }
-    .gg-card .gg-img-wrap{ position:relative; aspect-ratio:1/1; }
-    .gg-overlay-sub{ display:none; }
+    .gg-grid{ grid-template-columns:repeat(2, minmax(0, 1fr)); gap:.75rem; }
+    .gg-card{ border-radius:.9rem; }
+    .gg-zoom{ top:.5rem; right:.5rem; width:1.9rem; height:1.9rem; }
   }
 
   .gg-card{
+    display:block;
+    width:100%;
+    aspect-ratio:4 / 5;
     position:relative;
     border-radius:1.25rem;
     overflow:hidden;
-    background:#fff;
+    background:#f5f0e8;
     box-shadow:0 12px 30px -14px rgba(41,26,10,.28);
-    cursor:pointer;
+    cursor:zoom-in;
     isolation:isolate;
+    transition:box-shadow .35s ease, transform .35s ease;
   }
+  .gg-card:hover{ transform:translateY(-4px); box-shadow:0 20px 40px -16px rgba(41,26,10,.4); }
   .gg-card:focus-visible{ outline:3px solid #f59e0b; outline-offset:2px; }
-  .gg-img-wrap{ position:absolute; inset:0; }
+
   .gg-img{
-    width:100%; height:100%; object-fit:cover; object-position:top center;
+    width:100%; height:100%; object-fit:cover; object-position:center;
+    display:block;
     transition:transform .7s cubic-bezier(.2,.8,.2,1);
   }
-  .gg-card:hover .gg-img{ transform:scale(1.09); }
-
-  .gg-overlay{
-    position:absolute; inset:0; z-index:2;
-    display:flex; align-items:flex-end;
-    padding:1.1rem 1.2rem;
-    background:linear-gradient(to top, rgba(20,14,7,.92) 0%, rgba(20,14,7,.52) 46%, rgba(20,14,7,0) 80%);
-  }
-  .gg-overlay-badge{
-    display:inline-block; margin-bottom:.4rem;
-    font-size:.66rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
-    color:#fcd34d;
-  }
-  .gg-overlay-title{
-    color:#fff; font-weight:700; line-height:1.25;
-    font-family:"Playfair Display","Noto Serif Devanagari",Georgia,serif;
-  }
-  .gg-overlay-sub{
-    color:#f2e8d5; font-size:.8rem; line-height:1.4;
-    max-height:0; opacity:0; overflow:hidden;
-    transition:max-height .4s ease, opacity .3s ease, margin-top .3s ease;
-  }
-  .gg-card:hover .gg-overlay-sub, .gg-card:focus-within .gg-overlay-sub{
-    max-height:4rem; opacity:1; margin-top:.35rem;
-  }
+  .gg-card:hover .gg-img{ transform:scale(1.05); }
 
   .gg-zoom{
     position:absolute; top:.85rem; right:.85rem; z-index:3;
@@ -206,8 +193,9 @@
     background:rgba(255,255,255,.92); color:#92400e;
     opacity:0; transform:scale(.75);
     transition:opacity .3s ease, transform .3s ease;
+    pointer-events:none;
   }
-  .gg-card:hover .gg-zoom, .gg-card:focus-within .gg-zoom{ opacity:1; transform:scale(1); }
+  .gg-card:hover .gg-zoom, .gg-card:focus-visible .gg-zoom{ opacity:1; transform:scale(1); }
 
   /* Lightbox */
   .gg-lightbox{
@@ -220,17 +208,16 @@
   }
   .gg-lightbox.active{ opacity:1; pointer-events:auto; }
   .gg-lightbox-inner{
-    width:100%; max-width:880px; max-height:90vh;
-    background:#1c140d; border-radius:1.1rem; overflow:hidden auto;
-    display:flex; flex-direction:column;
+    border-radius:1.1rem; overflow:hidden; line-height:0;
     box-shadow:0 40px 90px -20px rgba(0,0,0,.7);
     transform:scale(.94); transition:transform .3s ease;
   }
   .gg-lightbox.active .gg-lightbox-inner{ transform:scale(1); }
   .gg-lightbox-inner img{
-    width:100%; max-height:64vh; object-fit:contain; background:#0c0804; display:block;
+    display:block; width:auto; height:auto;
+    max-width:min(560px, 92vw); max-height:86vh;
+    background:#0c0804;
   }
-  .gg-lightbox-caption{ padding:1.25rem 1.5rem 1.5rem; }
   .gg-lightbox-close{
     position:absolute; top:1.25rem; right:1.25rem; z-index:210;
     width:2.75rem; height:2.75rem; border-radius:9999px;
@@ -241,8 +228,10 @@
   .gg-lightbox-close:hover{ background:rgba(255,255,255,.28); transform:rotate(90deg); }
 
   @media (prefers-reduced-motion: reduce){
-    .gh-bg, .gh-badge, .gh-orb, .gh-arrow, .hero-pill::after{ animation: none !important; }
-    .gg-img, .gg-lightbox-inner{ transition:none !important; }
+    .gh-bg, .gh-orb, .gh-arrow{ animation: none !important; }
+    .gg-card, .gg-img, .gg-lightbox-inner{ transition:none !important; }
+    .gg-card:hover{ transform:none; }
+    .gg-card:hover .gg-img{ transform:none; }
   }
 </style>
 </head>
@@ -367,31 +356,28 @@
   <div class="gh-bg -z-20"></div>
 
   <!-- even overlay across the whole photo — dark enough for text, light enough to see the image -->
-  <div class="absolute inset-0 -z-10 bg-gradient-to-b from-stone-950/55 via-stone-950/40 to-stone-950/65"></div>
+  <div class="absolute inset-0 -z-10 bg-gradient-to-b from-stone-950/45 via-stone-950/25 to-stone-950/35"></div>
+
+  <!-- deeper scrim only where the copy sits -->
+  <div class="gh-scrim -z-10"></div>
 
   <!-- decorative glow orbs, kept subtle so they don't wash out the photo -->
   <div class="gh-orb absolute -top-20 -left-16 w-72 h-72 rounded-full bg-amber-500/15 pointer-events-none"></div>
   <div class="gh-orb absolute -bottom-16 -right-16 w-80 h-80 rounded-full bg-amber-300/10 pointer-events-none"></div>
 
-  <div class="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 pb-32 sm:pb-36 text-center">
+  <div class="relative z-10 w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-32 sm:pb-40 text-center">
 
-    <span class="gh-badge hero-pill reveal">
-      <span class="relative flex w-2.5 h-2.5">
-        <span class="animate-ping absolute inline-flex w-full h-full rounded-full bg-amber-400 opacity-75"></span>
-        <span class="relative inline-flex w-2.5 h-2.5 rounded-full bg-amber-300"></span>
-      </span>
-      <span data-i18n="gallery.hero.badge">Our Gallery</span>
-    </span>
+    <!-- The visible badge and heading were removed by request; this keeps a single
+         top-level heading on the page for search engines and screen readers. -->
+    <h1 class="sr-only" data-i18n="gallery.hero.title">Gallery</h1>
 
-    <h1 class="gh-text-shadow reveal d1 mt-7 text-4xl sm:text-5xl lg:text-[3.5rem] font-bold text-white leading-[1.15] [text-wrap:balance]" data-i18n="gallery.hero.title">Our Work &amp; Services</h1>
+    <div class="reveal mx-auto w-20 h-1.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500"></div>
 
-    <div class="reveal d2 mt-6 mx-auto w-20 h-1.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500"></div>
-
-    <p class="gh-text-shadow reveal d3 mt-7 text-lg sm:text-xl text-stone-100 leading-relaxed max-w-2xl mx-auto" data-i18n="gallery.hero.desc">
+    <p class="gh-text-shadow reveal d1 mt-7 text-lg sm:text-2xl text-stone-100 leading-relaxed max-w-2xl mx-auto" data-i18n="gallery.hero.desc">
       Explore our gallery showcasing funeral arrangements, dead body transport, ritual support, cremation coordination, and respectful ceremonies delivered with care.
     </p>
 
-    <div class="reveal d4 mt-9 flex flex-wrap items-center justify-center gap-4">
+    <div class="reveal d2 mt-9 flex flex-wrap items-center justify-center gap-4">
       <a data-link="phone" class="hero-btn">
         <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg>
         <span data-i18n="common.callnow">Call Now</span>
@@ -432,158 +418,68 @@
       <p class="mt-5 text-stone-600 leading-relaxed" data-i18n="gallery.grid.desc">From sacred rites on the riverbank to the families we walk beside — a look at the traditions and care behind every service we arrange across Pune.</p>
     </div>
 
-    <!-- Bento grid -->
+    <!-- Poster grid — each card is a 4:5 frame matching the source artwork -->
     <div class="gg-grid">
 
-      <!-- 1: Ghat / river rites -->
-      <article class="gg-card reveal d1 gg-big" tabindex="0" role="button" aria-label="View larger image">
-        <div class="gg-img-wrap"><img class="gg-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Varanasi_Munshi_Ghat3.jpg/1280px-Varanasi_Munshi_Ghat3.jpg" alt="Sacred riverbank ghats in India where traditional asthi visarjan and river rites are performed" loading="lazy"></div>
-        <button type="button" class="gg-zoom" tabindex="-1" aria-hidden="true">
+      <button type="button" class="gg-card reveal d1" aria-label="Enlarge: 25,000 departed given a dignified farewell">
+        <picture>
+          <source type="image/webp" sizes="(min-width:1024px) 30vw, 47vw" srcset="image/gallary/gallary1-480.webp 480w, image/gallary/gallary1-768.webp 768w, image/gallary/gallary1-1024.webp 1024w">
+          <img class="gg-img" src="image/gallary/gallary1-768.jpg" width="1024" height="1280" loading="lazy" decoding="async" alt="Sanman Yojana volunteers carrying a garlanded bier in a funeral procession — 25,000 departed given a dignified farewell.">
+        </picture>
+        <span class="gg-zoom" aria-hidden="true">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5M15 15l5.25 5.25"/></svg>
-        </button>
-        <div class="gg-overlay">
-          <div>
-            <span class="gg-overlay-badge" data-i18n="gallery.cat.rituals">Rituals</span>
-            <h3 class="gg-overlay-title text-lg sm:text-xl" data-i18n="gallery.c1.title">River Rites, Honoured with Care</h3>
-            <p class="gg-overlay-sub" data-i18n="gallery.c1.desc">Asthi visarjan and traditional river ceremonies, arranged with full respect for custom.</p>
-          </div>
-        </div>
-      </article>
+        </span>
+      </button>
 
-      <!-- 2: Diya / remembrance -->
-      <article class="gg-card reveal d2 gg-big" tabindex="0" role="button" aria-label="View larger image">
-        <div class="gg-img-wrap"><img class="gg-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/A_Deeya_Diya_oil_lamp_with_a_swastika_sign%2C_Hinduism_Varanasi_India.jpg/1280px-A_Deeya_Diya_oil_lamp_with_a_swastika_sign%2C_Hinduism_Varanasi_India.jpg" alt="A lit diya oil lamp used in Hindu remembrance and farewell ceremonies" loading="lazy"></div>
-        <button type="button" class="gg-zoom" tabindex="-1" aria-hidden="true">
+      <button type="button" class="gg-card reveal d2" aria-label="Enlarge: free treatment and meals for Warkari pilgrims">
+        <picture>
+          <source type="image/webp" sizes="(min-width:1024px) 30vw, 47vw" srcset="image/gallary/gallary2-480.webp 480w, image/gallary/gallary2-768.webp 768w, image/gallary/gallary2-1024.webp 1024w">
+          <img class="gg-img" src="image/gallary/gallary2-768.jpg" width="1024" height="1280" loading="lazy" decoding="async" alt="Collage of free medical treatment and meal camps run for Warkari pilgrims, alongside Sanman Yojana ambulances.">
+        </picture>
+        <span class="gg-zoom" aria-hidden="true">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5M15 15l5.25 5.25"/></svg>
-        </button>
-        <div class="gg-overlay">
-          <div>
-            <span class="gg-overlay-badge" data-i18n="gallery.cat.remembrance">Remembrance</span>
-            <h3 class="gg-overlay-title text-lg sm:text-xl" data-i18n="gallery.c2.title">A Light That Honours a Life</h3>
-            <p class="gg-overlay-sub" data-i18n="gallery.c2.desc">Diyas and sacred flame rituals mark every farewell with warmth and dignity.</p>
-          </div>
-        </div>
-      </article>
+        </span>
+      </button>
 
-      <!-- 3: Marigold garlands -->
-      <article class="gg-card reveal d3 gg-tall" tabindex="0" role="button" aria-label="View larger image">
-        <div class="gg-img-wrap"><img class="gg-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Marigold_Flowers_as_garland_in_India.jpg/1280px-Marigold_Flowers_as_garland_in_India.jpg" alt="Fresh marigold flower garlands used as ritual offerings in Indian ceremonies" loading="lazy"></div>
-        <button type="button" class="gg-zoom" tabindex="-1" aria-hidden="true">
+      <button type="button" class="gg-card reveal d3" aria-label="Enlarge: Shahid Bhagat Singh Pratishthan, 27 years of service">
+        <picture>
+          <source type="image/webp" sizes="(min-width:1024px) 30vw, 47vw" srcset="image/gallary/gallary3-480.webp 480w, image/gallary/gallary3-768.webp 768w, image/gallary/gallary3-1024.webp 1024w">
+          <img class="gg-img" src="image/gallary/gallary3-768.jpg" width="1024" height="1280" loading="lazy" decoding="async" alt="Shahid Bhagat Singh Pratishthan — twenty-seven years of public service in Pune.">
+        </picture>
+        <span class="gg-zoom" aria-hidden="true">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5M15 15l5.25 5.25"/></svg>
-        </button>
-        <div class="gg-overlay">
-          <div>
-            <span class="gg-overlay-badge" data-i18n="gallery.cat.offerings">Offerings</span>
-            <h3 class="gg-overlay-title text-base sm:text-lg" data-i18n="gallery.c3.title">Marigold &amp; Floral Offerings</h3>
-            <p class="gg-overlay-sub" data-i18n="gallery.c3.desc">Fresh flowers and garlands arranged for every ceremony.</p>
-          </div>
-        </div>
-      </article>
+        </span>
+      </button>
 
-      <!-- 4: Temple gate -->
-      <article class="gg-card reveal d4" tabindex="0" role="button" aria-label="View larger image">
-        <div class="gg-img-wrap"><img class="gg-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Tanjore_temple_gate.jpg/1280px-Tanjore_temple_gate.jpg" alt="Traditional Indian temple gateway representing venues coordinated for religious rites" loading="lazy"></div>
-        <button type="button" class="gg-zoom" tabindex="-1" aria-hidden="true">
+      <button type="button" class="gg-card reveal d1" aria-label="Enlarge: over 70 patients treated every day">
+        <picture>
+          <source type="image/webp" sizes="(min-width:1024px) 30vw, 47vw" srcset="image/gallary/gallary4-480.webp 480w, image/gallary/gallary4-768.webp 768w, image/gallary/gallary4-1024.webp 1024w">
+          <img class="gg-img" src="image/gallary/gallary4-768.jpg" width="1024" height="1280" loading="lazy" decoding="async" alt="Families queuing at the hospital and wellness camp where over 70 patients are treated every day.">
+        </picture>
+        <span class="gg-zoom" aria-hidden="true">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5M15 15l5.25 5.25"/></svg>
-        </button>
-        <div class="gg-overlay">
-          <div>
-            <span class="gg-overlay-badge" data-i18n="gallery.cat.venues">Venues</span>
-            <h3 class="gg-overlay-title text-base" data-i18n="gallery.c4.title">Temple &amp; Ground Access</h3>
-            <p class="gg-overlay-sub" data-i18n="gallery.c4.desc">Coordinated booking at trusted religious sites.</p>
-          </div>
-        </div>
-      </article>
+        </span>
+      </button>
 
-      <!-- 5: Priest -->
-      <article class="gg-card reveal d5" tabindex="0" role="button" aria-label="View larger image">
-        <div class="gg-img-wrap"><img class="gg-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/HINDU_PRIEST.jpg/1280px-HINDU_PRIEST.jpg" alt="A Hindu priest performing traditional religious rites" loading="lazy"></div>
-        <button type="button" class="gg-zoom" tabindex="-1" aria-hidden="true">
+      <button type="button" class="gg-card reveal d2" aria-label="Enlarge: Pune's first shavvahini funeral van">
+        <picture>
+          <source type="image/webp" sizes="(min-width:1024px) 30vw, 47vw" srcset="image/gallary/gallary5-480.webp 480w, image/gallary/gallary5-768.webp 768w, image/gallary/gallary5-1024.webp 1024w">
+          <img class="gg-img" src="image/gallary/gallary5-768.jpg" width="1024" height="1280" loading="lazy" decoding="async" alt="A garlanded funeral van — Pune's first shavvahini, one of ten now serving the city.">
+        </picture>
+        <span class="gg-zoom" aria-hidden="true">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5M15 15l5.25 5.25"/></svg>
-        </button>
-        <div class="gg-overlay">
-          <div>
-            <span class="gg-overlay-badge" data-i18n="gallery.cat.rituals">Rituals</span>
-            <h3 class="gg-overlay-title text-base" data-i18n="gallery.c5.title">Guruji for Every Rite</h3>
-            <p class="gg-overlay-sub" data-i18n="gallery.c5.desc">Experienced purohits guide each ceremony with proper vidhi.</p>
-          </div>
-        </div>
-      </article>
+        </span>
+      </button>
 
-      <!-- 6: Dead body transport -->
-      <article class="gg-card reveal d1" tabindex="0" role="button" aria-label="View larger image">
-        <div class="gg-img-wrap"><img class="gg-img" src="image/Ambulance-Service.png" alt="Sanman Yojana transport vehicle used for 24x7 dead body transport support" loading="lazy"></div>
-        <button type="button" class="gg-zoom" tabindex="-1" aria-hidden="true">
+      <button type="button" class="gg-card reveal d3" aria-label="Enlarge: ambulances on duty across Pune city">
+        <picture>
+          <source type="image/webp" sizes="(min-width:1024px) 30vw, 47vw" srcset="image/gallary/gallary6-480.webp 480w, image/gallary/gallary6-768.webp 768w, image/gallary/gallary6-1024.webp 1024w">
+          <img class="gg-img" src="image/gallary/gallary6-768.jpg" width="1024" height="1280" loading="lazy" decoding="async" alt="Two garlanded Sanman Yojana ambulances from the fleet on duty across Pune city.">
+        </picture>
+        <span class="gg-zoom" aria-hidden="true">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5M15 15l5.25 5.25"/></svg>
-        </button>
-        <div class="gg-overlay">
-          <div>
-            <span class="gg-overlay-badge" data-i18n="gallery.cat.transport">Transport</span>
-            <h3 class="gg-overlay-title text-base" data-i18n="gallery.c6.title">24×7 Dead Body Transport</h3>
-            <p class="gg-overlay-sub" data-i18n="gallery.c6.desc">Prompt, dignified transport whenever a family needs us.</p>
-          </div>
-        </div>
-      </article>
-
-      <!-- 7: Incense -->
-      <article class="gg-card reveal d2 gg-wide" tabindex="0" role="button" aria-label="View larger image">
-        <div class="gg-img-wrap"><img class="gg-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Incense_sticks_in_bangalore.jpg/1280px-Incense_sticks_in_bangalore.jpg" alt="Agarbatti incense sticks used as ritual essentials in Indian ceremonies" loading="lazy"></div>
-        <button type="button" class="gg-zoom" tabindex="-1" aria-hidden="true">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5M15 15l5.25 5.25"/></svg>
-        </button>
-        <div class="gg-overlay">
-          <div>
-            <span class="gg-overlay-badge" data-i18n="gallery.cat.essentials">Essentials</span>
-            <h3 class="gg-overlay-title text-base sm:text-lg" data-i18n="gallery.c7.title">Agarbatti &amp; Sacred Incense</h3>
-            <p class="gg-overlay-sub" data-i18n="gallery.c7.desc">Every ritual kit includes the essentials, prepared with care.</p>
-          </div>
-        </div>
-      </article>
-
-      <!-- 8: Rudraksha -->
-      <article class="gg-card reveal d3" tabindex="0" role="button" aria-label="View larger image">
-        <div class="gg-img-wrap"><img class="gg-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/RudrakshaBeads.jpg/1280px-RudrakshaBeads.jpg" alt="Rudraksha beads used in traditional ritual items" loading="lazy"></div>
-        <button type="button" class="gg-zoom" tabindex="-1" aria-hidden="true">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5M15 15l5.25 5.25"/></svg>
-        </button>
-        <div class="gg-overlay">
-          <div>
-            <span class="gg-overlay-badge" data-i18n="gallery.cat.essentials">Essentials</span>
-            <h3 class="gg-overlay-title text-base" data-i18n="gallery.c8.title">Rudraksha &amp; Ritual Items</h3>
-            <p class="gg-overlay-sub" data-i18n="gallery.c8.desc">Traditional items sourced for authentic ceremonies.</p>
-          </div>
-        </div>
-      </article>
-
-      <!-- 9: Pilgrims at the river -->
-      <article class="gg-card reveal d4" tabindex="0" role="button" aria-label="View larger image">
-        <div class="gg-img-wrap"><img class="gg-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Varanasi%2C_India%2C_Ganges_River%2C_Pilgrims.jpg/1280px-Varanasi%2C_India%2C_Ganges_River%2C_Pilgrims.jpg" alt="Pilgrims performing traditional rites by the river in India" loading="lazy"></div>
-        <button type="button" class="gg-zoom" tabindex="-1" aria-hidden="true">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5M15 15l5.25 5.25"/></svg>
-        </button>
-        <div class="gg-overlay">
-          <div>
-            <span class="gg-overlay-badge" data-i18n="gallery.cat.rituals">Rituals</span>
-            <h3 class="gg-overlay-title text-base" data-i18n="gallery.c9.title">Dashkriya &amp; River Ceremonies</h3>
-            <p class="gg-overlay-sub" data-i18n="gallery.c9.desc">Complete dashkriya vidhi performed with dignity.</p>
-          </div>
-        </div>
-      </article>
-
-      <!-- 10: Pune families -->
-      <article class="gg-card reveal d5 gg-big" tabindex="0" role="button" aria-label="View larger image">
-        <div class="gg-img-wrap"><img class="gg-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Pune%2C_Maharashtra%2C_India%2C_Family%2C_Mothers_and_their_children.jpg/1280px-Pune%2C_Maharashtra%2C_India%2C_Family%2C_Mothers_and_their_children.jpg" alt="A family in Pune, Maharashtra, representing the families Sanman Yojana supports" loading="lazy"></div>
-        <button type="button" class="gg-zoom" tabindex="-1" aria-hidden="true">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5M15 15l5.25 5.25"/></svg>
-        </button>
-        <div class="gg-overlay">
-          <div>
-            <span class="gg-overlay-badge" data-i18n="gallery.cat.families">Our Families</span>
-            <h3 class="gg-overlay-title text-lg sm:text-xl" data-i18n="gallery.c10.title">Standing With Pune Families</h3>
-            <p class="gg-overlay-sub" data-i18n="gallery.c10.desc">Compassionate support for families across Pune, every step of the way.</p>
-          </div>
-        </div>
-      </article>
+        </span>
+      </button>
 
     </div>
 
@@ -597,12 +493,7 @@
     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
   </button>
   <div class="gg-lightbox-inner">
-    <img id="ggLightboxImg" src="" alt="">
-    <div class="gg-lightbox-caption">
-      <span id="ggLightboxBadge" class="gg-overlay-badge" style="color:#fbbf24;"></span>
-      <h3 id="ggLightboxTitle" class="text-white text-lg sm:text-xl font-bold" style="font-family:'Playfair Display','Noto Serif Devanagari',Georgia,serif;"></h3>
-      <p id="ggLightboxSub" class="text-stone-300 text-sm mt-1.5 leading-relaxed"></p>
-    </div>
+    <img id="ggLightboxImg" src="" alt="" width="1024" height="1280">
   </div>
 </div>
 
@@ -704,36 +595,32 @@
 
     var lightbox = document.getElementById("ggLightbox");
     var lbImg = document.getElementById("ggLightboxImg");
-    var lbBadge = document.getElementById("ggLightboxBadge");
-    var lbTitle = document.getElementById("ggLightboxTitle");
-    var lbSub = document.getElementById("ggLightboxSub");
     var lbClose = document.getElementById("ggLightboxClose");
+    var lastCard = null;
 
     function openLightbox(card) {
       var img = card.querySelector(".gg-img");
-      var badge = card.querySelector(".gg-overlay-badge");
-      var title = card.querySelector(".gg-overlay-title");
-      var sub = card.querySelector(".gg-overlay-sub");
-      lbImg.src = img.src;
+      // currentSrc is the variant the browser already downloaded, so the
+      // preview opens instantly instead of pulling a second file.
+      lbImg.src = img.currentSrc || img.src;
       lbImg.alt = img.alt;
-      lbBadge.textContent = badge ? badge.textContent : "";
-      lbTitle.textContent = title ? title.textContent : "";
-      lbSub.textContent = sub ? sub.textContent : "";
+      lastCard = card;
       lightbox.classList.add("active");
       lightbox.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
+      lbClose.focus();
     }
     function closeLightbox() {
+      if (!lightbox.classList.contains("active")) return;
       lightbox.classList.remove("active");
       lightbox.setAttribute("aria-hidden", "true");
       document.body.style.overflow = "";
+      if (lastCard) { lastCard.focus(); lastCard = null; }
     }
 
+    // The cards are real <button> elements, so Enter/Space fire click natively.
     cards.forEach(function (card) {
       card.addEventListener("click", function () { openLightbox(card); });
-      card.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLightbox(card); }
-      });
     });
 
     lbClose.addEventListener("click", closeLightbox);
