@@ -26,6 +26,27 @@ description. Google crawls the English HTML as served, so **the English strings
 in the HTML are the ones that rank** — keep the HTML `content=` attribute and the
 `en` entry in `i18n.js` saying the same thing.
 
+## The share card (what shows up when the link is pasted into WhatsApp)
+
+Every page points `og:image` and `twitter:image` at
+`assets/img/og-logo.jpg` — the brand logo centred on a cream 1200x630 card, 69 KB.
+Three things about it are deliberate:
+
+- **1200x630.** WhatsApp only draws the big preview card for images at or near
+  1.91:1; anything squarer collapses to a small corner thumbnail.
+- **JPEG, under 300 KB.** WhatsApp refuses to fetch heavy previews, which is why
+  `assets/img/logo.png` (14222x14222, 16 MB) can never be used here directly. The
+  card is generated from it, not linked to it. WebP is unreliable in previews too.
+- **Absolute URL on the live host.** Relative paths silently produce no preview.
+
+If the logo art changes, regenerate the card at the same path and size, then paste
+a page URL into <https://developers.facebook.com/tools/debug/> and hit *Scrape
+Again* — WhatsApp and Facebook share that cache and will otherwise keep serving
+the old image for days.
+
+`hero-poster.jpg` is still the `image` on the `FuneralHome` schema node, and that
+is correct: Google wants a photograph of the business there, not a logotype.
+
 ## Structured data (what Google reads for rich results)
 
 | Page | Schema types |
