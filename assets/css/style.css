@@ -77,10 +77,12 @@ section[id],
 }
 
 /* ============================================================
-   TOP BAR — same white backdrop and link colour as the navbar
+   TOP BAR — the navbar's gradient, a shade darker: just enough
+   to separate the two brown strips without going near-black
    ============================================================ */
 .site-topbar {
-  color: #9a3412;              /* identical to .nav-link */
+  background: linear-gradient(115deg, #6a2e0d 0%, #80380c 50%, #6a2e0d 100%);
+  color: #f2ddc2;              /* warm cream — readable on the brown */
   /* the sticky header below is z-50 — without a stacking context of its own
      the language dropdown would open *behind* the navbar on desktop */
   position: relative;
@@ -88,7 +90,24 @@ section[id],
 }
 
 .topbar-link:hover {
-  color: var(--primary);
+  color: #fbbf24;
+}
+
+/* Social circles in the top bar — tinted glass on the brown instead of the
+   old amber-50 chips, which disappeared against it. */
+.tb-soc {
+  background: rgba(255, 255, 255, 0.12);
+  color: #f2ddc2;
+}
+
+.tb-soc:hover {
+  background: rgba(255, 255, 255, 0.24);
+  color: #fff;
+}
+
+.tb-soc-wa:hover {
+  background: #16a34a;
+  color: #fff;
 }
 
 /* ============================================================
@@ -134,13 +153,22 @@ section[id],
 }
 
 /* ============================================================
+   NAVBAR BAND — the exact gradient the emergency helpline strip
+   on the home page uses, so the two brown bands match.
+   ============================================================ */
+#siteHeader {
+  background: linear-gradient(115deg, #78350f 0%, #92400e 50%, #78350f 100%);
+  border-bottom: 2px solid rgba(251, 191, 36, 0.32);
+}
+
+/* ============================================================
    NAVIGATION LINKS
    ============================================================ */
 .nav-link {
   position: relative;
   font-weight: 600;
   font-size: 0.95rem;
-  color: #9a3412;
+  color: #f2ddc2;
   opacity: 0.92;
   padding: 0.5rem 0;
   transition: opacity 0.3s ease, color 0.3s ease;
@@ -153,7 +181,7 @@ section[id],
   bottom: -2px;
   width: 0;
   height: 2.5px;
-  background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+  background: linear-gradient(90deg, #fbbf24, #fde68a);
   border-radius: 99px;
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -161,7 +189,7 @@ section[id],
 .nav-link:hover,
 .nav-link.active {
   opacity: 1;
-  color: var(--primary);
+  color: #fbbf24;
 }
 
 .nav-link.active::after,
@@ -169,7 +197,9 @@ section[id],
   width: 100%;
 }
 
-/* "Contact Now" call-to-action in the navbar */
+/* "Contact Now" call-to-action in the navbar. The brown band swallowed the
+   old amber-on-amber button, so the fill and the text swap over: warm amber
+   on dark brown lettering. */
 .nav-cta {
   position: relative;
   display: inline-flex;
@@ -177,14 +207,14 @@ section[id],
   gap: 0.5rem;
   padding: 0.625rem 1.25rem;
   border-radius: 0.625rem;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  color: #fff;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: #4a2308;
   font-weight: 700;
   font-size: 0.9rem;
   line-height: 1;
   white-space: nowrap;
   overflow: hidden;
-  box-shadow: 0 10px 22px -14px rgba(120, 53, 15, 0.9);
+  box-shadow: 0 10px 22px -14px rgba(0, 0, 0, 0.85);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -205,7 +235,7 @@ section[id],
 
 .nav-cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 28px -14px rgba(120, 53, 15, 1);
+  box-shadow: 0 14px 28px -12px rgba(0, 0, 0, 0.95);
 }
 
 .nav-cta:hover svg {
@@ -214,6 +244,18 @@ section[id],
 
 .nav-cta:hover::after {
   transform: translateX(120%);
+}
+
+/* Hamburger — tinted glass on the brown band */
+.menu-btn {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fde68a;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.menu-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
 }
 
 /* ============================================================
@@ -451,16 +493,18 @@ section[id],
   background: rgba(255, 255, 255, 0.24);
 }
 
-/* Always light, regardless of the visitor's OS/browser dark-mode
-   preference — the top bar and the header are both white. */
+/* Used only inside the top bar and the header, both of which are brown, so
+   this stays a light chip on brown regardless of the visitor's OS dark-mode
+   preference. */
 .lang-toggle-light {
-  background: #fef3c7;
-  color: #78350f;
-  border: 1px solid #f3e0bb;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fde68a;
+  border: 1px solid rgba(253, 230, 138, 0.35);
 }
 
 .lang-toggle-light:hover {
-  background: #fde9c8;
+  background: rgba(255, 255, 255, 0.26);
+  color: #fff;
 }
 
 .lang-current {
@@ -513,10 +557,12 @@ section[id],
   color: #fff;
 }
 
-/* Mobile menu */
+/* Mobile menu — carries on the brown of the header it drops out of */
 #mobileMenu {
   max-height: 0;
   overflow: hidden;
+  background: #6a2e0d;
+  border-top: 1px solid rgba(253, 230, 138, 0.2);
   transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -526,17 +572,18 @@ section[id],
 }
 
 .mnav-link {
-  color: #44403c;
+  color: #f2ddc2;
   transition: background 0.25s ease, color 0.25s ease;
 }
 
 .mnav-link:hover {
-  background: #f5f5f4;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
 
 .mnav-link.active {
-  background: #fffbeb;
-  color: var(--primary);
+  background: rgba(251, 191, 36, 0.16);
+  color: #fbbf24;
   font-weight: 700;
 }
 
@@ -773,6 +820,186 @@ section[id],
   transform: none;
 }
 
+/* ============================================================
+   HOME — "OUR SERVICES" CARDS
+   ============================================================ */
+
+/* The lift and the shadow live here rather than in utility classes because
+   .reveal.reveal-soft.show above wins on specificity and would otherwise
+   flatten a hover transform set on the same element. */
+.svc-teaser.reveal.reveal-soft.show {
+  transition: opacity 0.3s ease-out, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s ease-out;
+}
+
+.svc-teaser.reveal.reveal-soft.show:hover {
+  transform: translateY(-8px);
+}
+
+/* Amber hairline that draws itself across the top of the card on hover. */
+.svc-teaser::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, #b45309, #f59e0b, #fcd34d);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  z-index: 4;
+}
+
+.svc-teaser:hover::after { transform: scaleX(1); }
+
+/* Frosted icon tile on the photo — fills amber as the card is hovered. */
+.svc-teaser .svc-ico {
+  transition: background-color 0.35s ease, color 0.35s ease,
+              box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.svc-teaser:hover .svc-ico {
+  background-color: rgba(180, 83, 9, 0.95);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px -12px rgba(120, 53, 15, 0.9);
+}
+
+/* Short accent rule under the heading, drawn out on hover. */
+.svc-teaser .svc-rule {
+  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.svc-teaser:hover .svc-rule { width: 3.5rem; }
+
+/* Learn More — outline pill that fills on hover anywhere over the card. */
+.svc-teaser .svc-cta {
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+              color 0.3s ease, gap 0.3s ease;
+}
+
+.svc-teaser:hover .svc-cta {
+  background-color: #b45309;
+  border-color: #b45309;
+  color: #fff;
+  gap: 0.75rem;
+}
+
+.svc-teaser .svc-cta-arrow {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.svc-teaser:hover .svc-cta-arrow { transform: translateX(2px); }
+
+/* Light sweeping across the photo. Transform/opacity only, and pointer
+   devices only, so phones never pay for it. */
+.svc-sheen {
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.3) 50%, transparent 62%);
+  opacity: 0;
+  transform: translateX(-110%);
+}
+
+@media (hover: hover) {
+  .svc-teaser:hover .svc-sheen {
+    opacity: 1;
+    transform: translateX(110%);
+    transition: transform 0.95s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-teaser.reveal.reveal-soft.show:hover { transform: none; }
+  .svc-teaser:hover .svc-ico { transform: none; }
+  .svc-teaser .svc-sheen { display: none; }
+}
+
+/* ---------- Home services cards ----------
+   The cards are on the page from the start and ride in as the section is
+   scrolled to; main.js deals out .show card by card. */
+
+/* The sideways travel is inward on wide screens but crosses the whole card on
+   phones, so the panel clips its own overflow rather than letting a card push
+   the page sideways. The clip margin leaves room for the drop shadows. */
+#svcPanel {
+  overflow-x: clip;
+  overflow-clip-margin: 32px;
+}
+
+/* ---- The cards spread out like a hand of cards ----
+   Each card starts pulled in toward the middle of its row, shrunk and tilted,
+   then fans out to its own slot. The per-column offsets are set as custom
+   properties so one transform serves every breakpoint. `#svcPanel` is used on
+   purpose: it outranks the .reveal / .reveal-soft rules that would otherwise
+   flatten this back into a plain fade. */
+#svcPanel .svc-teaser.reveal.reveal-soft {
+  --sx: 0px;
+  --sy: 26px;
+  --sr: 0deg;
+  --ss: 0.9;
+  opacity: 0;
+  transform-origin: 50% 130%;
+  transform: translate3d(var(--sx), var(--sy), 0) rotate(var(--sr)) scale(var(--ss));
+  transition: opacity 0.45s ease-out,
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* One column — the cards come in alternately from the left and from the right
+   as the phone is scrolled, so each one arrives from its own side rather than
+   the whole strip drifting up. */
+@media (max-width: 639px) {
+  #svcPanel .svc-teaser.reveal.reveal-soft {
+    --sy: 12px;
+    --ss: 0.94;
+    transform-origin: 50% 50%;
+  }
+  #svcPanel .svc-teaser.reveal.reveal-soft:nth-child(2n + 1) { --sx: -78px; --sr: -3deg; }
+  #svcPanel .svc-teaser.reveal.reveal-soft:nth-child(2n)     { --sx: 78px;  --sr: 3deg; }
+}
+
+#svcPanel .svc-teaser.reveal.reveal-soft.show {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hover lift still wins once the card has landed. */
+#svcPanel .svc-teaser.reveal.reveal-soft.show:hover {
+  transform: translateY(-8px);
+  transition: opacity 0.3s ease-out,
+              transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s ease-out;
+}
+
+/* Two columns — the pair starts overlapped in the middle and parts sideways.
+   Every offset points inward, so the travel stays inside the grid and never
+   widens the page. */
+@media (min-width: 640px) {
+  #svcPanel .svc-teaser.reveal.reveal-soft:nth-child(2n + 1) { --sx: 70px;  --sr: -4deg; }
+  #svcPanel .svc-teaser.reveal.reveal-soft:nth-child(2n)     { --sx: -70px; --sr: 4deg; }
+}
+
+/* Four columns — a real fan: the outer cards travel furthest and tilt most. */
+@media (min-width: 1024px) {
+  #svcPanel .svc-teaser.reveal.reveal-soft { --sy: 34px; --ss: 0.86; }
+  #svcPanel .svc-teaser.reveal.reveal-soft:nth-child(4n + 1) { --sx: 170px;  --sr: -7deg; }
+  #svcPanel .svc-teaser.reveal.reveal-soft:nth-child(4n + 2) { --sx: 58px;   --sr: -2.5deg; }
+  #svcPanel .svc-teaser.reveal.reveal-soft:nth-child(4n + 3) { --sx: -58px;  --sr: 2.5deg; }
+  #svcPanel .svc-teaser.reveal.reveal-soft:nth-child(4n + 4) { --sx: -170px; --sr: 7deg; }
+}
+
+/* The per-column offsets above are set on :nth-child rules, so :nth-child(n) is
+   repeated here to match their weight — a plain selector would lose and the
+   cards would still slide. */
+@media (prefers-reduced-motion: reduce) {
+  #svcPanel .svc-teaser.reveal.reveal-soft,
+  #svcPanel .svc-teaser.reveal.reveal-soft:nth-child(n) {
+    --sx: 0px;
+    --sy: 0px;
+    --sr: 0deg;
+    --ss: 1;
+    transition: none;
+  }
+}
+
 /* Staggered delays */
 .d1 { transition-delay: 0.1s; }
 .d2 { transition-delay: 0.2s; }
@@ -870,7 +1097,7 @@ section[id],
    HEADER STICKY EFFECTS
    ============================================================ */
 #siteHeader.shadow-lg {
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px -10px rgba(45, 20, 5, 0.45);
 }
 
 /* ============================================================

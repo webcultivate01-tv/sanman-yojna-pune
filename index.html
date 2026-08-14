@@ -241,9 +241,195 @@
     border-color: #d97706;
   }
 
-  /* Steps connector line */
-  .step-line{
-    background: repeating-linear-gradient(90deg, #d97706 0, #d97706 8px, transparent 8px, transparent 16px);
+  /* ===================== HOW IT WORKS ===================== */
+  .hiw{
+    background: radial-gradient(120% 80% at 50% 0%, #fffcf7 0%, #fbf3e7 55%, #f7eddd 100%);
+  }
+  .hiw-leaf{
+    position: absolute; top: 0; width: 210px; color: #e6d3ae; opacity: .55;
+    pointer-events: none;
+  }
+  .hiw-leaf.is-left { left: 0; }
+  .hiw-leaf.is-right{ right: 0; transform: scaleX(-1); }
+
+  .hiw-grid{
+    --hiw-gap: 2rem;
+    display: grid;
+    gap: 3.5rem var(--hiw-gap);
+  }
+  @media (min-width: 768px){
+    .hiw-grid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+  }
+
+  /* Circular photo medallion with its gold outline */
+  .hiw-media{
+    position: relative;
+    width: min(100%, 300px);
+    margin-inline: auto;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    padding: 10px;                       /* the gap between photo and gold ring */
+    background: #fffdf9;
+    box-shadow: inset 0 0 0 2px #cba24a, 0 18px 36px -22px rgba(120,53,15,.55);
+  }
+  /* Clips the photo to the circle so each shot can be zoomed/nudged
+     independently — lets a square source hide any branding near its edge.
+     Tune per image with --z (zoom), --tx / --ty (shift) on .hiw-shot. */
+  .hiw-shot{
+    display: block;
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 0 3px #e4cf9c;
+  }
+  /* --k is the live zoom multiplier: the entrance settles it 1.14 -> 1 and
+     hover lifts it to 1.05, so both effects share one transform declaration
+     and never overwrite each other's framing. */
+  .hiw-shot img{
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transform: scale(calc(var(--z, 1) * var(--k, 1))) translate(var(--tx, 0), var(--ty, 0));
+    transition: transform .5s ease;
+  }
+  .hiw-step:hover .hiw-shot img{ --k: 1.05; }
+
+  /* 01 / 02 / 03 badge straddling the bottom of the medallion */
+  .hiw-num{
+    position: absolute; left: 50%; bottom: -18px;
+    transform: translateX(-50%);
+    width: 58px; height: 58px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: #b21e4b;
+    color: #fff;
+    font-size: 20px; font-weight: 700; letter-spacing: .02em;
+    box-shadow: 0 0 0 5px #fdf7ee, 0 10px 20px -10px rgba(178,30,75,.7);
+  }
+
+  /* Connector arrow sitting in the gap between two steps */
+  .hiw-arrow{
+    display: none;
+    position: absolute; top: 50%; left: calc(100% + 14px);
+    transform: translateY(-50%);
+    width: 46px; color: #cba24a;
+  }
+  @media (min-width: 768px){
+    .hiw-step:not(:last-child) .hiw-arrow{ display: block; }
+  }
+
+  .hiw-body{
+    margin-top: 2.75rem;
+    display: flex; align-items: flex-start; gap: .875rem;
+  }
+  .hiw-icon{
+    flex: none;
+    width: 46px; height: 46px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: #f2e3c8;
+    color: #7c4a12;
+  }
+  .hiw-icon svg{ width: 24px; height: 24px; }
+  .hiw-title{ font-size: 1.125rem; font-weight: 700; color: #231b16; }
+  .hiw-desc { margin-top: .3rem; font-size: .9375rem; line-height: 1.6; color: #6b5a4b; }
+
+  @media (max-width: 767px){
+    .hiw-body{ justify-content: center; text-align: left; max-width: 300px; margin-inline: auto; }
+  }
+
+  /* ---------- Entrance choreography ----------
+     The article carries .reveal so the shared observer flips .show on it, but
+     the article itself stays put — every part inside animates on its own clock
+     off that one class. --sd is the column's head start, so the three steps
+     deal out left to right on desktop; on one column it stays 0 because each
+     step already arrives on its own scroll. */
+  .hiw-step.reveal{ opacity: 1; transform: none; transition: none; }
+
+  .hiw-step{ --sd: 0s; }
+  @media (min-width: 768px){
+    .hiw-step:nth-child(2){ --sd: .14s; }
+    .hiw-step:nth-child(3){ --sd: .28s; }
+  }
+
+  /* 1. the medallion rises and grows into place */
+  .hiw-step .hiw-media{
+    opacity: 0;
+    transform: translateY(26px) scale(.9);
+    transition: opacity .55s ease-out,
+                transform .75s cubic-bezier(.22,1,.36,1);
+    transition-delay: var(--sd);
+  }
+  .hiw-step.show .hiw-media{ opacity: 1; transform: none; }
+
+  /* 2. the photo unzooms behind the frame as it lands */
+  .hiw-step .hiw-shot img{
+    --k: 1.14;
+    transition: transform .9s cubic-bezier(.22,1,.36,1);
+    transition-delay: var(--sd);
+  }
+  .hiw-step.show .hiw-shot img{ --k: 1; }
+  .hiw-step.show:hover .hiw-shot img{ --k: 1.05; transition-duration: .5s; }
+
+  /* 3. the number pops on once the circle has settled */
+  .hiw-step .hiw-num{
+    opacity: 0;
+    transform: translateX(-50%) scale(.3);
+    transition: opacity .25s ease-out,
+                transform .5s cubic-bezier(.34,1.56,.64,1);
+    transition-delay: calc(var(--sd) + .34s);
+  }
+  .hiw-step.show .hiw-num{ opacity: 1; transform: translateX(-50%) scale(1); }
+
+  /* 4. the icon and copy follow */
+  .hiw-step .hiw-body{
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity .5s ease-out,
+                transform .6s cubic-bezier(.22,1,.36,1);
+    transition-delay: calc(var(--sd) + .44s);
+  }
+  .hiw-step.show .hiw-body{ opacity: 1; transform: none; }
+
+  .hiw-step .hiw-icon{
+    transform: scale(.5) rotate(-14deg);
+    transition: transform .55s cubic-bezier(.34,1.56,.64,1);
+    transition-delay: calc(var(--sd) + .56s);
+  }
+  .hiw-step.show .hiw-icon{ transform: none; }
+
+  /* 5. the connector draws itself toward the next step, last of all */
+  .hiw-arrow svg path{
+    stroke-dasharray: 60;
+    stroke-dashoffset: 60;
+    transition: stroke-dashoffset .65s ease-out;
+    transition-delay: calc(var(--sd) + .68s);
+  }
+  .hiw-step.show .hiw-arrow svg path{ stroke-dashoffset: 0; }
+
+  /* Phones: shorter travel and a softer zoom so nothing overshoots the frame */
+  @media (max-width: 767px){
+    .hiw-step .hiw-media{ transform: translateY(16px) scale(.94); }
+    .hiw-step .hiw-shot img{ --k: 1.08; }
+    .hiw-step .hiw-body{ transform: translateY(10px); }
+  }
+
+  /* The global reduced-motion rule zeroes durations but not delays, so the
+     staggered waits are cleared here — otherwise the parts would sit invisible
+     for their full delay and then snap in. */
+  @media (prefers-reduced-motion: reduce){
+    .hiw-step .hiw-media,
+    .hiw-step .hiw-shot img,
+    .hiw-step .hiw-num,
+    .hiw-step .hiw-body,
+    .hiw-step .hiw-icon,
+    .hiw-arrow svg path{ transition-delay: 0s !important; }
+
+    .hiw-step .hiw-media{ transform: none; }
+    .hiw-step .hiw-shot img,
+    .hiw-step.show:hover .hiw-shot img{ --k: 1; }
+    .hiw-step .hiw-body{ transform: none; }
+    .hiw-step .hiw-icon{ transform: none; }
+    .hiw-arrow svg path{ stroke-dashoffset: 0; }
   }
 
   /* CTA band */
@@ -262,12 +448,6 @@
   }
   .cta-band::before{ top:-140px; left:-120px; }
   .cta-band::after{ bottom:-160px; right:-100px; }
-
-  /* Testimonial cards */
-  .quote-mark{
-    font-family: 'Playfair Display', serif;
-    line-height: 1;
-  }
 
   /* ===================== EMERGENCY STRIP ===================== */
   .emg-band{
@@ -417,6 +597,17 @@
   }
 
   /* ===================== TESTIMONIAL SLIDER ===================== */
+  /* section shell — a warm wash instead of flat white, so the cards read as
+     paper laid on the page rather than boxes drawn on it */
+  .testi-band{
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(720px 420px at 6% -14%,   rgba(217,119,6,.10) 0%, rgba(217,119,6,0) 62%),
+      radial-gradient(660px 460px at 102% 110%, rgba(180,83,9,.09) 0%, rgba(180,83,9,0) 58%),
+      linear-gradient(180deg,#fffdf8 0%,#ffffff 50%,#fffbf2 100%);
+  }
+
   .tslider{
     display:grid;
     grid-auto-flow:column;
@@ -425,7 +616,9 @@
     overflow-x:auto;
     scroll-snap-type:x mandatory;
     scrollbar-width:none;
-    padding-bottom:.5rem;
+    /* vertical breathing room so the hover lift and its shadow are not
+       clipped by the track's own overflow */
+    padding:.6rem 0 1rem;
     /* the track keeps its own horizontal scrolling to itself; the page keeps
        vertical swipes that merely start on top of a card */
     overscroll-behavior-x:contain;
@@ -450,19 +643,78 @@
 
   /* individual quote card */
   .tcard{
+    position:relative;
     display:flex;
     flex-direction:column;
     border-radius:1.25rem;
-    border:1px solid #e7e5e4;
-    background:linear-gradient(180deg,#fffdf8 0%,#faf7f1 100%);
-    padding:1.75rem;
-    box-shadow:0 14px 34px -26px rgba(120,53,15,.5);
+    border:1px solid #f1e7d7;
+    background:#fff;
+    padding:1.9rem 1.75rem 1.6rem;
+    box-shadow:0 18px 40px -30px rgba(120,53,15,.55);
+    overflow:hidden;
+    /* own stacking context so the watermark quote can sit behind the copy
+       but still in front of the card background */
+    isolation:isolate;
     transition:transform .35s cubic-bezier(.4,0,.2,1),
                box-shadow .35s cubic-bezier(.4,0,.2,1),
                border-color .35s ease;
   }
-  .tcard .tquote{ flex:1 1 auto; }
-  .tcard-foot{ border-top:1px solid #f0e6d6; }
+  /* accent rule that draws itself across the top on hover */
+  .tcard::before{
+    content:"";
+    position:absolute;
+    top:0; left:0; right:0;
+    height:3px;
+    background:linear-gradient(90deg,#b45309,#f0b256,#d97706);
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform .45s cubic-bezier(.4,0,.2,1);
+  }
+  .tmark{
+    position:absolute;
+    top:-1.4rem; right:.9rem;
+    font-family:'Playfair Display',serif;
+    font-size:7rem; line-height:1;
+    color:#f59e0b;
+    opacity:.15;
+    z-index:-1;
+    pointer-events:none;
+  }
+  .tstars{
+    display:block;
+    width:7rem; height:1.2rem;
+    color:#f59e0b;
+  }
+  .tcard .tquote{
+    flex:1 1 auto;
+    margin-top:1rem;
+    color:#44403c;
+    font-size:1.02rem;
+    line-height:1.75;
+  }
+  .tcard-foot{
+    margin-top:1.5rem;
+    padding-top:1.1rem;
+    border-top:1px solid #f5ece0;
+    display:flex; align-items:center; gap:.8rem;
+  }
+  .tavatar{
+    flex:none;
+    width:2.9rem; height:2.9rem;
+    border-radius:9999px;
+    display:grid; place-items:center;
+    font-weight:700; font-size:1.05rem;
+    color:#fff;
+    background:linear-gradient(140deg,#d97706 0%,#92400e 100%);
+    box-shadow:0 10px 20px -12px rgba(120,53,15,.9);
+  }
+  .tname{ font-weight:700; font-size:.95rem; color:#1c1917; }
+  .tloc{
+    margin-top:.12rem;
+    display:flex; align-items:center; gap:.3rem;
+    font-size:.78rem; color:#78716c;
+  }
+  .tloc svg{ width:.85rem; height:.85rem; flex:none; color:#b45309; }
 
   /* First-load entrance: only the cards already on screen animate in.
      Overrides .reveal so the stagger stays short and snappy. */
@@ -482,15 +734,21 @@
     .tcard.reveal.show:hover{
       transform:translateY(-6px);
       border-color:#fcd34d;
-      box-shadow:0 26px 50px -28px rgba(120,53,15,.6);
+      box-shadow:0 30px 56px -30px rgba(120,53,15,.6);
     }
+    .tcard:hover::before{ transform:scaleX(1); }
+    .tcard:hover .tmark{ opacity:.24; }
   }
+  .tmark{ transition:opacity .35s ease; }
   .tdot{
+    position:relative;
     width:.55rem; height:.55rem;
     border-radius:9999px;
     background:#e7e5e4;
     transition:width .3s ease, background .3s ease;
   }
+  /* invisible padding so the dots are a comfortable tap target on phones */
+  .tdot::after{ content:""; position:absolute; inset:-.6rem; }
   .tdot.active{ width:1.6rem; background:#b45309; }
 
   /* side-mounted prev/next arrows for the testimonial slider */
@@ -796,7 +1054,7 @@
 <a href="#main" class="sr-only focus:not-sr-only" data-i18n="common.skip">Skip to main content</a>
 
 <!-- TOP BAR -->
-<div class="site-topbar bg-white/95 backdrop-blur text-sm py-1.5 md:py-2 border-b-2 border-amber-200">
+<div class="site-topbar text-sm py-1.5 md:py-2">
   <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-wrap items-center justify-center md:justify-between gap-x-6 gap-y-1.5">
     <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-1.5">
       <a data-link="phone" class="flex items-center gap-2 topbar-link transition font-medium">
@@ -815,13 +1073,13 @@
 
     <div class="hidden md:flex items-center gap-4">
       <div class="flex items-center gap-2">
-        <a data-link="facebook" target="_blank" rel="noopener" aria-label="Facebook" class="w-7 h-7 rounded-full bg-amber-50 hover:bg-amber-100 grid place-items-center transition">
+        <a data-link="facebook" target="_blank" rel="noopener" aria-label="Facebook" class="tb-soc w-7 h-7 rounded-full grid place-items-center transition">
           <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 320 512"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
         </a>
-        <a data-link="whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp" class="w-7 h-7 rounded-full bg-amber-50 hover:bg-green-600 hover:text-white grid place-items-center transition">
+        <a data-link="whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp" class="tb-soc tb-soc-wa w-7 h-7 rounded-full grid place-items-center transition">
           <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-71.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
         </a>
-        <a data-link="instagram" target="_blank" rel="noopener" aria-label="Instagram" class="w-7 h-7 rounded-full bg-amber-50 hover:bg-amber-100 grid place-items-center transition">
+        <a data-link="instagram" target="_blank" rel="noopener" aria-label="Instagram" class="tb-soc w-7 h-7 rounded-full grid place-items-center transition">
           <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
         </a>
       </div>
@@ -841,7 +1099,7 @@
 </div>
 
 <!-- HEADER -->
-<header id="siteHeader" class="sticky top-0 z-50 bg-white/95 backdrop-blur transition-all border-b-2 border-amber-200">
+<header id="siteHeader" class="sticky top-0 z-50 transition-all">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="h-20 sm:h-24 flex items-center justify-between gap-3 sm:gap-4">
 
@@ -876,7 +1134,7 @@
           </div>
         </div>
 
-        <button id="menuBtn" aria-expanded="false" aria-label="Open menu" class="lg:hidden w-12 h-12 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 grid place-items-center">
+        <button id="menuBtn" aria-expanded="false" aria-label="Open menu" class="menu-btn lg:hidden w-12 h-12 rounded-lg grid place-items-center">
           <svg class="ico-open w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
           <svg class="ico-close hidden w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18 18 6M6 6l12 12"/></svg>
         </button>
@@ -884,7 +1142,7 @@
     </div>
   </div>
 
-  <div id="mobileMenu" class="lg:hidden bg-white border-t border-stone-200">
+  <div id="mobileMenu" class="lg:hidden">
     <nav class="px-4 py-3 flex flex-col gap-1">
       <a href="index.html" class="mnav-link px-4 py-3 rounded-lg font-semibold" data-i18n="nav.home">Home</a>
       <a href="about.html" class="mnav-link px-4 py-3 rounded-lg font-semibold" data-i18n="nav.about">About</a>
@@ -1913,57 +2171,176 @@
       </p>
     </div>
 
-    <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+    <!-- Without JS nothing ever stamps .show on the cards, so they are simply
+         left standing where they are. -->
+    <noscript><style>
+      #svcPanel .reveal { opacity: 1; transform: none; }
+    </style></noscript>
 
-      <div class="reveal reveal-soft svc-teaser group">
-        <div class="relative rounded-[20px] overflow-hidden aspect-[16/10] shadow-[0_20px_45px_-20px_rgba(120,53,15,.35)] transition-all duration-300 ease-out group-hover:shadow-[0_28px_60px_-18px_rgba(120,53,15,.45)] group-hover:-translate-y-1">
-          <img class="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]" src="image/Ambulance-Service.png" alt="24/7 dead body transport service" loading="lazy" decoding="async">
-          <div class="absolute inset-0 bg-gradient-to-t from-stone-900/70 via-stone-900/10 to-transparent"></div>
+    <!-- The cards ride in on scroll — see .svc-teaser in style.css -->
+    <div id="svcPanel" class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-7">
+
+      <!-- 01 — Complete funeral ritual services -->
+      <article class="reveal reveal-soft svc-teaser group relative h-full flex flex-col overflow-hidden rounded-2xl bg-white border border-amber-100 shadow-[0_16px_40px_-24px_rgba(120,53,15,.45)] hover:border-amber-300 hover:shadow-[0_26px_55px_-20px_rgba(120,53,15,.5)]">
+        <div class="relative overflow-hidden aspect-[4/3]">
+          <img class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" src="image/services/complete-rituals.jpg" alt="Complete funeral ritual services in Pune" loading="lazy" decoding="async">
+          <div class="absolute inset-0 bg-gradient-to-t from-stone-900/65 via-stone-900/10 to-transparent"></div>
+          <span class="absolute top-3 left-3 grid place-items-center w-9 h-9 rounded-full bg-white/95 text-amber-800 text-sm font-bold shadow-md" aria-hidden="true">01</span>
         </div>
-        <div class="mt-6">
+        <div class="flex flex-col flex-1 p-5">
           <span class="block w-10 h-[3px] rounded-full bg-gradient-to-r from-amber-600 to-amber-300"></span>
-          <h3 class="mt-4 text-xl font-bold text-stone-900" data-i18n="home.services.svc1.title">24/7 Dead Body Transport Service</h3>
-          <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.services.svc1.desc">Immediate dead body transport with trained staff for safe and respectful movement of the deceased.</p>
-          <a href="services.html#svc-transport" class="mt-4 inline-flex items-center gap-1.5 text-amber-800 font-bold text-sm group-hover:gap-2.5 transition-all">
-            <span data-i18n="home.services.learnmore">Learn More</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-          </a>
+          <h3 class="mt-3 text-lg font-bold text-stone-900 leading-snug" data-i18n="home.services.svc1.title">Complete Funeral Ritual Services</h3>
+          <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.services.svc1.desc">Complete support for all essential funeral rituals and arrangements. We ensure every farewell is conducted with care, dignity and respect.</p>
+          <div class="mt-auto pt-5">
+            <a href="services.html#svc-complete" class="svc-cta inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-amber-300 bg-amber-50 text-amber-800 font-bold text-sm transition-all duration-300 hover:bg-amber-700 hover:border-amber-700 hover:text-white group-hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 after:content-[''] after:absolute after:inset-0 after:rounded-2xl">
+              <span data-i18n="home.services.learnmore">Learn More</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+            </a>
+          </div>
         </div>
-      </div>
+      </article>
 
-      <div class="reveal reveal-soft svc-teaser group">
-        <div class="relative rounded-[20px] overflow-hidden aspect-[16/10] shadow-[0_20px_45px_-20px_rgba(120,53,15,.35)] transition-all duration-300 ease-out group-hover:shadow-[0_28px_60px_-18px_rgba(120,53,15,.45)] group-hover:-translate-y-1">
-          <img class="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]" src="image/galleryHero.jpg" alt="Ritual and pandit arrangements" loading="lazy" decoding="async">
-          <div class="absolute inset-0 bg-gradient-to-t from-stone-900/70 via-stone-900/10 to-transparent"></div>
+      <!-- 02 — 24/7 dead body transport -->
+      <article class="reveal reveal-soft svc-teaser group relative h-full flex flex-col overflow-hidden rounded-2xl bg-white border border-amber-100 shadow-[0_16px_40px_-24px_rgba(120,53,15,.45)] hover:border-amber-300 hover:shadow-[0_26px_55px_-20px_rgba(120,53,15,.5)]">
+        <div class="relative overflow-hidden aspect-[4/3]">
+          <img class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" src="image/Ambulance-Service.png" alt="24/7 dead body transport service" loading="lazy" decoding="async">
+          <div class="absolute inset-0 bg-gradient-to-t from-stone-900/65 via-stone-900/10 to-transparent"></div>
+          <span class="absolute top-3 left-3 grid place-items-center w-9 h-9 rounded-full bg-white/95 text-amber-800 text-sm font-bold shadow-md" aria-hidden="true">02</span>
         </div>
-        <div class="mt-6">
+        <div class="flex flex-col flex-1 p-5">
           <span class="block w-10 h-[3px] rounded-full bg-gradient-to-r from-amber-600 to-amber-300"></span>
-          <h3 class="mt-4 text-xl font-bold text-stone-900" data-i18n="home.services.svc2.title">Ritual &amp; Pandit Arrangements</h3>
-          <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.services.svc2.desc">Experienced pandits available for all Hindu funeral ceremonies according to family traditions.</p>
-          <a href="services.html#svc-rituals" class="mt-4 inline-flex items-center gap-1.5 text-amber-800 font-bold text-sm group-hover:gap-2.5 transition-all">
-            <span data-i18n="home.services.learnmore">Learn More</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-          </a>
+          <h3 class="mt-3 text-lg font-bold text-stone-900 leading-snug" data-i18n="home.services.svc2.title">Ambulance Service</h3>
+          <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.services.svc2.desc">Reliable vehicle support for the safe and respectful transportation of the deceased. We help families during their most difficult moments.</p>
+          <div class="mt-auto pt-5">
+            <a href="services.html#svc-transport" class="svc-cta inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-amber-300 bg-amber-50 text-amber-800 font-bold text-sm transition-all duration-300 hover:bg-amber-700 hover:border-amber-700 hover:text-white group-hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 after:content-[''] after:absolute after:inset-0 after:rounded-2xl">
+              <span data-i18n="home.services.learnmore">Learn More</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+            </a>
+          </div>
         </div>
-      </div>
+      </article>
 
-      <div class="reveal reveal-soft svc-teaser group">
-        <div class="relative rounded-[20px] overflow-hidden aspect-[16/10] shadow-[0_20px_45px_-20px_rgba(120,53,15,.35)] transition-all duration-300 ease-out group-hover:shadow-[0_28px_60px_-18px_rgba(120,53,15,.45)] group-hover:-translate-y-1">
-          <img class="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]" src="image/Ash-Immersion.png" alt="Asthi Visarjan service" loading="lazy" decoding="async" style="filter:sepia(.5) saturate(1.5) hue-rotate(-8deg) brightness(.94) contrast(1.02);">
-          <div class="absolute inset-0 bg-gradient-to-t from-stone-900/70 via-stone-900/10 to-transparent"></div>
+      <!-- 03 — Religious rituals by priests -->
+      <article class="reveal reveal-soft svc-teaser group relative h-full flex flex-col overflow-hidden rounded-2xl bg-white border border-amber-100 shadow-[0_16px_40px_-24px_rgba(120,53,15,.45)] hover:border-amber-300 hover:shadow-[0_26px_55px_-20px_rgba(120,53,15,.5)]">
+        <div class="relative overflow-hidden aspect-[4/3]">
+          <img class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" src="image/services/Religious Rituals by Experienced Priests.webp" alt="Religious funeral rituals performed by experienced priests" loading="lazy" decoding="async">
+          <div class="absolute inset-0 bg-gradient-to-t from-stone-900/65 via-stone-900/10 to-transparent"></div>
+          <span class="absolute top-3 left-3 grid place-items-center w-9 h-9 rounded-full bg-white/95 text-amber-800 text-sm font-bold shadow-md" aria-hidden="true">03</span>
         </div>
-        <div class="mt-6">
+        <div class="flex flex-col flex-1 p-5">
           <span class="block w-10 h-[3px] rounded-full bg-gradient-to-r from-amber-600 to-amber-300"></span>
-          <h3 class="mt-4 text-xl font-bold text-stone-900" data-i18n="home.services.svc3.title">Asthi Visarjan Service</h3>
-          <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.services.svc3.desc">Organized transportation and complete assistance for Asthi Visarjan ceremonies.</p>
-          <a href="services.html#svc-immersion" class="mt-4 inline-flex items-center gap-1.5 text-amber-800 font-bold text-sm group-hover:gap-2.5 transition-all">
-            <span data-i18n="home.services.learnmore">Learn More</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-          </a>
+          <h3 class="mt-3 text-lg font-bold text-stone-900 leading-snug" data-i18n="home.services.svc3.title">Ritual &amp; Pandit Arrangements</h3>
+          <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.services.svc3.desc">Experienced Pandit arrangements for traditional funeral, rituals and ceremonies. Guidance is provided to ensure every ritual is performed properly.</p>
+          <div class="mt-auto pt-5">
+            <a href="services.html#svc-rituals" class="svc-cta inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-amber-300 bg-amber-50 text-amber-800 font-bold text-sm transition-all duration-300 hover:bg-amber-700 hover:border-amber-700 hover:text-white group-hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 after:content-[''] after:absolute after:inset-0 after:rounded-2xl">
+              <span data-i18n="home.services.learnmore">Learn More</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+            </a>
+          </div>
         </div>
-      </div>
+      </article>
 
-    </div>
+      <!-- 04 — Ash immersion -->
+      <article class="reveal reveal-soft svc-teaser group relative h-full flex flex-col overflow-hidden rounded-2xl bg-white border border-amber-100 shadow-[0_16px_40px_-24px_rgba(120,53,15,.45)] hover:border-amber-300 hover:shadow-[0_26px_55px_-20px_rgba(120,53,15,.5)]">
+        <div class="relative overflow-hidden aspect-[4/3]">
+          <img class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" src="image/Ash-Immersion.png" alt="Ash immersion (Asthi Visarjan) service" loading="lazy" decoding="async" style="filter:sepia(.5) saturate(1.5) hue-rotate(-8deg) brightness(.94) contrast(1.02);">
+          <div class="absolute inset-0 bg-gradient-to-t from-stone-900/65 via-stone-900/10 to-transparent"></div>
+          <span class="absolute top-3 left-3 grid place-items-center w-9 h-9 rounded-full bg-white/95 text-amber-800 text-sm font-bold shadow-md" aria-hidden="true">04</span>
+        </div>
+        <div class="flex flex-col flex-1 p-5">
+          <span class="block w-10 h-[3px] rounded-full bg-gradient-to-r from-amber-600 to-amber-300"></span>
+          <h3 class="mt-3 text-lg font-bold text-stone-900 leading-snug" data-i18n="home.services.svc4.title">Asthi Visarjan Service</h3>
+          <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.services.svc4.desc">Complete assistance for Asthi Visarjan arrangements after the final rites. We help families complete this important ritual with peace and dignity.</p>
+          <div class="mt-auto pt-5">
+            <a href="services.html#svc-immersion" class="svc-cta inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-amber-300 bg-amber-50 text-amber-800 font-bold text-sm transition-all duration-300 hover:bg-amber-700 hover:border-amber-700 hover:text-white group-hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 after:content-[''] after:absolute after:inset-0 after:rounded-2xl">
+              <span data-i18n="home.services.learnmore">Learn More</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 05 — Complete funeral materials -->
+      <article class="reveal reveal-soft svc-teaser group relative h-full flex flex-col overflow-hidden rounded-2xl bg-white border border-amber-100 shadow-[0_16px_40px_-24px_rgba(120,53,15,.45)] hover:border-amber-300 hover:shadow-[0_26px_55px_-20px_rgba(120,53,15,.5)]">
+        <div class="relative overflow-hidden aspect-[4/3]">
+          <img class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" src="image/services/Funeral Materials & Essential Arrangements.webp" alt="Complete funeral materials including flowers and garlands" loading="lazy" decoding="async">
+          <div class="absolute inset-0 bg-gradient-to-t from-stone-900/65 via-stone-900/10 to-transparent"></div>
+          <span class="absolute top-3 left-3 grid place-items-center w-9 h-9 rounded-full bg-white/95 text-amber-800 text-sm font-bold shadow-md" aria-hidden="true">05</span>
+        </div>
+        <div class="flex flex-col flex-1 p-5">
+          <span class="block w-10 h-[3px] rounded-full bg-gradient-to-r from-amber-600 to-amber-300"></span>
+          <h3 class="mt-3 text-lg font-bold text-stone-900 leading-snug" data-i18n="home.services.svc5.title">Funeral Materials &amp; Essential Arrangements</h3>
+          <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.services.svc5.desc">We arrange all the essential materials required for the final rites. Everything is organised with care so families can focus on their loved ones.</p>
+          <div class="mt-auto pt-5">
+            <a href="services.html#svc-materials" class="svc-cta inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-amber-300 bg-amber-50 text-amber-800 font-bold text-sm transition-all duration-300 hover:bg-amber-700 hover:border-amber-700 hover:text-white group-hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 after:content-[''] after:absolute after:inset-0 after:rounded-2xl">
+              <span data-i18n="home.services.learnmore">Learn More</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 06 — Cremation ground booking -->
+      <article class="reveal reveal-soft svc-teaser group relative h-full flex flex-col overflow-hidden rounded-2xl bg-white border border-amber-100 shadow-[0_16px_40px_-24px_rgba(120,53,15,.45)] hover:border-amber-300 hover:shadow-[0_26px_55px_-20px_rgba(120,53,15,.5)]">
+        <div class="relative overflow-hidden aspect-[4/3]">
+          <img class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" src="image/services/Cremation Ground.webp" alt="Cremation ground booking in Pune" loading="lazy" decoding="async">
+          <div class="absolute inset-0 bg-gradient-to-t from-stone-900/65 via-stone-900/10 to-transparent"></div>
+          <span class="absolute top-3 left-3 grid place-items-center w-9 h-9 rounded-full bg-white/95 text-amber-800 text-sm font-bold shadow-md" aria-hidden="true">06</span>
+        </div>
+        <div class="flex flex-col flex-1 p-5">
+          <span class="block w-10 h-[3px] rounded-full bg-gradient-to-r from-amber-600 to-amber-300"></span>
+          <h3 class="mt-3 text-lg font-bold text-stone-900 leading-snug" data-i18n="home.services.svc6.title">Cremation Ground Booking</h3>
+          <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.services.svc6.desc">Assistance with cremation ground arrangements and necessary bookings. We help make the process smooth and stress-free for the family.</p>
+          <div class="mt-auto pt-5">
+            <a href="services.html#svc-booking" class="svc-cta inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-amber-300 bg-amber-50 text-amber-800 font-bold text-sm transition-all duration-300 hover:bg-amber-700 hover:border-amber-700 hover:text-white group-hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 after:content-[''] after:absolute after:inset-0 after:rounded-2xl">
+              <span data-i18n="home.services.learnmore">Learn More</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 07 — Family counseling &amp; coordination -->
+      <article class="reveal reveal-soft svc-teaser group relative h-full flex flex-col overflow-hidden rounded-2xl bg-white border border-amber-100 shadow-[0_16px_40px_-24px_rgba(120,53,15,.45)] hover:border-amber-300 hover:shadow-[0_26px_55px_-20px_rgba(120,53,15,.5)]">
+        <div class="relative overflow-hidden aspect-[4/3]">
+          <img class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" src="image/services/genrate Family Counselling & Support.webp" alt="Family counselling and coordination support" loading="lazy" decoding="async">
+          <div class="absolute inset-0 bg-gradient-to-t from-stone-900/65 via-stone-900/10 to-transparent"></div>
+          <span class="absolute top-3 left-3 grid place-items-center w-9 h-9 rounded-full bg-white/95 text-amber-800 text-sm font-bold shadow-md" aria-hidden="true">07</span>
+        </div>
+        <div class="flex flex-col flex-1 p-5">
+          <span class="block w-10 h-[3px] rounded-full bg-gradient-to-r from-amber-600 to-amber-300"></span>
+          <h3 class="mt-3 text-lg font-bold text-stone-900 leading-snug" data-i18n="home.services.svc7.title">Family Counselling &amp; Support</h3>
+          <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.services.svc7.desc">Emotional guidance and support for families during a difficult time. We stand beside you with understanding, care and compassion.</p>
+          <div class="mt-auto pt-5">
+            <a href="services.html#svc-counseling" class="svc-cta inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-amber-300 bg-amber-50 text-amber-800 font-bold text-sm transition-all duration-300 hover:bg-amber-700 hover:border-amber-700 hover:text-white group-hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 after:content-[''] after:absolute after:inset-0 after:rounded-2xl">
+              <span data-i18n="home.services.learnmore">Learn More</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 08 — Complete guidance for final rites -->
+      <article class="reveal reveal-soft svc-teaser group relative h-full flex flex-col overflow-hidden rounded-2xl bg-white border border-amber-100 shadow-[0_16px_40px_-24px_rgba(120,53,15,.45)] hover:border-amber-300 hover:shadow-[0_26px_55px_-20px_rgba(120,53,15,.5)]">
+        <div class="relative overflow-hidden aspect-[4/3]">
+          <img class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" src="image/services/final-guidance.jpg" alt="Complete guidance for the final rites" loading="lazy" decoding="async">
+          <div class="absolute inset-0 bg-gradient-to-t from-stone-900/65 via-stone-900/10 to-transparent"></div>
+          <span class="absolute top-3 left-3 grid place-items-center w-9 h-9 rounded-full bg-white/95 text-amber-800 text-sm font-bold shadow-md" aria-hidden="true">08</span>
+        </div>
+        <div class="flex flex-col flex-1 p-5">
+          <span class="block w-10 h-[3px] rounded-full bg-gradient-to-r from-amber-600 to-amber-300"></span>
+          <h3 class="mt-3 text-lg font-bold text-stone-900 leading-snug" data-i18n="home.services.svc8.title">Complete Guidance for Final Rites</h3>
+          <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.services.svc8.desc">From the first arrangement to the final ritual, we provide complete guidance. Our aim is simple — to make every final journey peaceful, respectful and dignified.</p>
+          <div class="mt-auto pt-5">
+            <a href="services.html#svc-guidance" class="svc-cta inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-amber-300 bg-amber-50 text-amber-800 font-bold text-sm transition-all duration-300 hover:bg-amber-700 hover:border-amber-700 hover:text-white group-hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 after:content-[''] after:absolute after:inset-0 after:rounded-2xl">
+              <span data-i18n="home.services.learnmore">Learn More</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </div><!-- /#svcPanel -->
 
     <!-- Stats strip -->
     <!-- <div class="reveal d3 mt-16 rounded-[20px] bg-gradient-to-br from-amber-50 via-white to-amber-50 border border-amber-100 shadow-[0_20px_50px_-30px_rgba(120,53,15,.4)] py-10 px-6 sm:px-10">
@@ -1986,15 +2363,6 @@
         </div>
       </div>
     </div> -->
-
-    <!-- View all services -->
-    <div class="reveal reveal-soft mt-12 text-center">
-      <p class="text-stone-600" data-i18n="home.services.viewall.title">Looking for something more specific?</p>
-      <a href="services.html" class="mt-4 inline-flex items-center gap-2 px-7 py-3 bg-amber-700 hover:bg-amber-800 text-white font-bold rounded-lg transition hover:-translate-y-0.5">
-        <span data-i18n="home.services.viewall.btn">Explore All Services</span>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-      </a>
-    </div>
 
   </div>
 </section>
@@ -2070,8 +2438,21 @@
 <!-- ============================================================
      HOW IT WORKS
      ============================================================ -->
-<section class="py-16 lg:py-24 bg-white border-t-2 border-amber-100">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="hiw relative overflow-hidden py-16 lg:py-24 border-t-2 border-amber-100">
+
+  <!-- decorative corner foliage -->
+  <svg class="hiw-leaf is-left" viewBox="0 0 220 150" fill="currentColor" aria-hidden="true">
+    <path d="M4 6c34 2 62 16 82 40 8 10 14 21 18 33-14-3-27-9-38-18C50 47 33 26 4 6Z" opacity=".85"/>
+    <path d="M22 2c26 12 45 31 56 56 4 10 7 20 8 30-12-6-22-15-30-26C43 44 34 24 22 2Z" opacity=".6"/>
+    <path d="M104 4c14 20 20 42 18 65-1 9-3 18-6 26-8-12-12-25-13-39-1-18 0-35 1-52Z" opacity=".45"/>
+  </svg>
+  <svg class="hiw-leaf is-right" viewBox="0 0 220 150" fill="currentColor" aria-hidden="true">
+    <path d="M4 6c34 2 62 16 82 40 8 10 14 21 18 33-14-3-27-9-38-18C50 47 33 26 4 6Z" opacity=".85"/>
+    <path d="M22 2c26 12 45 31 56 56 4 10 7 20 8 30-12-6-22-15-30-26C43 44 34 24 22 2Z" opacity=".6"/>
+    <path d="M104 4c14 20 20 42 18 65-1 9-3 18-6 26-8-12-12-25-13-39-1-18 0-35 1-52Z" opacity=".45"/>
+  </svg>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <div class="max-w-2xl mx-auto text-center">
       <span class="reveal inline-flex items-center gap-2 rounded-full bg-amber-100 border border-amber-300 px-4 py-2 text-[13px] font-bold uppercase tracking-[0.12em] text-amber-800">
@@ -2080,26 +2461,81 @@
       <h2 class="reveal d1 mt-5 text-3xl sm:text-4xl font-bold text-stone-900" data-i18n="home.how.title">How Sanman Yojana Helps You</h2>
     </div>
 
-    <div class="mt-14 relative grid sm:grid-cols-3 gap-10 sm:gap-6">
-      <div class="hidden sm:block step-line absolute top-8 left-[16.5%] right-[16.5%] h-0.5"></div>
+    <div class="hiw-grid mt-16 lg:mt-20">
 
-      <div class="reveal text-center relative">
-        <div class="mx-auto w-16 h-16 rounded-full bg-amber-700 text-white grid place-items-center text-xl font-bold shadow-lg relative z-10">1</div>
-        <h3 class="mt-5 text-lg font-bold text-stone-900" data-i18n="home.how.step1.title">Call Our Helpline</h3>
-        <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.how.step1.desc">One call, any hour — our team responds immediately.</p>
-      </div>
+      <!-- STEP 1 -->
+      <article class="hiw-step reveal">
+        <div class="hiw-media">
+          <span class="hiw-shot" style="--z:1.35; --ty:-9%">
+            <img src="image/process1.webp"
+                 data-i18n-alt="home.how.step1.title"
+                 alt="Call Our Helpline" loading="lazy" decoding="async">
+          </span>
+          <span class="hiw-num">01</span>
+          <span class="hiw-arrow" aria-hidden="true">
+            <svg viewBox="0 0 48 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 8h40M35 2l6 6-6 6"/>
+            </svg>
+          </span>
+        </div>
+        <div class="hiw-body">
+          <span class="hiw-icon" aria-hidden="true">
+            <svg fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg>
+          </span>
+          <div>
+            <h3 class="hiw-title" data-i18n="home.how.step1.title">Call Our Helpline</h3>
+            <p class="hiw-desc" data-i18n="home.how.step1.desc">One call, any hour — our team responds immediately.</p>
+          </div>
+        </div>
+      </article>
 
-      <div class="reveal d1 text-center relative">
-        <div class="mx-auto w-16 h-16 rounded-full bg-amber-700 text-white grid place-items-center text-xl font-bold shadow-lg relative z-10">2</div>
-        <h3 class="mt-5 text-lg font-bold text-stone-900" data-i18n="home.how.step2.title">We Arrive &amp; Assist</h3>
-        <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.how.step2.desc">Our staff reaches your location and manages every arrangement.</p>
-      </div>
+      <!-- STEP 2 -->
+      <article class="hiw-step reveal">
+        <div class="hiw-media">
+          <span class="hiw-shot" style="--z:1.4; --tx:-9%">
+            <img src="image/process2.webp"
+                 data-i18n-alt="home.how.step2.title"
+                 alt="We Arrive &amp; Assist" loading="lazy" decoding="async">
+          </span>
+          <span class="hiw-num">02</span>
+          <span class="hiw-arrow" aria-hidden="true">
+            <svg viewBox="0 0 48 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 8h40M35 2l6 6-6 6"/>
+            </svg>
+          </span>
+        </div>
+        <div class="hiw-body">
+          <span class="hiw-icon" aria-hidden="true">
+            <svg fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>
+          </span>
+          <div>
+            <h3 class="hiw-title" data-i18n="home.how.step2.title">We Arrive &amp; Assist</h3>
+            <p class="hiw-desc" data-i18n="home.how.step2.desc">Our staff reaches your location and manages every arrangement.</p>
+          </div>
+        </div>
+      </article>
 
-      <div class="reveal d2 text-center relative">
-        <div class="mx-auto w-16 h-16 rounded-full bg-amber-700 text-white grid place-items-center text-xl font-bold shadow-lg relative z-10">3</div>
-        <h3 class="mt-5 text-lg font-bold text-stone-900" data-i18n="home.how.step3.title">Rituals Completed with Care</h3>
-        <p class="mt-2 text-sm text-stone-600 leading-relaxed" data-i18n="home.how.step3.desc">Every ceremony conducted with full respect and dignity.</p>
-      </div>
+      <!-- STEP 3 -->
+      <article class="hiw-step reveal">
+        <div class="hiw-media">
+          <span class="hiw-shot">
+            <img src="image/services/complete-rituals.jpg"
+                 data-i18n-alt="home.how.step3.title"
+                 alt="Rituals Completed with Care" loading="lazy" decoding="async">
+          </span>
+          <span class="hiw-num">03</span>
+        </div>
+        <div class="hiw-body">
+          <span class="hiw-icon" aria-hidden="true">
+            <svg fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.048 8.287 8.287 0 0 0 9 9.6a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z"/></svg>
+          </span>
+          <div>
+            <h3 class="hiw-title" data-i18n="home.how.step3.title">Rituals Completed with Care</h3>
+            <p class="hiw-desc" data-i18n="home.how.step3.desc">Every ceremony conducted with full respect and dignity.</p>
+          </div>
+        </div>
+      </article>
+
     </div>
   </div>
 </section>
@@ -2308,17 +2744,27 @@
 <!-- ============================================================
      TESTIMONIALS
      ============================================================ -->
-<section class="py-16 lg:py-24 bg-white border-y-2 border-amber-100">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="testi-band py-16 lg:py-24 border-y-2 border-amber-100">
+  <!-- star glyph, defined once and reused by every card -->
+  <svg width="0" height="0" class="absolute" aria-hidden="true" focusable="false">
+    <symbol id="icoStar" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 2.6l2.9 5.88 6.49.94-4.7 4.58 1.11 6.46L12 17.4l-5.8 3.06 1.1-6.46-4.69-4.58 6.49-.94L12 2.6z"/>
+    </symbol>
+  </svg>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <div class="max-w-2xl mx-auto text-center">
       <span class="reveal inline-flex items-center gap-2 rounded-full bg-amber-100 border border-amber-300 px-4 py-2 text-[13px] font-bold uppercase tracking-[0.12em] text-amber-800">
         <span data-i18n="home.testi.badge">Families We've Helped</span>
       </span>
-      <h2 class="reveal d1 mt-5 text-3xl sm:text-4xl font-bold text-stone-900" data-i18n="home.testi.title">What Families Say About Us</h2>
+      <h2 class="reveal d1 mt-5 text-3xl sm:text-4xl font-bold text-stone-900" style="font-family:'Playfair Display',serif;" data-i18n="home.testi.title">What Families Say About Us</h2>
+      <p class="reveal d2 mt-4 text-lg text-stone-600 leading-relaxed" data-i18n="home.testi.desc">
+        Families across Pune, in their own words — on the night they called us and the days that followed.
+      </p>
     </div>
 
-    <div class="mt-14 relative px-9 sm:px-11 lg:px-0">
+    <div class="mt-12 lg:mt-14 relative px-9 sm:px-11 lg:px-0">
 
     <button type="button" id="tPrev" aria-label="Previous testimonial" class="tarrow tarrow-prev">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>
@@ -2329,65 +2775,115 @@
 
     <div id="tSlider" class="tslider">
 
-      <div class="tcard reveal">
-        <span class="quote-mark text-5xl text-amber-300">&ldquo;</span>
-        <p class="tquote mt-2 text-stone-700 leading-relaxed" data-i18n="home.testi.q1">In our hardest moment, Sanman Yojana handled everything with so much care. We didn't have to worry about a single arrangement.</p>
-        <div class="tcard-foot mt-6 pt-5 flex items-center gap-3">
-          <div class="w-11 h-11 rounded-full bg-amber-100 text-amber-700 grid place-items-center font-bold">R</div>
-          <div>
-            <p class="font-bold text-stone-900 text-sm" data-i18n="home.testi.n1">Ramesh Patil</p>
-            <p class="text-xs text-stone-500" data-i18n="home.testi.l1">Hadapsar, Pune</p>
-          </div>
-        </div>
-      </div>
+      <figure class="tcard reveal m-0">
+        <span class="tmark" aria-hidden="true">&ldquo;</span>
+        <svg class="tstars" viewBox="0 0 116 20" role="img" data-i18n-aria="home.testi.rating" aria-label="Rated 5 out of 5">
+          <use href="#icoStar" x="0"  y="0" width="20" height="20"/>
+          <use href="#icoStar" x="24" y="0" width="20" height="20"/>
+          <use href="#icoStar" x="48" y="0" width="20" height="20"/>
+          <use href="#icoStar" x="72" y="0" width="20" height="20"/>
+          <use href="#icoStar" x="96" y="0" width="20" height="20"/>
+        </svg>
+        <blockquote class="tquote m-0" data-i18n="home.testi.q1">In our hardest moment, Sanman Yojana handled everything with so much care. We didn't have to worry about a single arrangement.</blockquote>
+        <figcaption class="tcard-foot">
+          <span class="tavatar" aria-hidden="true" data-i18n="home.testi.a1">R</span>
+          <span>
+            <span class="tname block" data-i18n="home.testi.n1">Ramesh Patil</span>
+            <span class="tloc">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              <span data-i18n="home.testi.l1">Hadapsar, Pune</span>
+            </span>
+          </span>
+        </figcaption>
+      </figure>
 
-      <div class="tcard reveal d1">
-        <span class="quote-mark text-5xl text-amber-300">&ldquo;</span>
-        <p class="tquote mt-2 text-stone-700 leading-relaxed" data-i18n="home.testi.q2">They reached within minutes of our call, at 2 AM. Truly compassionate people who treated us like family.</p>
-        <div class="tcard-foot mt-6 pt-5 flex items-center gap-3">
-          <div class="w-11 h-11 rounded-full bg-amber-100 text-amber-700 grid place-items-center font-bold">S</div>
-          <div>
-            <p class="font-bold text-stone-900 text-sm" data-i18n="home.testi.n2">Sunita Deshmukh</p>
-            <p class="text-xs text-stone-500" data-i18n="home.testi.l2">Kondhwa, Pune</p>
-          </div>
-        </div>
-      </div>
+      <figure class="tcard reveal d1 m-0">
+        <span class="tmark" aria-hidden="true">&ldquo;</span>
+        <svg class="tstars" viewBox="0 0 116 20" role="img" data-i18n-aria="home.testi.rating" aria-label="Rated 5 out of 5">
+          <use href="#icoStar" x="0"  y="0" width="20" height="20"/>
+          <use href="#icoStar" x="24" y="0" width="20" height="20"/>
+          <use href="#icoStar" x="48" y="0" width="20" height="20"/>
+          <use href="#icoStar" x="72" y="0" width="20" height="20"/>
+          <use href="#icoStar" x="96" y="0" width="20" height="20"/>
+        </svg>
+        <blockquote class="tquote m-0" data-i18n="home.testi.q2">They reached within minutes of our call, at 2 AM. Truly compassionate people who treated us like family.</blockquote>
+        <figcaption class="tcard-foot">
+          <span class="tavatar" aria-hidden="true" data-i18n="home.testi.a2">S</span>
+          <span>
+            <span class="tname block" data-i18n="home.testi.n2">Sunita Deshmukh</span>
+            <span class="tloc">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              <span data-i18n="home.testi.l2">Kondhwa, Pune</span>
+            </span>
+          </span>
+        </figcaption>
+      </figure>
 
-      <div class="tcard reveal d2">
-        <span class="quote-mark text-5xl text-amber-300">&ldquo;</span>
-        <p class="tquote mt-2 text-stone-700 leading-relaxed" data-i18n="home.testi.q3">Transparent pricing, no surprises, and every ritual was done exactly as our family wished. Grateful for their support.</p>
-        <div class="tcard-foot mt-6 pt-5 flex items-center gap-3">
-          <div class="w-11 h-11 rounded-full bg-amber-100 text-amber-700 grid place-items-center font-bold">V</div>
-          <div>
-            <p class="font-bold text-stone-900 text-sm" data-i18n="home.testi.n3">Vijay Kulkarni</p>
-            <p class="text-xs text-stone-500" data-i18n="home.testi.l3">Wagholi, Pune</p>
-          </div>
-        </div>
-      </div>
+      <figure class="tcard reveal d2 m-0">
+        <span class="tmark" aria-hidden="true">&ldquo;</span>
+        <svg class="tstars" viewBox="0 0 116 20" role="img" data-i18n-aria="home.testi.rating" aria-label="Rated 5 out of 5">
+          <use href="#icoStar" x="0"  y="0" width="20" height="20"/>
+          <use href="#icoStar" x="24" y="0" width="20" height="20"/>
+          <use href="#icoStar" x="48" y="0" width="20" height="20"/>
+          <use href="#icoStar" x="72" y="0" width="20" height="20"/>
+          <use href="#icoStar" x="96" y="0" width="20" height="20"/>
+        </svg>
+        <blockquote class="tquote m-0" data-i18n="home.testi.q3">Transparent pricing, no surprises, and every ritual was done exactly as our family wished. Grateful for their support.</blockquote>
+        <figcaption class="tcard-foot">
+          <span class="tavatar" aria-hidden="true" data-i18n="home.testi.a3">V</span>
+          <span>
+            <span class="tname block" data-i18n="home.testi.n3">Vijay Kulkarni</span>
+            <span class="tloc">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              <span data-i18n="home.testi.l3">Wagholi, Pune</span>
+            </span>
+          </span>
+        </figcaption>
+      </figure>
 
-      <div class="tcard">
-        <span class="quote-mark text-5xl text-amber-300">&ldquo;</span>
-        <p class="tquote mt-2 text-stone-700 leading-relaxed" data-i18n="home.testi.q4">The freezer box and hearse van reached us before our relatives did. Everything was ready when the family gathered.</p>
-        <div class="tcard-foot mt-6 pt-5 flex items-center gap-3">
-          <div class="w-11 h-11 rounded-full bg-amber-100 text-amber-700 grid place-items-center font-bold">A</div>
-          <div>
-            <p class="font-bold text-stone-900 text-sm" data-i18n="home.testi.n4">Anil Jadhav</p>
-            <p class="text-xs text-stone-500" data-i18n="home.testi.l4">Pimpri-Chinchwad</p>
-          </div>
-        </div>
-      </div>
+      <figure class="tcard m-0">
+        <span class="tmark" aria-hidden="true">&ldquo;</span>
+        <svg class="tstars" viewBox="0 0 116 20" role="img" data-i18n-aria="home.testi.rating" aria-label="Rated 5 out of 5">
+          <use href="#icoStar" x="0"  y="0" width="20" height="20"/>
+          <use href="#icoStar" x="24" y="0" width="20" height="20"/>
+          <use href="#icoStar" x="48" y="0" width="20" height="20"/>
+          <use href="#icoStar" x="72" y="0" width="20" height="20"/>
+          <use href="#icoStar" x="96" y="0" width="20" height="20"/>
+        </svg>
+        <blockquote class="tquote m-0" data-i18n="home.testi.q4">The freezer box and hearse van reached us before our relatives did. Everything was ready when the family gathered.</blockquote>
+        <figcaption class="tcard-foot">
+          <span class="tavatar" aria-hidden="true" data-i18n="home.testi.a4">A</span>
+          <span>
+            <span class="tname block" data-i18n="home.testi.n4">Anil Jadhav</span>
+            <span class="tloc">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              <span data-i18n="home.testi.l4">Pimpri-Chinchwad</span>
+            </span>
+          </span>
+        </figcaption>
+      </figure>
 
-      <div class="tcard">
-        <span class="quote-mark text-5xl text-amber-300">&ldquo;</span>
-        <p class="tquote mt-2 text-stone-700 leading-relaxed" data-i18n="home.testi.q5">They arranged the Guruji, the samagri and even the dashakriya rites. We only had to be present with our family.</p>
-        <div class="tcard-foot mt-6 pt-5 flex items-center gap-3">
-          <div class="w-11 h-11 rounded-full bg-amber-100 text-amber-700 grid place-items-center font-bold">M</div>
-          <div>
-            <p class="font-bold text-stone-900 text-sm" data-i18n="home.testi.n5">Manisha Shinde</p>
-            <p class="text-xs text-stone-500" data-i18n="home.testi.l5">Katraj, Pune</p>
-          </div>
-        </div>
-      </div>
+      <figure class="tcard m-0">
+        <span class="tmark" aria-hidden="true">&ldquo;</span>
+        <svg class="tstars" viewBox="0 0 116 20" role="img" data-i18n-aria="home.testi.rating" aria-label="Rated 5 out of 5">
+          <use href="#icoStar" x="0"  y="0" width="20" height="20"/>
+          <use href="#icoStar" x="24" y="0" width="20" height="20"/>
+          <use href="#icoStar" x="48" y="0" width="20" height="20"/>
+          <use href="#icoStar" x="72" y="0" width="20" height="20"/>
+          <use href="#icoStar" x="96" y="0" width="20" height="20"/>
+        </svg>
+        <blockquote class="tquote m-0" data-i18n="home.testi.q5">They arranged the Guruji, the samagri and even the dashakriya rites. We only had to be present with our family.</blockquote>
+        <figcaption class="tcard-foot">
+          <span class="tavatar" aria-hidden="true" data-i18n="home.testi.a5">M</span>
+          <span>
+            <span class="tname block" data-i18n="home.testi.n5">Manisha Shinde</span>
+            <span class="tloc">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              <span data-i18n="home.testi.l5">Katraj, Pune</span>
+            </span>
+          </span>
+        </figcaption>
+      </figure>
 
     </div>
 
@@ -2526,6 +3022,14 @@
           <span class="acc-icon"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg></span>
         </button>
         <div class="acc-body"><div data-i18n="home.faq.a6">Fill the membership form at our Hadapsar office or ask us to send it on WhatsApp. Payment can be made by cash, UPI or bank transfer, and you receive a receipt and certificate for your records.</div></div>
+      </div>
+
+      <div class="acc">
+        <button type="button" class="acc-head">
+          <span data-i18n="home.faq.q7">How will you know after I pass away?</span>
+          <span class="acc-icon"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg></span>
+        </button>
+        <div class="acc-body"><div data-i18n="home.faq.a7">Once you become a Sanman Yojana member you receive a membership certificate carrying your unique membership code. When the need arises, your family or relatives call our 24×7 helpline and tell us that code. As soon as it is verified, our team reaches the place immediately and handles every arrangement that follows with full respect.</div></div>
       </div>
 
     </div>

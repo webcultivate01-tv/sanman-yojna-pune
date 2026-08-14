@@ -240,9 +240,19 @@
       els.forEach(function (e) { e.classList.add("show"); });
       return;
     }
+    var slow = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var io = new IntersectionObserver(function (entries) {
+      /* A wide screen brings a whole row of service cards past the line in one
+         batch. Those are dealt out one after another so the row fills in card
+         by card instead of landing all at once; everything else shows at once. */
+      var n = 0;
       entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add("show"); io.unobserve(en.target); }
+        if (!en.isIntersecting) return;
+        var el = en.target;
+        io.unobserve(el);
+        var wait = !slow && el.classList.contains("svc-teaser") ? n++ * 90 : 0;
+        if (wait) setTimeout(function () { el.classList.add("show"); }, wait);
+        else el.classList.add("show");
       });
     }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
     els.forEach(function (e) { io.observe(e); });
