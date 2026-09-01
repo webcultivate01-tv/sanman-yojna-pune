@@ -77,11 +77,11 @@ section[id],
 }
 
 /* ============================================================
-   TOP BAR — the navbar's gradient, a shade darker: just enough
-   to separate the two brown strips without going near-black
+   TOP BAR — a shade lighter than before, now that the navbar below
+   it is white, so the two bands don't clash too hard.
    ============================================================ */
 .site-topbar {
-  background: linear-gradient(115deg, #6a2e0d 0%, #80380c 50%, #6a2e0d 100%);
+  background: linear-gradient(115deg, var(--secondary) 0%, var(--primary-dark) 50%, var(--secondary) 100%);
   color: #f2ddc2;              /* warm cream — readable on the brown */
   /* the sticky header below is z-50 — without a stacking context of its own
      the language dropdown would open *behind* the navbar on desktop */
@@ -153,12 +153,15 @@ section[id],
 }
 
 /* ============================================================
-   NAVBAR BAND — the exact gradient the emergency helpline strip
-   on the home page uses, so the two brown bands match.
+   NAVBAR BAND — soft, faint white (not solid) so the logo's own
+   white backdrop sits flush without the band feeling like a stark
+   white slab; a light blur keeps it legible over the sticky scroll.
    ============================================================ */
 #siteHeader {
-  background: linear-gradient(115deg, #78350f 0%, #92400e 50%, #78350f 100%);
-  border-bottom: 2px solid rgba(251, 191, 36, 0.32);
+  background: rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  backdrop-filter: blur(10px) saturate(150%);
+  border-bottom: 1px solid rgba(180, 83, 9, 0.12);
 }
 
 /* ============================================================
@@ -168,8 +171,8 @@ section[id],
   position: relative;
   font-weight: 600;
   font-size: 0.95rem;
-  color: #f2ddc2;
-  opacity: 0.92;
+  color: var(--secondary);
+  opacity: 0.85;
   padding: 0.5rem 0;
   transition: opacity 0.3s ease, color 0.3s ease;
 }
@@ -181,7 +184,7 @@ section[id],
   bottom: -2px;
   width: 0;
   height: 2.5px;
-  background: linear-gradient(90deg, #fbbf24, #fde68a);
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
   border-radius: 99px;
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -189,7 +192,7 @@ section[id],
 .nav-link:hover,
 .nav-link.active {
   opacity: 1;
-  color: #fbbf24;
+  color: var(--primary);
 }
 
 .nav-link.active::after,
@@ -246,16 +249,30 @@ section[id],
   transform: translateX(120%);
 }
 
-/* Hamburger — tinted glass on the brown band */
+/* Hamburger — amber-tinted chip on the white band */
 .menu-btn {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fde68a;
+  background: rgba(180, 83, 9, 0.08);
+  color: var(--secondary);
   transition: background 0.2s ease, color 0.2s ease;
 }
 
 .menu-btn:hover {
-  background: rgba(255, 255, 255, 0.22);
-  color: #fff;
+  background: rgba(180, 83, 9, 0.16);
+  color: var(--primary-dark);
+}
+
+/* The mobile language toggle lives inside the (now white) header, while the
+   same .lang-toggle-light class is also used in the brown top bar — scope
+   this override to the header so the top bar chip is untouched. */
+#siteHeader .lang-toggle-light {
+  background: rgba(180, 83, 9, 0.08);
+  color: var(--secondary);
+  border: 1px solid rgba(180, 83, 9, 0.2);
+}
+
+#siteHeader .lang-toggle-light:hover {
+  background: rgba(180, 83, 9, 0.16);
+  color: var(--primary-dark);
 }
 
 /* ============================================================
@@ -557,12 +574,12 @@ section[id],
   color: #fff;
 }
 
-/* Mobile menu — carries on the brown of the header it drops out of */
+/* Mobile menu — carries on the white of the header it drops out of */
 #mobileMenu {
   max-height: 0;
   overflow: hidden;
-  background: #6a2e0d;
-  border-top: 1px solid rgba(253, 230, 138, 0.2);
+  background: #ffffff;
+  border-top: 1px solid rgba(180, 83, 9, 0.16);
   transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -572,18 +589,18 @@ section[id],
 }
 
 .mnav-link {
-  color: #f2ddc2;
+  color: var(--secondary);
   transition: background 0.25s ease, color 0.25s ease;
 }
 
 .mnav-link:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: rgba(180, 83, 9, 0.08);
+  color: var(--primary-dark);
 }
 
 .mnav-link.active {
   background: rgba(251, 191, 36, 0.16);
-  color: #fbbf24;
+  color: var(--primary);
   font-weight: 700;
 }
 

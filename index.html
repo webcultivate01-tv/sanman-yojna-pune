@@ -1029,22 +1029,34 @@
     }
   }
 
-  /* under-stack controls */
+  /* under-stack controls: just the dots + hint now, prev/next live on the card */
   .vnav{
     display:flex; align-items:center; gap:14px;
   }
-  .vnav-btn{
-    width:46px; height:46px;
-    display:grid; place-items:center;
-    border-radius:50%;
-    color:#92400e;
-    background:#fff;
-    border:1px solid #f3ddb4;
-    box-shadow:0 10px 24px -16px rgba(120,53,15,.65);
-    transition: transform .25s ease, background-color .25s ease, color .25s ease, border-color .25s ease;
+
+  /* ---------- side arrows on the card itself, laptop and up ----------
+     Hidden below 1024px: the phone/tablet layout already relies on drag and
+     the under-copy .vnav pair, and a narrow reel has no room to spare. */
+  .vside-btn{
+    display:none;
+    position:absolute; top:50%;
+    width:44px; height:44px;
+    z-index:150;                 /* above every card (fronts cap out at 120) */
+    align-items:center; justify-content:center;
+    color:#fff;
+    background:none;
+    border:0;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,.7));
+    cursor:pointer;
+    transition: transform .25s ease;
   }
-  .vnav-btn:hover{ background:#b45309; border-color:#b45309; color:#fff; transform:translateY(-2px); }
-  .vnav-btn svg{ width:18px; height:18px; }
+  .vside-btn svg{ width:28px; height:28px; }
+  .vside-prev{ left:10px;  transform:translateY(-50%); }
+  .vside-next{ right:10px; transform:translateY(-50%); }
+  .vside-btn:hover{ transform:translateY(-50%) scale(1.12); }
+  @media (min-width:1024px){
+    .vside-btn{ display:flex; }
+  }
   .vdots{ display:flex; align-items:center; gap:7px; }
   .vdot{
     width:8px; height:8px; border-radius:999px;
@@ -1056,7 +1068,7 @@
   @media (prefers-reduced-motion: reduce){
     .hero-badge-dot, .hero-scroll, .emg-pulse{ animation:none !important; }
     .feat-card, .plan-card, .svc-card, .chip, .area-pill, .gthumb img{ transition:none !important; }
-    .vcard, .vplay, .vdot, .vbtn, .vnav-btn{ transition:none !important; }
+    .vcard, .vplay, .vdot, .vbtn, .vside-btn{ transition:none !important; }
   }
 </style>
 </head>
@@ -1435,14 +1447,8 @@
           Because dignity should not end with life… it should remain <strong class="text-amber-800 font-bold">Forever!</strong>
         </p>
 
-        <!-- carousel controls live with the copy on desktop, under the stack on phones -->
+        <!-- prev/next are the overlay arrows on the card itself now (.vside-btn); dots + hint stay with the copy -->
         <div class="vnav mt-9 lg:mt-10">
-          <button type="button" class="vnav-btn" data-vnav="prev" aria-label="Previous video">
-            <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.5 7.5 12 15 4.5"/></svg>
-          </button>
-          <button type="button" class="vnav-btn" data-vnav="next" aria-label="Next video">
-            <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5 16.5 12 9 19.5"/></svg>
-          </button>
           <span class="vdots" id="thoughtDots" aria-hidden="true"></span>
           <span class="ml-1 text-[13px] font-semibold text-stone-500" data-i18n="home.thought.hint">Drag to explore</span>
         </div>
@@ -1451,7 +1457,14 @@
       <!-- ---------- RIGHT: stacked video carousel ---------- -->
       <div class="reveal reveal-soft vstage">
         <div id="thoughtStack" class="vstack" tabindex="0" role="group"
-             aria-roledescription="carousel" aria-label="Sanman Yojana videos"></div>
+             aria-roledescription="carousel" aria-label="Sanman Yojana videos">
+          <button type="button" class="vside-btn vside-prev" data-vnav="prev" aria-label="Previous video">
+            <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.5 7.5 12 15 4.5"/></svg>
+          </button>
+          <button type="button" class="vside-btn vside-next" data-vnav="next" aria-label="Next video">
+            <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5 16.5 12 9 19.5"/></svg>
+          </button>
+        </div>
         <p class="sr-only" id="thoughtLive" aria-live="polite"></p>
       </div>
 
@@ -1485,10 +1498,15 @@
      To swap a video: change the id, then change the matching caption string
      (home.thought.v1 … v4) in the three language blocks of assets/js/i18n.js. */
   var VIDEOS = [
-    { id: "t0pL2oehNes", key: "home.thought.v1", title: "A mother is a mother" },
-    { id: "eHOWLjblwu0", key: "home.thought.v2", title: "Dad, I never realised" },
-    { id: "ExD9v1Lc3fc", key: "home.thought.v3", title: "A journey for two" },
-    { id: "QCQtrLOjxBE", key: "home.thought.v4", title: "The farmer's bull" }
+    { id: "OfpXoNNMoiU", key: "home.thought.v1", title: "A mother is a mother" },
+    { id: "zYHc9hGHaeE", key: "home.thought.v2", title: "Dad, I never realised" },
+    { id: "3CEuCAoV3AM", key: "home.thought.v3", title: "A journey for two" },
+    { id: "9CVBYUvOPOU", key: "home.thought.v4", title: "The farmer's bull" },
+    { id: "g1yOndPJyB8", key: "home.thought.v5", title: "The farmer's bull" },
+    { id: "zYHc9hGHaeE", key: "home.thought.v6", title: "The farmer's bull" },
+    { id: "wus_OzQ-rjM", key: "home.thought.v7", title: "The farmer's bull" },
+    { id: "MLAZX3ZbDcc", key: "home.thought.v8", title: "The farmer's bull" },
+    { id: "9CVBYUvOPOU", key: "home.thought.v9", title: "The farmer's bull" }
   ];
 
   var stack = document.getElementById("thoughtStack");
@@ -1929,6 +1947,7 @@
   stack.addEventListener("pointerdown", function (e) {
     if (e.pointerType === "mouse" && e.button !== 0) return;
     if (e.target.closest(".vacts")) return;       /* sound / YouTube buttons */
+    if (e.target.closest(".vside-btn")) return;   /* side prev/next arrows */
     dragging = true; pid = e.pointerId;
     sx = lastX = e.clientX; sy = e.clientY;
     lastMs = performance.now();
@@ -2074,13 +2093,16 @@
     });
   });
 
-  /* ---------- keyboard + arrows ---------- */
+  /* ---------- keyboard + arrows ----------
+     go(1) sweeps the deck left, go(-1) sweeps it right (see render()) — so the
+     left-pointing controls (ArrowLeft, the "<" button) call go(1) and the
+     right-pointing ones call go(-1), to keep the motion honest to the icon. */
   stack.addEventListener("keydown", function (e) {
-    if (e.key === "ArrowLeft")  { e.preventDefault(); go(-1); }
-    if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
+    if (e.key === "ArrowLeft")  { e.preventDefault(); go(1); }
+    if (e.key === "ArrowRight") { e.preventDefault(); go(-1); }
   });
   document.querySelectorAll("[data-vnav]").forEach(function (b) {
-    b.addEventListener("click", function () { go(b.dataset.vnav === "next" ? 1 : -1); });
+    b.addEventListener("click", function () { go(b.dataset.vnav === "next" ? -1 : 1); });
   });
 
   /* ---------- only run while the section is on screen ---------- */
@@ -3121,7 +3143,7 @@
         <h2 class="text-xl font-bold text-white mb-5" data-i18n="footer.services">Our Services</h2>
         <ul class="space-y-3 text-sm">
           <li><a href="services.html#svc-complete" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc6">Complete Funeral Ritual Services</span></a></li>
-          <li><a href="services.html#svc-transport" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc1">24/7 Dead Body Transport Service</span></a></li>
+          <li><a href="services.html#svc-transport" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc1">24/7 Funeral Ambulance Service</span></a></li>
           <li><a href="services.html#svc-rituals" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc4">Religious Rituals by Priests</span></a></li>
           <li><a href="services.html#svc-immersion" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc3">Ash Immersion (Asthi Visarjan)</span></a></li>
           <li><a href="services.html#svc-materials" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc2">Complete Funeral Materials</span></a></li>
