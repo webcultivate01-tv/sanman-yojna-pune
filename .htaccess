@@ -180,7 +180,7 @@ Options -Indexes
 # partials.txt is a markup fragment, not a page. robots.txt already asks
 # crawlers to skip it; this stops anyone reading it directly.
 <IfModule mod_authz_core.c>
-  <FilesMatch "^(\.htaccess|\.gitignore|partials\.txt|README\.md|SEO\.md)$">
+  <FilesMatch "^(\.htaccess|\.gitignore|partials\.txt|README\.md|SEO\.md|tailwind\.config\.js|tailwind\.src\.css)$">
     Require all denied
   </FilesMatch>
 </IfModule>
