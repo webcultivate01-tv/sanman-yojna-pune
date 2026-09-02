@@ -636,7 +636,7 @@ const I18N = {
     "svc.cta.btnPackages": "View Packages",
     /* PAGE TITLES */
         "home.about.yearsbadge": "25+ Years",
-    "page.title.home": "Funeral Services & 24x7 Ambulance in Pune | Sanman Yojana",
+    "page.title.home": "24x7 Funeral Ambulance Services in Pune | Sanman Yojana",
     "page.title.about": "About Sanman Yojana | 25 Years of Funeral Service in Pune",
     "page.title.services": "Funeral Services in Pune | Ambulance, Pandit & Ceremonies",
     "page.title.packages": "Funeral Packages in Pune from ₹11,000 | Sanman Yojana",
