@@ -1,22 +1,39 @@
 /* ============================================================
-   TAILWIND THEME  —  Sanman Yojana
-   Palette: deep navy (trust) + gold (dignity) + ivory (calm)
+   TAILWIND BUILD CONFIG — Sanman Yojana
+   ------------------------------------------------------------
+   The theme below is the exact same object that assets/js/tw-config.js
+   handed to the Play CDN; it is kept here so the built stylesheet and the
+   old CDN produce identical utilities.
+
+   To rebuild assets/css/tailwind.css after editing any markup:
+
+     npx tailwindcss@3 -c tailwind.config.js -i assets/css/tailwind.src.css \
+                       -o assets/css/tailwind.css --minify
+
+   The `content` globs must keep including assets/js — main.js builds the
+   enquiry-form result banner by assigning a className string, and those
+   utilities exist nowhere in the HTML. Dropping that glob would purge them
+   and the banner would render unstyled.
    ============================================================ */
-tailwind.config = {
+module.exports = {
+  content: [
+    "./*.html",
+    "./assets/js/**/*.js"
+  ],
   theme: {
     extend: {
       colors: {
         brand: {
-          ink:       "#0c1826",  /* darkest — footer, overlays       */
-          navy:      "#14293f",  /* primary — headings, header, btns */
-          navyMid:   "#1f405f",  /* hover / gradient stop            */
-          navySoft:  "#eef3f8",  /* tinted surface                   */
-          gold:      "#b8912a",  /* accent — CTAs, rules, icons      */
-          goldLight: "#d9b449",  /* accent hover / gradient          */
-          goldSoft:  "#fbf4de",  /* accent surface                   */
-          ivory:     "#faf8f4",  /* page background                  */
-          line:      "#e6e0d4",  /* hairline borders                 */
-          muted:     "#5b6976"   /* secondary text                   */
+          ink:       "#0c1826",
+          navy:      "#14293f",
+          navyMid:   "#1f405f",
+          navySoft:  "#eef3f8",
+          gold:      "#b8912a",
+          goldLight: "#d9b449",
+          goldSoft:  "#fbf4de",
+          ivory:     "#faf8f4",
+          line:      "#e6e0d4",
+          muted:     "#5b6976"
         }
       },
       fontFamily: {

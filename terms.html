@@ -85,8 +85,12 @@
 }
 </style>
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="assets/js/tw-config.js"></script>
+<!-- Tailwind, compiled ahead of time. This used to be cdn.tailwindcss.com:
+     407 KB of JavaScript that rebuilt the stylesheet in the browser on every
+     visit, and left every page unstyled whenever that CDN was slow or blocked.
+     The build is 42 KB (8 KB over the wire) and depends on nothing external.
+     Theme and rebuild command: see tailwind.config.js in the project root. -->
+<link rel="stylesheet" href="assets/css/tailwind.css">
 <link rel="stylesheet" href="assets/css/style.css">
 
 <!-- ===== REVEAL-ON-SCROLL FAILSAFE =====
