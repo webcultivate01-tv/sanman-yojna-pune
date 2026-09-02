@@ -145,6 +145,29 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="assets/js/tw-config.js"></script>
 <link rel="stylesheet" href="assets/css/style.css">
+
+<!-- ===== REVEAL-ON-SCROLL FAILSAFE =====
+     .reveal starts at opacity:0 and is only made visible by the scroll
+     observer in main.js. That is the whole animation, but it also means a
+     visit where that script never runs shows a page with almost nothing on
+     it. Two nets, neither of which changes anything when the site works:
+       1. scripting switched off  -> the classes are neutralised outright;
+       2. main.js blocked, 404, or still stuck in a slow network -> after
+          five seconds every remaining block is simply shown, using the same
+          .show class the observer would have added. -->
+<noscript><style>
+  .reveal, .reveal-left, .reveal-right { opacity: 1 !important; transform: none !important; }
+</style></noscript>
+<script>
+(function () {
+  var root = document.documentElement;
+  setTimeout(function () {
+    if (root.getAttribute("data-sy-booted")) return;
+    var els = document.querySelectorAll(".reveal:not(.show)");
+    for (var i = 0; i < els.length; i++) els[i].classList.add("show");
+  }, 5000);
+})();
+</script>
 <link rel="icon" type="image/png" sizes="128x128" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
 <link rel="preload" as="image" fetchpriority="high" href="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1920&q=80&auto=format&fit=crop">
@@ -524,16 +547,16 @@
 <section id="svHero" class="sv-hero">
 
   <div class="sv-slide is-active" data-index="0">
-    <div class="sv-slide-img" style="background-image:url('image/packageHero3.png');"></div>
+    <div class="sv-slide-img" style="background-image:url('image/packageHero3.webp');"></div>
   </div>
   <div class="sv-slide" data-index="1">
-    <div class="sv-slide-img" style="background-image:url('image/packageHero4.png');"></div>
+    <div class="sv-slide-img" style="background-image:url('image/packageHero4.webp');"></div>
   </div>
   <div class="sv-slide" data-index="2">
-    <div class="sv-slide-img" style="background-image:url('image/packageHero1.png');"></div>
+    <div class="sv-slide-img" style="background-image:url('image/packageHero1.webp');"></div>
   </div>
   <div class="sv-slide" data-index="3">
-    <div class="sv-slide-img" style="background-image:url('image/packageHero2.png');"></div>
+    <div class="sv-slide-img" style="background-image:url('image/packageHero2.webp');"></div>
   </div>
 
   <div class="sv-overlay"></div>
@@ -572,7 +595,6 @@
     <button type="button" class="sv-dot" data-goto="1" aria-label="Go to slide 2"></button>
     <button type="button" class="sv-dot" data-goto="2" aria-label="Go to slide 3"></button>
     <button type="button" class="sv-dot" data-goto="3" aria-label="Go to slide 4"></button>
-    <button type="button" class="sv-dot" data-goto="4" aria-label="Go to slide 5"></button>
   </div>
 </section>
 
@@ -773,16 +795,12 @@
               </li>
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                <span data-i18n="pkgs2.p1.f2">Authentic Government Death Certificate</span>
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                <span data-i18n="pkgs2.p1.f3">Crematorium Booking</span>
+                <span data-i18n="pkgs2.p1.f3">Cremation Ground Booking</span>
               </li>
             </ul>
             <div class="pkgs2-actions">
               <a href="package-basic.html" class="pkgs2-btn pkgs2-btn-primary" data-i18n="pkgs2.cta.primary" data-i18n-aria="pkgs2.cta.primary" aria-label="Learn More">Learn More</a>
-              <a href="#" class="pkgs2-btn pkgs2-btn-secondary" data-i18n-aria="pkgs2.cta.secondary" aria-label="Download Brochure">
+              <a href="image/packages.pdf" download="Sanman-Yojana-Packages.pdf" class="pkgs2-btn pkgs2-btn-secondary" data-i18n-aria="pkgs2.cta.secondary" aria-label="Download Brochure">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 <span data-i18n="pkgs2.cta.secondary">Download Brochure</span>
               </a>
@@ -811,7 +829,7 @@
               </li>
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                <span data-i18n="pkgs2.p2.f3">Crematorium Booking</span>
+                <span data-i18n="pkgs2.p2.f3">Cremation Ground Booking</span>
               </li>
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -820,7 +838,7 @@
             </ul>
             <div class="pkgs2-actions">
               <a href="package-sanman.html" class="pkgs2-btn pkgs2-btn-primary" data-i18n="pkgs2.cta.primary" data-i18n-aria="pkgs2.cta.primary" aria-label="Learn More">Learn More</a>
-              <a href="#" class="pkgs2-btn pkgs2-btn-secondary" data-i18n-aria="pkgs2.cta.secondary" aria-label="Download Brochure">
+              <a href="image/packages.pdf" download="Sanman-Yojana-Packages.pdf" class="pkgs2-btn pkgs2-btn-secondary" data-i18n-aria="pkgs2.cta.secondary" aria-label="Download Brochure">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 <span data-i18n="pkgs2.cta.secondary">Download Brochure</span>
               </a>
@@ -841,11 +859,11 @@
             <ul class="pkgs2-features">
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                <span data-i18n="pkgs2.p3.f1">Dashakriya Ritual</span>
+                <span data-i18n="pkgs2.p3.f1">Dashakriya Ceremony</span>
               </li>
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                <span data-i18n="pkgs2.p3.f2">Ritual Materials (Puja Samagri)</span>
+                <span data-i18n="pkgs2.p3.f2">Ceremony Materials (Puja Samagri)</span>
               </li>
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -853,7 +871,7 @@
               </li>
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                <span data-i18n="pkgs2.p3.f4">Meal Arrangement for 100 People</span>
+                <span data-i18n="pkgs2.p3.f4">Meal Arrangement for 50 People</span>
               </li>
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -862,7 +880,7 @@
             </ul>
             <div class="pkgs2-actions">
               <a href="package-dashakriya.html" class="pkgs2-btn pkgs2-btn-primary" data-i18n="pkgs2.cta.primary" data-i18n-aria="pkgs2.cta.primary" aria-label="Learn More">Learn More</a>
-              <a href="#" class="pkgs2-btn pkgs2-btn-secondary" data-i18n-aria="pkgs2.cta.secondary" aria-label="Download Brochure">
+              <a href="image/packages.pdf" download="Sanman-Yojana-Packages.pdf" class="pkgs2-btn pkgs2-btn-secondary" data-i18n-aria="pkgs2.cta.secondary" aria-label="Download Brochure">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 <span data-i18n="pkgs2.cta.secondary">Download Brochure</span>
               </a>
@@ -887,7 +905,7 @@
               </li>
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                <span data-i18n="pkgs2.p4.f2">10th / 13th Day Ritual — with Priest</span>
+                <span data-i18n="pkgs2.p4.f2">10th / 13th Day Ceremony — with Priest</span>
               </li>
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -896,7 +914,7 @@
             </ul>
             <div class="pkgs2-actions">
               <a href="package-family.html" class="pkgs2-btn pkgs2-btn-primary" data-i18n="pkgs2.cta.primary" data-i18n-aria="pkgs2.cta.primary" aria-label="Learn More">Learn More</a>
-              <a href="#" class="pkgs2-btn pkgs2-btn-secondary" data-i18n-aria="pkgs2.cta.secondary" aria-label="Download Brochure">
+              <a href="image/packages.pdf" download="Sanman-Yojana-Packages.pdf" class="pkgs2-btn pkgs2-btn-secondary" data-i18n-aria="pkgs2.cta.secondary" aria-label="Download Brochure">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 <span data-i18n="pkgs2.cta.secondary">Download Brochure</span>
               </a>
@@ -914,7 +932,7 @@
      CTA BAND
      ============================================================ -->
 <section class="relative py-20 lg:py-28 overflow-hidden bg-amber-900">
-  <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('image/packageCTA1.png');" aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('image/packageCTA1.webp');" aria-hidden="true"></div>
   <div class="absolute inset-0 bg-gradient-to-br from-amber-950/55 via-amber-900/45 to-stone-950/55" aria-hidden="true"></div>
 
   <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -924,7 +942,7 @@
     <!-- leading is repeated per breakpoint: the `sm:text-4xl` media rule ships
          its own line-height and would otherwise win over a base `leading-*` -->
     <h2 class="reveal text-3xl sm:text-4xl lg:text-[2.9rem] font-bold text-white leading-[1.4] sm:leading-[1.4] lg:leading-[1.4] mb-6" data-i18n="svc.cta.title">
-      Apply today and ensure a dignified farewell for your loved ones.
+      Apply today and ensure a dignified last journey for your loved ones.
     </h2>
     <p class="reveal d1 text-lg sm:text-xl text-amber-100/90 leading-relaxed mb-10 max-w-2xl mx-auto" data-i18n="svc.cta.desc">
       Registration takes a few minutes today, and spares your family days of running around tomorrow.
@@ -976,14 +994,14 @@
       <div>
         <h2 class="text-xl font-bold text-white mb-5" data-i18n="footer.services">Our Services</h2>
         <ul class="space-y-3 text-sm">
-          <li><a href="services.html#svc-complete" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc6">Complete Funeral Ritual Services</span></a></li>
+          <li><a href="services.html#svc-complete" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc6">Complete Funeral Ceremony Services</span></a></li>
           <li><a href="services.html#svc-transport" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc1">24/7 Funeral Ambulance Service</span></a></li>
-          <li><a href="services.html#svc-rituals" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc4">Religious Rituals by Priests</span></a></li>
-          <li><a href="services.html#svc-immersion" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc3">Ash Immersion (Asthi Visarjan)</span></a></li>
-          <li><a href="services.html#svc-materials" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc2">Complete Funeral Materials</span></a></li>
+          <li><a href="services.html#svc-ceremonies" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc4">Ceremony &amp; Pandit Arrangements</span></a></li>
+          <li><a href="services.html#svc-immersion" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc3">Asthi Visarjan Service</span></a></li>
+          <li><a href="services.html#svc-materials" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc2">Funeral Materials &amp; Essential Arrangements</span></a></li>
           <li><a href="services.html#svc-booking" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc7">Cremation Ground Booking</span></a></li>
-          <li><a href="services.html#svc-counseling" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc5">Family Counseling &amp; Coordination</span></a></li>
-          <li><a href="services.html#svc-guidance" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc8">Complete Guidance for Final Rites</span></a></li>
+          <li><a href="services.html#svc-counseling" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc5">Family Counselling &amp; Support</span></a></li>
+          <li><a href="services.html#svc-guidance" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc8">Complete Guidance for Final Journey</span></a></li>
         </ul>
       </div>
 
@@ -1039,32 +1057,41 @@
 
   var slides = Array.prototype.slice.call(hero.querySelectorAll(".sv-slide"));
   var dots = Array.prototype.slice.call(hero.querySelectorAll(".sv-dot"));
+  if (!slides.length) return;
   var current = 0;
   var timer = null;
   var DELAY = 5500;
 
   function goTo(index) {
-    index = (index + slides.length) % slides.length;
+    /* a dot pointing past the last slide, or a data-goto that will not parse,
+       used to land on slides[NaN] and leave the hero stuck */
+    if (isNaN(index)) return;
+    index = ((index % slides.length) + slides.length) % slides.length;
     slides[current].classList.remove("is-active");
-    dots[current].classList.remove("is-active");
+    if (dots[current]) dots[current].classList.remove("is-active");
     current = index;
     slides[current].classList.add("is-active");
-    dots[current].classList.add("is-active");
+    if (dots[current]) dots[current].classList.add("is-active");
   }
 
   function next() { goTo(current + 1); }
   function prev() { goTo(current - 1); }
 
+  var reduced = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
   function start() {
     stop();
+    if (reduced) return;              /* the arrows and dots still work */
     timer = setInterval(next, DELAY);
   }
   function stop() {
     if (timer) { clearInterval(timer); timer = null; }
   }
 
-  hero.querySelector(".sv-arrow-next").addEventListener("click", function () { next(); start(); });
-  hero.querySelector(".sv-arrow-prev").addEventListener("click", function () { prev(); start(); });
+  var nextBtn = hero.querySelector(".sv-arrow-next");
+  var prevBtn = hero.querySelector(".sv-arrow-prev");
+  if (nextBtn) nextBtn.addEventListener("click", function () { next(); start(); });
+  if (prevBtn) prevBtn.addEventListener("click", function () { prev(); start(); });
   dots.forEach(function (dot) {
     dot.addEventListener("click", function () {
       goTo(parseInt(dot.dataset.goto, 10));
@@ -1072,8 +1099,18 @@
     });
   });
 
-  hero.addEventListener("mouseenter", stop);
-  hero.addEventListener("mouseleave", start);
+  /* Hover-to-pause is for real pointers only. On a touch screen a tap fires
+     mouseenter and the matching mouseleave often never arrives, which parked
+     the hero on one slide for the rest of the visit. */
+  if (window.matchMedia && window.matchMedia("(hover: hover)").matches) {
+    hero.addEventListener("mouseenter", stop);
+    hero.addEventListener("mouseleave", start);
+  }
+
+  /* a background tab should not keep stepping the slides */
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) stop(); else start();
+  });
 
   start();
 })();

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title data-i18n="page.title.pkgbasic">Basic Funeral Package ₹11,000 in Pune | Sanman Yojana</title>
-<meta name="description" data-i18n-content="page.desc.pkgbasic" content="Basic Package, a one-time ₹11,000 — hearse vehicle within Pune &amp; Pimpri-Chinchwad, crematorium booking and all 18 funeral ritual materials.">
+<meta name="description" data-i18n-content="page.desc.pkgbasic" content="Basic Package, a one-time ₹11,000 — hearse vehicle within Pune &amp; Pimpri-Chinchwad, crematorium booking and all 18 funeral ceremony materials.">
 <link rel="canonical" href="https://sanmanyojana.org/package-basic.html">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="Sanman Yojana — Shahid Bhagat Singh Pratishthan, Pune">
@@ -18,7 +18,7 @@
 <meta property="og:locale:alternate" content="hi_IN">
 <meta property="og:url" content="https://sanmanyojana.org/package-basic.html">
 <meta property="og:title" content="Basic Funeral Package ₹11,000 in Pune | Sanman Yojana">
-<meta property="og:description" content="Basic Package, a one-time ₹11,000 — hearse vehicle within Pune &amp; Pimpri-Chinchwad, crematorium booking and all 18 funeral ritual materials.">
+<meta property="og:description" content="Basic Package, a one-time ₹11,000 — hearse vehicle within Pune &amp; Pimpri-Chinchwad, crematorium booking and all 18 funeral ceremony materials.">
 <meta property="og:image" content="https://sanmanyojana.org/assets/img/og-logo.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
@@ -28,7 +28,7 @@
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Basic Funeral Package ₹11,000 in Pune | Sanman Yojana">
-<meta name="twitter:description" content="Basic Package, a one-time ₹11,000 — hearse vehicle within Pune &amp; Pimpri-Chinchwad, crematorium booking and all 18 funeral ritual materials.">
+<meta name="twitter:description" content="Basic Package, a one-time ₹11,000 — hearse vehicle within Pune &amp; Pimpri-Chinchwad, crematorium booking and all 18 funeral ceremony materials.">
 <meta name="twitter:image" content="https://sanmanyojana.org/assets/img/og-logo.jpg">
 
 <!-- Structured data: the plan itself, priced, plus the trail back to /packages.html. -->
@@ -41,7 +41,7 @@
       "@id": "https://sanmanyojana.org/package-basic.html#service",
       "name": "Basic Funeral Package",
       "serviceType": "Funeral package",
-      "description": "Hearse vehicle within Pune & Pimpri-Chinchwad, crematorium booking and all 18 funeral ritual materials.",
+      "description": "Hearse vehicle within Pune & Pimpri-Chinchwad, crematorium booking and all 18 funeral ceremony materials.",
       "url": "https://sanmanyojana.org/package-basic.html",
       "provider": { "@id": "https://sanmanyojana.org/#organization" },
       "areaServed": [
@@ -98,6 +98,29 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="assets/js/tw-config.js"></script>
 <link rel="stylesheet" href="assets/css/style.css">
+
+<!-- ===== REVEAL-ON-SCROLL FAILSAFE =====
+     .reveal starts at opacity:0 and is only made visible by the scroll
+     observer in main.js. That is the whole animation, but it also means a
+     visit where that script never runs shows a page with almost nothing on
+     it. Two nets, neither of which changes anything when the site works:
+       1. scripting switched off  -> the classes are neutralised outright;
+       2. main.js blocked, 404, or still stuck in a slow network -> after
+          five seconds every remaining block is simply shown, using the same
+          .show class the observer would have added. -->
+<noscript><style>
+  .reveal, .reveal-left, .reveal-right { opacity: 1 !important; transform: none !important; }
+</style></noscript>
+<script>
+(function () {
+  var root = document.documentElement;
+  setTimeout(function () {
+    if (root.getAttribute("data-sy-booted")) return;
+    var els = document.querySelectorAll(".reveal:not(.show)");
+    for (var i = 0; i < els.length; i++) els[i].classList.add("show");
+  }, 5000);
+})();
+</script>
 <link rel="icon" type="image/png" sizes="128x128" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
 <style>
@@ -144,7 +167,7 @@
   .pkg-card:nth-child(6n+5){ transition-delay:.24s; }
   .pkg-card:nth-child(6n+6){ transition-delay:.3s; }
 
-  /* lotus flower motion — echoes the site's ritual/spiritual theme */
+  /* lotus flower motion — echoes the site's ceremony/spiceremony theme */
   @keyframes lotusSway {
     0%, 100% { transform:rotate(-6deg) scale(1); }
     50%      { transform:rotate(6deg) scale(1.05); }
@@ -353,7 +376,7 @@
         <span class="text-3xl sm:text-4xl font-bold text-amber-700">₹11,000</span>
         <span class="text-sm text-stone-400 uppercase tracking-wide" data-i18n="pkg.basic.priceunit">one-time</span>
       </div>
-      <p class="text-stone-500 leading-relaxed" data-i18n="pkg.basic.desc">Every essential item and ritual material, thoughtfully arranged and delivered with care.</p>
+      <p class="text-stone-500 leading-relaxed" data-i18n="pkg.basic.desc">Every essential item and ceremony material, thoughtfully arranged and delivered with care.</p>
       <div class="w-16 h-[3px] bg-amber-600 rounded-full mx-auto mt-6"></div>
     </div>
 
@@ -578,7 +601,7 @@
      CTA BAND
      ============================================================ -->
 <section class="relative py-20 lg:py-28 overflow-hidden bg-amber-900">
-  <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('image/packageCTA1.png');" aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('image/packageCTA1.webp');" aria-hidden="true"></div>
   <div class="absolute inset-0 bg-gradient-to-br from-amber-950/55 via-amber-900/45 to-stone-950/55" aria-hidden="true"></div>
 
   <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -588,7 +611,7 @@
     <!-- leading is repeated per breakpoint: the `sm:text-4xl` media rule ships
          its own line-height and would otherwise win over a base `leading-*` -->
     <h2 class="reveal text-3xl sm:text-4xl lg:text-[2.9rem] font-bold text-white leading-[1.4] sm:leading-[1.4] lg:leading-[1.4] mb-6" data-i18n="svc.cta.title">
-      Apply today and ensure a dignified farewell for your loved ones.
+      Apply today and ensure a dignified last journey for your loved ones.
     </h2>
     <p class="reveal d1 text-lg sm:text-xl text-amber-100/90 leading-relaxed mb-10 max-w-2xl mx-auto" data-i18n="svc.cta.desc">
       Registration takes a few minutes today, and spares your family days of running around tomorrow.
@@ -601,6 +624,10 @@
       </a>
       <a href="contact.html#enquiry" class="inline-flex items-center justify-center gap-2.5 px-5 sm:px-8 py-3.5 sm:py-4 bg-white hover:bg-amber-50 text-amber-800 font-bold text-sm sm:text-base rounded-xl transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5">
         <span data-i18n="pkg.contactus">Contact Us</span>
+      </a>
+      <a href="image/packages.pdf" download="Sanman-Yojana-Packages.pdf" class="inline-flex items-center justify-center gap-2.5 px-5 sm:px-8 py-3.5 sm:py-4 border-2 border-white text-white font-bold text-sm sm:text-base rounded-xl transition-all duration-300 hover:bg-white hover:text-amber-800 hover:shadow-xl hover:-translate-y-0.5">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span data-i18n="pkgs2.cta.secondary">Download Brochure</span>
       </a>
     </div>
   </div>
@@ -640,14 +667,14 @@
       <div>
         <h2 class="text-xl font-bold text-white mb-5" data-i18n="footer.services">Our Services</h2>
         <ul class="space-y-3 text-sm">
-          <li><a href="services.html#svc-complete" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc6">Complete Funeral Ritual Services</span></a></li>
+          <li><a href="services.html#svc-complete" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc6">Complete Funeral Ceremony Services</span></a></li>
           <li><a href="services.html#svc-transport" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc1">24/7 Funeral Ambulance Service</span></a></li>
-          <li><a href="services.html#svc-rituals" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc4">Religious Rituals by Priests</span></a></li>
-          <li><a href="services.html#svc-immersion" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc3">Ash Immersion (Asthi Visarjan)</span></a></li>
-          <li><a href="services.html#svc-materials" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc2">Complete Funeral Materials</span></a></li>
+          <li><a href="services.html#svc-ceremonies" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc4">Ceremony &amp; Pandit Arrangements</span></a></li>
+          <li><a href="services.html#svc-immersion" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc3">Asthi Visarjan Service</span></a></li>
+          <li><a href="services.html#svc-materials" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc2">Funeral Materials &amp; Essential Arrangements</span></a></li>
           <li><a href="services.html#svc-booking" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc7">Cremation Ground Booking</span></a></li>
-          <li><a href="services.html#svc-counseling" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc5">Family Counseling &amp; Coordination</span></a></li>
-          <li><a href="services.html#svc-guidance" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc8">Complete Guidance for Final Rites</span></a></li>
+          <li><a href="services.html#svc-counseling" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc5">Family Counselling &amp; Support</span></a></li>
+          <li><a href="services.html#svc-guidance" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc8">Complete Guidance for Final Journey</span></a></li>
         </ul>
       </div>
 

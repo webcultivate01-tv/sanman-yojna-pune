@@ -9,8 +9,19 @@
   "use strict";
 
   /* Primary language: English first, then Marathi, then Hindi.
-     User preference is stored in localStorage. */
-  var LANG = localStorage.getItem("sy_lang") || "en";
+     User preference is stored in localStorage.
+
+     Reading it is wrapped: a browser with cookies/site data blocked throws on
+     the property access itself, and this file is one IIFE — an exception here
+     used to leave the whole site with no JavaScript at all. The value is also
+     checked against the three languages that exist, so a stale or hand-edited
+     entry cannot end up in <html lang>. */
+  var LANGS = ["en", "mr", "hi"];
+  var LANG = "en";
+  try {
+    var saved = localStorage.getItem("sy_lang");
+    if (saved && LANGS.indexOf(saved) !== -1) LANG = saved;
+  } catch (e) { /* storage unavailable — English it is */ }
 
   /* pick the right string out of {en, mr, hi} objects in config.js */
   function pick(v) {
@@ -48,16 +59,22 @@
     });
 
     /* logo — WebP first, then the PNG for anything too old to decode it,
-       then the typed mark if neither file is reachable */
+       then the typed mark if neither file is reachable.
+       wireSite() runs again on every language switch, so the src is only
+       written when it would actually change: re-writing it forced a decode
+       each time, and once the PNG fallback was in place a second write put
+       the unreadable WebP back and the next error tore the image out. */
     document.querySelectorAll("[data-logo]").forEach(function (img) {
-      img.onerror = function () {
-        if (SITE.logoFallback && !this.dataset.fellBack) {
-          this.dataset.fellBack = "1";
-          this.src = SITE.logoFallback;
+      if (img.dataset.fellBack) return;
+
+      var fail = function () {
+        if (SITE.logoFallback && !img.dataset.fellBack) {
+          img.dataset.fellBack = "1";
+          img.src = SITE.logoFallback;
           return;
         }
-        var box = this.parentElement;
-        this.remove();
+        var box = img.parentElement;
+        img.remove();
         if (box && !box.querySelector(".logo-fallback")) {
           var s = document.createElement("span");
           s.className = "logo-fallback font-head font-bold text-amber-800 text-xl leading-none";
@@ -65,12 +82,23 @@
           box.appendChild(s);
         }
       };
-      img.src = SITE.logo;
+
+      img.onerror = fail;
+      if (img.getAttribute("src") !== SITE.logo) img.src = SITE.logo;
+
+      /* The src is already in the markup, so the browser may have finished —
+         and failed — before this handler existed. A finished image with no
+         intrinsic width is one that did not decode; the error event for it is
+         long gone, so the fallback is run by hand. */
+      if (img.complete && img.naturalWidth === 0) fail();
     });
 
-    /* embedded map */
+    /* embedded map — same guard: assigning src again reloads the whole Google
+       Maps frame, which is a fresh third-party fetch on every language switch */
     var map = document.getElementById("mapFrame");
-    if (map && SITE.mapEmbed) map.src = SITE.mapEmbed;
+    if (map && SITE.mapEmbed && map.getAttribute("src") !== SITE.mapEmbed) {
+      map.src = SITE.mapEmbed;
+    }
 
     /* current year */
     document.querySelectorAll("[data-year]").forEach(function (el) {
@@ -111,7 +139,9 @@
 
   function setLang(lang) {
     LANG = lang;
-    localStorage.setItem("sy_lang", lang);
+    /* Safari in private browsing, and any browser with site data switched
+       off, throws on write. The switch itself must still work. */
+    try { localStorage.setItem("sy_lang", lang); } catch (e) {}
     document.documentElement.lang = lang;
     wireSite();
     applyI18n();
@@ -305,6 +335,53 @@
 
   /* ---------- 7. Enquiry form ---------- */
 
+  /* Submissions are recorded in this Google Form (owner: Sanman Yojana):
+     https://docs.google.com/forms/d/e/1FAIpQLSdMNWOcTdjvlsYJHMsu9UWZMmcmjxwxEWBjekErX0hCgMbjDg/viewform */
+  var GFORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSdMNWOcTdjvlsYJHMsu9UWZMmcmjxwxEWBjekErX0hCgMbjDg/formResponse";
+  var GFORM_ENTRIES = {
+    fullname: "entry.2005620554",
+    phone: "entry.860816428",
+    email: "entry.1045781291",
+    village: "entry.1065046570",
+    message: "entry.1166974658"
+  };
+
+  /* no-cors gives an opaque response, so a resolved promise is the only signal
+     that the POST left the browser — and a rejected one is a genuine failure
+     (offline, DNS, Google unreachable). A request that never answers used to
+     leave the submit button disabled for the rest of the visit, so it is given
+     a ceiling of its own. */
+  var GFORM_TIMEOUT = 12000;
+
+  function submitToGoogleForm(values) {
+    var body = new URLSearchParams();
+    Object.keys(GFORM_ENTRIES).forEach(function (key) {
+      body.append(GFORM_ENTRIES[key], values[key] || "");
+    });
+
+    var opts = { method: "POST", mode: "no-cors", body: body };
+    var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
+    if (ctrl) opts.signal = ctrl.signal;
+
+    return new Promise(function (resolve, reject) {
+      var done = false;
+      var timer = setTimeout(function () {
+        if (done) return;
+        done = true;
+        if (ctrl) { try { ctrl.abort(); } catch (e) {} }
+        reject(new Error("timeout"));
+      }, GFORM_TIMEOUT);
+
+      fetch(GFORM_ACTION, opts).then(function (r) {
+        if (done) return;
+        done = true; clearTimeout(timer); resolve(r);
+      }, function (err) {
+        if (done) return;
+        done = true; clearTimeout(timer); reject(err);
+      });
+    });
+  }
+
   function initForm() {
     var form = document.getElementById("contactForm");
     if (!form) return;
@@ -321,15 +398,26 @@
       form.querySelectorAll("[data-err]").forEach(function (e) { e.classList.add("hidden"); });
     };
 
+    /* read a field by name — a form missing one of them must not take the
+       whole submit handler down with a TypeError */
+    var val = function (n) {
+      var el = form.elements[n];
+      return el && typeof el.value === "string" ? el.value.trim() : "";
+    };
+
+    var sending = false;
+
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
+      if (sending) return;
       clear();
       if (box) box.classList.add("hidden");
 
-      var name = form.fullname.value.trim();
-      var phone = form.phone.value.trim();
-      var email = form.email.value.trim();
-      var message = form.message.value.trim();
+      var name = val("fullname");
+      var phone = val("phone");
+      var email = val("email");
+      var village = val("village");
+      var message = val("message");
       var ok = true;
 
       if (name.length < 2) { setErr("fullname", "Please enter your full name."); ok = false; }
@@ -347,15 +435,33 @@
         return;
       }
 
-      /* No backend yet — show a local confirmation.
-         To send for real, replace this block with a fetch() to
-         Formspree / Google Apps Script / your own API. */
-      if (box) {
-        box.className = "mt-5 rounded-xl border border-green-200 bg-green-50 px-4 py-3.5 text-sm text-green-800";
-        box.textContent = "Thank you. Your message has been noted — we will call you back shortly. For anything urgent, please call " + (typeof SITE !== "undefined" ? SITE.phone : "") + ".";
+      var submitBtn = form.querySelector('button[type="submit"]');
+      sending = true;
+      if (submitBtn) submitBtn.disabled = true;
+
+      var tel = (typeof SITE !== "undefined" && SITE.phone) ? SITE.phone : "";
+
+      var finish = function (delivered) {
+        sending = false;
+        if (submitBtn) submitBtn.disabled = false;
+        if (!box) return;
+        if (delivered) {
+          box.className = "mt-5 rounded-xl border border-green-200 bg-green-50 px-4 py-3.5 text-sm text-green-800";
+          box.textContent = "Thank you. Your message has been noted — we will call you back shortly. For anything urgent, please call " + tel + ".";
+        } else {
+          /* The message never left the browser. Saying "we will call you back"
+             here would leave a family waiting on a call that was never
+             requested, so the form is kept filled in and the phone number is
+             offered instead. */
+          box.className = "mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3.5 text-sm text-red-800";
+          box.textContent = "We could not send your message just now — please check your internet connection and try again, or call us directly on " + tel + ".";
+        }
         box.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-      form.reset();
+      };
+
+      submitToGoogleForm({ fullname: name, phone: phone, email: email, village: village, message: message })
+        .then(function () { finish(true); form.reset(); },
+              function () { finish(false); });
     });
 
     form.querySelectorAll(".field").forEach(function (i) {
@@ -369,16 +475,31 @@
 
   /* ---------- Boot ---------- */
 
+  /* Every widget is started on its own. They used to run as one statement
+     list, so a single missing element anywhere — one page shipped without a
+     menu icon, one browser without a constructor — threw and took every
+     later widget on the page down with it: no language switch, no reveal, no
+     enquiry form. A failure is now contained to the one thing that failed. */
+  function safe(name, fn) {
+    try { fn(); }
+    catch (e) {
+      if (window.console && console.error) console.error("[sanman] " + name + " failed:", e);
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
+    /* stands down the reveal-on-scroll failsafe in the page <head> — this file
+       arrived, so the observer will do the work */
+    document.documentElement.setAttribute("data-sy-booted", "1");
     document.documentElement.lang = LANG;
-    wireSite();
-    applyI18n();
-    initHeader();
-    initLangSwitch();
-    initActiveNav();
-    initReveal();
-    initCounters();
-    initAccordion();
-    initForm();
+    safe("wireSite", wireSite);
+    safe("applyI18n", applyI18n);
+    safe("initHeader", initHeader);
+    safe("initLangSwitch", initLangSwitch);
+    safe("initActiveNav", initActiveNav);
+    safe("initReveal", initReveal);
+    safe("initCounters", initCounters);
+    safe("initAccordion", initAccordion);
+    safe("initForm", initForm);
   });
 })();

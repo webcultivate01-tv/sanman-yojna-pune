@@ -73,7 +73,7 @@ const SITE = {
   social: {
     facebook:  "https://www.facebook.com/share/1DFLJSaLeT/",
     instagram: "https://www.instagram.com/sanmanyojana/",
-    youtube:   "#",   /* TODO */
+    youtube:   "https://www.youtube.com/@SanmanYojana",
     whatsapp:  "https://wa.me/918766945548"
   },
 
@@ -103,7 +103,7 @@ const SITE = {
       },
       adds: [
         { en: "Death certificate (natural death)", mr: "डेथ सर्टिफिकेट (नैसर्गिक मृत्यू)", hi: "डेथ सर्टिफिकेट (प्राकृतिक मृत्यु)" },
-        { en: "Hearse van (within Pune & Pimpri-Chinchwad city limits)", mr: "शववाहिका (पुणे आणि पिंपरी-चिंचवड शहर मर्यादित)", hi: "शव वाहिका (पुणे और पिंपरी-चिंचवड शहर सीमित)" },
+        { en: "Hearse van (within Pune & Pimpri-Chinchwad city limits)", mr: "अंत्ययात्रा वाहन (पुणे आणि पिंपरी-चिंचवड शहर मर्यादित)", hi: "अंत्ययात्रा वाहन (पुणे और पिंपरी-चिंचवड शहर सीमित)" },
         { en: "Basic funeral materials", mr: "मूलभूत अंत्यसंस्कार साहित्य", hi: "मूलभूत अंत्यसंस्कार सामग्री" },
         { en: "Crematorium booking", mr: "स्मशानभूमी बुकिंग", hi: "श्मशान भूमि बुकिंग" }
       ]

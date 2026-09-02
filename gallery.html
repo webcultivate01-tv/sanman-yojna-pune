@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title data-i18n="page.title.gallery">Gallery | Funeral Services &amp; Rituals in Pune — Sanman Yojana</title>
-<meta name="description" data-i18n-content="page.desc.gallery" content="Photographs from our work across Pune — funeral rituals, asthi visarjan on the riverbank, dead body transport and the families we have stood beside.">
+<title data-i18n="page.title.gallery">Gallery | Funeral Services &amp; Ceremonies in Pune — Sanman Yojana</title>
+<meta name="description" data-i18n-content="page.desc.gallery" content="Photographs from our work across Pune — funeral ceremonies, asthi visarjan on the riverbank, ambulance and hearse service, and the families we have stood beside.">
 <link rel="canonical" href="https://sanmanyojana.org/gallery.html">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="Sanman Yojana — Shahid Bhagat Singh Pratishthan, Pune">
@@ -17,8 +17,8 @@
 <meta property="og:locale:alternate" content="mr_IN">
 <meta property="og:locale:alternate" content="hi_IN">
 <meta property="og:url" content="https://sanmanyojana.org/gallery.html">
-<meta property="og:title" content="Gallery | Funeral Services &amp; Rituals in Pune — Sanman Yojana">
-<meta property="og:description" content="Photographs from our work across Pune — funeral rituals, asthi visarjan on the riverbank, dead body transport and the families we have stood beside.">
+<meta property="og:title" content="Gallery | Funeral Services &amp; Ceremonies in Pune — Sanman Yojana">
+<meta property="og:description" content="Photographs from our work across Pune — funeral ceremonies, asthi visarjan on the riverbank, ambulance and hearse service, and the families we have stood beside.">
 <meta property="og:image" content="https://sanmanyojana.org/assets/img/og-logo.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
@@ -27,8 +27,8 @@
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Gallery | Funeral Services &amp; Rituals in Pune — Sanman Yojana">
-<meta name="twitter:description" content="Photographs from our work across Pune — funeral rituals, asthi visarjan on the riverbank, dead body transport and the families we have stood beside.">
+<meta name="twitter:title" content="Gallery | Funeral Services &amp; Ceremonies in Pune — Sanman Yojana">
+<meta name="twitter:description" content="Photographs from our work across Pune — funeral ceremonies, asthi visarjan on the riverbank, ambulance and hearse service, and the families we have stood beside.">
 <meta name="twitter:image" content="https://sanmanyojana.org/assets/img/og-logo.jpg">
 
 <!-- Structured data: an image gallery belonging to the organisation. -->
@@ -40,8 +40,8 @@
       "@type": "ImageGallery",
       "@id": "https://sanmanyojana.org/gallery.html#webpage",
       "url": "https://sanmanyojana.org/gallery.html",
-      "name": "Gallery | Funeral Services & Rituals in Pune — Sanman Yojana",
-      "description": "Photographs from our work across Pune — funeral rituals, asthi visarjan on the riverbank, dead body transport and the families we have stood beside.",
+      "name": "Gallery | Funeral Services & Ceremonies in Pune — Sanman Yojana",
+      "description": "Photographs from our work across Pune — funeral ceremonies, asthi visarjan on the riverbank, ambulance and hearse service, and the families we have stood beside.",
       "inLanguage": "en-IN",
       "isPartOf": { "@id": "https://sanmanyojana.org/#website" },
       "about": { "@id": "https://sanmanyojana.org/#organization" }
@@ -87,9 +87,32 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="assets/js/tw-config.js"></script>
 <link rel="stylesheet" href="assets/css/style.css">
+
+<!-- ===== REVEAL-ON-SCROLL FAILSAFE =====
+     .reveal starts at opacity:0 and is only made visible by the scroll
+     observer in main.js. That is the whole animation, but it also means a
+     visit where that script never runs shows a page with almost nothing on
+     it. Two nets, neither of which changes anything when the site works:
+       1. scripting switched off  -> the classes are neutralised outright;
+       2. main.js blocked, 404, or still stuck in a slow network -> after
+          five seconds every remaining block is simply shown, using the same
+          .show class the observer would have added. -->
+<noscript><style>
+  .reveal, .reveal-left, .reveal-right { opacity: 1 !important; transform: none !important; }
+</style></noscript>
+<script>
+(function () {
+  var root = document.documentElement;
+  setTimeout(function () {
+    if (root.getAttribute("data-sy-booted")) return;
+    var els = document.querySelectorAll(".reveal:not(.show)");
+    for (var i = 0; i < els.length; i++) els[i].classList.add("show");
+  }, 5000);
+})();
+</script>
 <link rel="icon" type="image/png" sizes="128x128" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
-<link rel="preload" as="image" fetchpriority="high" href="image/gallaryHero.png">
+<link rel="preload" as="image" fetchpriority="high" href="image/gallaryHero.webp">
 
 <style>
   /* ---- Gallery hero: full-bleed photo with animated Ken Burns zoom ---- */
@@ -124,7 +147,7 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    background-image: url('image/gallaryHero.png');
+    background-image: url('image/gallaryHero.webp');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center top;
@@ -374,7 +397,7 @@
     <div class="reveal mx-auto w-20 h-1.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500"></div>
 
     <p class="gh-text-shadow reveal d1 mt-7 text-lg sm:text-2xl text-stone-100 leading-relaxed max-w-2xl mx-auto" data-i18n="gallery.hero.desc">
-      Explore our gallery showcasing funeral arrangements, dead body transport, ritual support, cremation coordination, and respectful ceremonies delivered with care.
+      Explore our gallery showcasing funeral arrangements, ambulance and hearse service, ceremony support, cremation coordination, and respectful ceremonies delivered with care.
     </p>
 
     <div class="reveal d2 mt-9 flex flex-wrap items-center justify-center gap-4">
@@ -413,7 +436,7 @@
         <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
         A Glimpse Into Sanman Yojana
       </span>
-      <h2 class="mt-5 text-3xl sm:text-4xl font-bold text-stone-900" data-i18n="gallery.grid.title">Moments &amp; Rituals We Honour</h2>
+      <h2 class="mt-5 text-3xl sm:text-4xl font-bold text-stone-900" data-i18n="gallery.grid.title">Moments &amp; Ceremonies We Honour</h2>
       <div class="mt-4 mx-auto w-16 h-1.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500"></div>
       <p class="mt-5 text-stone-600 leading-relaxed" data-i18n="gallery.grid.desc">From sacred rites on the riverbank to the families we walk beside — a look at the traditions and care behind every service we arrange across Pune.</p>
     </div>
@@ -421,10 +444,10 @@
     <!-- Poster grid — each card is a 4:5 frame matching the source artwork -->
     <div class="gg-grid">
 
-      <button type="button" class="gg-card reveal d1" aria-label="Enlarge: 25,000 departed given a dignified farewell">
+      <button type="button" class="gg-card reveal d1" aria-label="Enlarge: 25,000 departed given a dignified last journey">
         <picture>
           <source type="image/webp" sizes="(min-width:1024px) 30vw, 47vw" srcset="image/gallary/gallary1-480.webp 480w, image/gallary/gallary1-768.webp 768w, image/gallary/gallary1-1024.webp 1024w">
-          <img class="gg-img" src="image/gallary/gallary1-768.jpg" width="1024" height="1280" loading="lazy" decoding="async" alt="Sanman Yojana volunteers carrying a garlanded bier in a funeral procession — 25,000 departed given a dignified farewell.">
+          <img class="gg-img" src="image/gallary/gallary1-768.jpg" width="1024" height="1280" loading="lazy" decoding="async" alt="Sanman Yojana volunteers carrying a garlanded bier in a funeral procession — 25,000 departed given a dignified last journey.">
         </picture>
         <span class="gg-zoom" aria-hidden="true">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5M15 15l5.25 5.25"/></svg>
@@ -531,14 +554,14 @@
       <div>
         <h2 class="text-xl font-bold text-white mb-5" data-i18n="footer.services">Our Services</h2>
         <ul class="space-y-3 text-sm">
-          <li><a href="services.html#svc-complete" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc6">Complete Funeral Ritual Services</span></a></li>
+          <li><a href="services.html#svc-complete" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc6">Complete Funeral Ceremony Services</span></a></li>
           <li><a href="services.html#svc-transport" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc1">24/7 Funeral Ambulance Service</span></a></li>
-          <li><a href="services.html#svc-rituals" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc4">Religious Rituals by Priests</span></a></li>
-          <li><a href="services.html#svc-immersion" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc3">Ash Immersion (Asthi Visarjan)</span></a></li>
-          <li><a href="services.html#svc-materials" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc2">Complete Funeral Materials</span></a></li>
+          <li><a href="services.html#svc-ceremonies" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc4">Ceremony &amp; Pandit Arrangements</span></a></li>
+          <li><a href="services.html#svc-immersion" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc3">Asthi Visarjan Service</span></a></li>
+          <li><a href="services.html#svc-materials" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc2">Funeral Materials &amp; Essential Arrangements</span></a></li>
           <li><a href="services.html#svc-booking" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc7">Cremation Ground Booking</span></a></li>
-          <li><a href="services.html#svc-counseling" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc5">Family Counseling &amp; Coordination</span></a></li>
-          <li><a href="services.html#svc-guidance" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc8">Complete Guidance for Final Rites</span></a></li>
+          <li><a href="services.html#svc-counseling" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc5">Family Counselling &amp; Support</span></a></li>
+          <li><a href="services.html#svc-guidance" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc8">Complete Guidance for Final Journey</span></a></li>
         </ul>
       </div>
 
@@ -596,10 +619,12 @@
     var lightbox = document.getElementById("ggLightbox");
     var lbImg = document.getElementById("ggLightboxImg");
     var lbClose = document.getElementById("ggLightboxClose");
+    if (!lightbox || !lbImg || !lbClose) return;
     var lastCard = null;
 
     function openLightbox(card) {
       var img = card.querySelector(".gg-img");
+      if (!img) return;
       // currentSrc is the variant the browser already downloaded, so the
       // preview opens instantly instead of pulling a second file.
       lbImg.src = img.currentSrc || img.src;

@@ -1,0 +1,186 @@
+# ============================================================
+#  Sanman Yojana — Apache configuration
+#  Every block is wrapped in <IfModule>, so a host that is missing
+#  one of these modules ignores that block instead of returning a
+#  500 for the whole site.
+# ============================================================
+
+# ---- Defaults -------------------------------------------------
+AddDefaultCharset UTF-8
+Options -Indexes
+
+<IfModule mod_dir.c>
+  DirectoryIndex index.html
+</IfModule>
+
+
+# ---- Canonical host ------------------------------------------
+# Everything on the site — <link rel="canonical">, the Open Graph tags
+# and sitemap.xml — declares https://sanmanyojana.org/. Without this the
+# same page is reachable on four addresses (http/https x www/no-www) and
+# search engines split the ranking between them.
+#
+# The two conditions cover both kinds of host: one that terminates TLS
+# itself (HTTPS=on) and one behind a proxy or CDN that forwards the
+# original scheme in a header. Together they cannot loop.
+#
+# >> If this host has no SSL certificate yet, comment the three RewriteRule
+#    lines below out until it does, or the redirect will not resolve. <<
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # http -> https
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+  # www -> bare domain
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+
+# ---- MIME types ----------------------------------------------
+# Older Apache builds serve .webp / .avif / .woff2 as octet-stream, which
+# stops the browser decoding them at all.
+<IfModule mod_mime.c>
+  AddType image/webp                   .webp
+  AddType image/avif                   .avif
+  AddType image/svg+xml                .svg .svgz
+  AddType video/mp4                    .mp4 .m4v
+  AddType font/woff2                   .woff2
+  AddType font/woff                    .woff
+  AddType application/manifest+json    .webmanifest
+  AddType application/json             .json
+  AddType text/xml                     .xml
+  AddCharset UTF-8                     .html .css .js .json .xml .txt .svg
+</IfModule>
+
+
+# ---- Compression ---------------------------------------------
+# i18n.js alone is 260 KB of Devanagari text and the pages are 30-190 KB
+# each. Compressed they are a fraction of that. Images, video and PDF are
+# already compressed and are deliberately left alone.
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css text/xml
+  AddOutputFilterByType BROTLI_COMPRESS text/javascript application/javascript
+  AddOutputFilterByType BROTLI_COMPRESS application/json application/xml
+  AddOutputFilterByType BROTLI_COMPRESS application/rss+xml image/svg+xml
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml
+  AddOutputFilterByType DEFLATE text/javascript application/javascript
+  AddOutputFilterByType DEFLATE application/json application/xml
+  AddOutputFilterByType DEFLATE application/rss+xml image/svg+xml
+
+  # Netscape 4 era workarounds that some hosts still ship with; they switch
+  # compression off for browsers that have not existed for twenty years.
+  <IfModule mod_setenvif.c>
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE\s7 !no-gzip !gzip-only-text/html
+  </IfModule>
+
+  <IfModule mod_headers.c>
+    Header append Vary Accept-Encoding env=!dont-vary
+  </IfModule>
+</IfModule>
+
+
+# ---- Caching --------------------------------------------------
+# Images, video and fonts are addressed by a stable filename and are
+# replaced by uploading a new name, so they are cached for a year.
+#
+# style.css and the four .js files carry no version in their filenames,
+# so a year would strand visitors on an old copy after an edit. A day is
+# the compromise: fast for a returning visitor, and any change reaches
+# everyone within a day. HTML is always revalidated, so a corrected page
+# or price is live immediately.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault                          "access plus 1 month"
+
+  ExpiresByType text/html                 "access plus 0 seconds"
+  ExpiresByType application/xml           "access plus 0 seconds"
+  ExpiresByType text/xml                  "access plus 0 seconds"
+
+  ExpiresByType text/css                  "access plus 1 day"
+  ExpiresByType text/javascript           "access plus 1 day"
+  ExpiresByType application/javascript    "access plus 1 day"
+
+  ExpiresByType image/jpeg                "access plus 1 year"
+  ExpiresByType image/png                 "access plus 1 year"
+  ExpiresByType image/gif                 "access plus 1 year"
+  ExpiresByType image/webp                "access plus 1 year"
+  ExpiresByType image/avif                "access plus 1 year"
+  ExpiresByType image/svg+xml             "access plus 1 year"
+  ExpiresByType image/x-icon              "access plus 1 year"
+  ExpiresByType video/mp4                 "access plus 1 year"
+  ExpiresByType application/pdf           "access plus 1 month"
+  ExpiresByType font/woff2                "access plus 1 year"
+  ExpiresByType font/woff                 "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  # immutable tells the browser not to send even a revalidation request
+  <FilesMatch "\.(jpg|jpeg|png|gif|webp|avif|svg|ico|mp4|m4v|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=86400, stale-while-revalidate=604800"
+  </FilesMatch>
+
+  <FilesMatch "\.(html|xml|txt|json)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+
+# ---- Security headers ----------------------------------------
+# No Content-Security-Policy here on purpose: the pages run inline scripts
+# and load Tailwind and Google Fonts from their CDNs, so a policy strict
+# enough to be worth setting would break the site. See the note at the
+# bottom of this file.
+<IfModule mod_headers.c>
+  # stop a browser second-guessing a declared Content-Type
+  Header always set X-Content-Type-Options "nosniff"
+
+  # the site is never meant to be framed by anyone else
+  Header always set X-Frame-Options "SAMEORIGIN"
+
+  # send the bare origin off-site — never the path a visitor was reading
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # nothing here asks for a camera, a microphone or a location
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+
+  # tell browsers to stay on https for a year. Turn this on only once the
+  # certificate is confirmed working — it cannot be undone quickly.
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+  # the version banner is of use to nobody but a scanner
+  Header unset X-Powered-By
+  Header always unset X-Powered-By
+</IfModule>
+
+
+# ---- Downloads ------------------------------------------------
+# The brochure link carries download=, but that attribute is ignored on a
+# cross-origin hit and by some in-app browsers; this makes it stick.
+<IfModule mod_headers.c>
+  <FilesMatch "^packages\.pdf$">
+    Header set Content-Disposition "attachment; filename=Sanman-Yojana-Packages.pdf"
+  </FilesMatch>
+</IfModule>
+
+
+# ---- Protect the source files --------------------------------
+# partials.txt is a markup fragment, not a page. robots.txt already asks
+# crawlers to skip it; this stops anyone reading it directly.
+<IfModule mod_authz_core.c>
+  <FilesMatch "^(\.htaccess|\.gitignore|partials\.txt|README\.md|SEO\.md)$">
+    Require all denied
+  </FilesMatch>
+</IfModule>

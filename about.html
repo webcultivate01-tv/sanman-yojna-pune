@@ -87,6 +87,29 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="assets/js/tw-config.js"></script>
 <link rel="stylesheet" href="assets/css/style.css">
+
+<!-- ===== REVEAL-ON-SCROLL FAILSAFE =====
+     .reveal starts at opacity:0 and is only made visible by the scroll
+     observer in main.js. That is the whole animation, but it also means a
+     visit where that script never runs shows a page with almost nothing on
+     it. Two nets, neither of which changes anything when the site works:
+       1. scripting switched off  -> the classes are neutralised outright;
+       2. main.js blocked, 404, or still stuck in a slow network -> after
+          five seconds every remaining block is simply shown, using the same
+          .show class the observer would have added. -->
+<noscript><style>
+  .reveal, .reveal-left, .reveal-right { opacity: 1 !important; transform: none !important; }
+</style></noscript>
+<script>
+(function () {
+  var root = document.documentElement;
+  setTimeout(function () {
+    if (root.getAttribute("data-sy-booted")) return;
+    var els = document.querySelectorAll(".reveal:not(.show)");
+    for (var i = 0; i < els.length; i++) els[i].classList.add("show");
+  }, 5000);
+})();
+</script>
 <link rel="icon" type="image/png" sizes="128x128" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
 
@@ -130,6 +153,13 @@
   @keyframes orbDrift {
     0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
     50%      { transform: translate3d(24px, -28px, 0) scale(1.08); }
+  }
+
+  /* the site's signature line — same italic serif treatment it gets on the home page */
+  .about-thought-quote {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    color: #92400e;
   }
 
   /* ===================== MISSION / VISION SPLITS ===================== */
@@ -381,6 +411,37 @@
     line-height: 1.55;
     color: #78716c;
   }
+
+  /* dot list of associated organisations, directly under the identity card */
+  .gov-companies {
+    margin-top: 1.25rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid rgba(180, 83, 9, 0.16);
+    text-align: center;
+  }
+
+  .gov-companies-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #b45309;
+    margin-bottom: 0.55rem;
+  }
+
+  .gov-companies-list { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+
+  .gov-companies-list li {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.55rem;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: #57534e;
+  }
+
+  .gov-companies-dot { flex: none; margin-top: 0.15em; color: #b45309; font-weight: 800; }
 
   .gov-heading {
     font-family: 'Playfair Display', serif;
@@ -704,7 +765,7 @@
       </h1>
       <p class="reveal reveal-soft mt-5 text-lg text-stone-600 leading-relaxed" data-i18n="about.intro.desc">
         For 25 years we have been guided by one vision — to stand beside families in Pune when
-        they need it most, and to make a dignified farewell something no household has to worry about.
+        they need it most, and to make a dignified last journey something no household has to worry about.
       </p>
     </div>
 
@@ -713,7 +774,7 @@
       <figure class="mv-media reveal reveal-left m-0">
         <span class="mv-outline" aria-hidden="true"></span>
         <div class="mv-frame">
-          <img src="image/packageHero2.png" data-i18n-alt="about.vision.alt" alt="Final rites performed at sunrise on a riverside ghat" loading="lazy" decoding="async">
+          <img src="image/packageHero2.webp" data-i18n-alt="about.vision.alt" alt="Final rites performed at sunrise on a riverside ghat" loading="lazy" decoding="async">
         </div>
       </figure>
 
@@ -722,16 +783,21 @@
 
         <h2 class="mv-title mt-4" data-i18n="about.vision.title">Our Vision</h2>
 
+        <p class="about-thought-quote mt-4 text-xl sm:text-[1.45rem] leading-[1.55]" data-i18n="about.intro.quote">
+          A life lived with dignity deserves a dignified last journey.
+        </p>
+
         <p class="mv-text mt-4" data-i18n="about.vision.text">
-          To be the most trusted funeral service in Maharashtra — the organisation that sets the standard for
-          compassion, transparency and cultural sensitivity. We are working towards a Pune where no family,
-          of any faith or income, faces a loss alone or unprepared.
+          To be the most trusted funeral service in Maharashtra — an organisation that sets the standard for
+          compassion, transparency, and cultural sensitivity. We envision a Pune where no family, regardless
+          of faith or financial circumstances, has to face the loss of a loved one alone or unprepared.
         </p>
 
         <ul class="mv-list mt-7">
-          <li><span class="mv-tick" aria-hidden="true">✓</span><span data-i18n="about.vision.pt1">A dignified farewell within reach of every household budget</span></li>
-          <li><span class="mv-tick" aria-hidden="true">✓</span><span data-i18n="about.vision.pt2">Equal respect for every faith, community and tradition we serve</span></li>
-          <li><span class="mv-tick" aria-hidden="true">✓</span><span data-i18n="about.vision.pt3">Support that continues well past the funeral day itself</span></li>
+          <li><span class="mv-tick" aria-hidden="true">✓</span><span data-i18n="about.vision.pt1">A dignified last journey within reach of every household budget</span></li>
+          <li><span class="mv-tick" aria-hidden="true">✓</span><span data-i18n="about.vision.pt2">Equal respect for every faith, community, and tradition we serve</span></li>
+          <li><span class="mv-tick" aria-hidden="true">✓</span><span data-i18n="about.vision.pt3">Completely free funeral services for individuals and families in genuine need</span></li>
+          <li><span class="mv-tick" aria-hidden="true">✓</span><span data-i18n="about.vision.pt4">Support that continues well beyond the funeral day itself</span></li>
         </ul>
       </div>
     </div>
@@ -779,6 +845,17 @@
           <p class="gov-name" data-i18n="about.founder.name">Vijay More</p>
           <p class="gov-desig" data-i18n="about.founder.role">Founder &amp; President</p>
           <p class="gov-org" data-i18n-html="about.founder.org">Shahid Bhagat Singh Pratishthan<br>Pune, Maharashtra</p>
+
+          <div class="gov-companies">
+            <p class="gov-companies-label" data-i18n="about.founder.companies.label">Also Associated With</p>
+            <ul class="gov-companies-list">
+              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c1">Company Name 1</span></li>
+              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c2">Company Name 2</span></li>
+              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c3">Company Name 3</span></li>
+              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c4">Company Name 4</span></li>
+              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c5">Company Name 5</span></li>
+            </ul>
+          </div>
         </figcaption>
       </figure>
 
@@ -787,15 +864,15 @@
         <h3 class="gov-heading" data-i18n="about.founder.msgtitle">Message from the Founder</h3>
 
         <blockquote class="gov-quote" data-i18n="about.founder.quote">
-          “No family should have to bargain over a farewell. That belief is the whole reason this
+          “No family should have to bargain over a last journey. That belief is the whole reason this
           organisation exists.”
         </blockquote>
 
         <p class="gov-para" data-i18n="about.founder.p1">
-          Vijay More established Sanman Yojana in 2004 with a simple conviction — that compassion and
-          transparency should be the foundation of funeral services. What began as an effort to help a
-          handful of neighbouring families has grown into a trusted institution serving more than 4,200
-          households across Pune and Pimpri-Chinchwad.
+          Vijay More established Shahid Bhagat Singh Pratishthan in 2004 with a simple conviction — that
+          compassion and transparency should be the foundation of funeral services. What began as an effort
+          to help a handful of neighbouring families has grown into Sanman Yojana, a trusted institution
+          serving more than 4,200 households across Pune and Pimpri-Chinchwad.
         </p>
 
         <p class="gov-para" data-i18n="about.founder.p2">
@@ -852,38 +929,38 @@
     </div>
 
     <ul class="reveal reveal-soft mt-14 grid sm:grid-cols-2 gap-x-10 gap-y-3.5 max-w-5xl mx-auto">
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i1">Pune's first free hearse service launched in Hadapsar.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i2">8 ambulance services.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i3">7 hearse vehicles in operation.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i1">Pune's first free funeral ambulance service launched in Hadapsar.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i2">8 ambulance services currently available.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i3">7 funeral ambulances (hearse vehicles) currently operational.</span></li>
       <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i4">Umesh Multispeciality Hospital — treating 70+ patients every day.</span></li>
       <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i5">15,000+ Ayushman Bharat card registrations.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i6">Free consultancy service, medical supplies and treatment for patients.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i7">Free jumbo drinking water supply.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i6">Free consultation services, medical supplies, and medicines for patients.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i7">Free Jumbo Water service.</span></li>
       <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i8">Social service is our true identity.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i9">Immediate relief and rehabilitation during natural disasters.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i10">Ration, vegetables and oxygen supplied during the COVID period.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i11">Disinfectant / medicine spraying during the COVID period.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i12">On-site oxygen service at Andhulsa.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i13">Shaktipeeth darshan trips for women during Navratri.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i14">Ujjwala gas and water connections.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i15">Shed facility built at the Hadapsar ST bus stop.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i16">Help with school and college admissions for students.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i17">Over 1,000 cataract surgeries.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i18">50 years of blood donation drives and hundreds of camps.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i19">Free gynaecological services.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i20">Health check-up camps for women and the elderly.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i21">Planting and conservation of thousands of trees.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i22">Free bus service and educational sponsorship for students.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i23">Job guidance for the youth.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i24">Resolving family disputes and rehabilitation.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i25">Life-saving service through Andhulsa.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i26">Smart Skilling Career Academy — the first pre-police-recruitment training centre in Hadapsar.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i27">3,000+ students placed in administrative services.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i28">"School for the Failed" — a new direction for students whose education had stopped.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i29">First MPSC-UPSC guidance centre — 450+ Class One and Class Two officers.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i30">Women's study hall and library — a centre for career and job guidance.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i31">A state-of-the-art hall built at the school for the deaf and mute in memory of Umesh Vijay More.</span></li>
-      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i32">Free lodging, meals and Faral (festive food) distribution for Warkari pilgrims every year.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i9">Immediate assistance and rehabilitation during natural disasters.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i10">During the COVID-19 pandemic, provided ration, food, and oxygen supplies.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i11">Sanitisation and medicine spraying during the COVID-19 pandemic.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i12">Life-saving oxygen services through Andhulsam.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i13">Free Shaktipeeth Darshan for women during Navratri.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i14">Assistance with Ujjwala Gas and water connections.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i15">Shelter facility provided at the Hadapsar ST Bus Stop.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i16">Assistance to students with school and college admissions.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i17">1,000+ cataract surgeries performed.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i18">50 years of blood donation initiatives and hundreds of blood donation camps.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i19">Free gynaecological healthcare services.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i20">Health check-up camps for women and senior citizens.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i21">Thousands of trees planted and nurtured.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i22">Free bus transportation and educational sponsorship for students.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i23">Career and employment guidance for young people.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i24">Family dispute resolution and rehabilitation support.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i25">Life-saving services through Andhulsam.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i26">Smart Skilling Career Academy — Hadapsar: first pre-training centre for police recruitment.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i27">3,000+ students supported in entering administrative services.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i28">"School for Failed Students" — providing a new direction to students who have discontinued their education.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i29">First MPSC/UPSC guidance centre — 450+ Class I &amp; Class II officers supported.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i30">Women's Study Centre &amp; Library — a centre for career and employment guidance.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i31">A modern hall established at the School for the Deaf in memory of Umesh Vijay More.</span></li>
+      <li class="sw-item"><span class="sw-bullet" aria-hidden="true">•</span><span data-i18n="about.social.i32">Free accommodation, meals, refreshments, and support every year for Warkaris (pilgrims).</span></li>
     </ul>
 
     <p class="reveal reveal-soft mt-10 text-center text-stone-600">
@@ -897,7 +974,7 @@
      CTA BAND
      ============================================================ -->
 <section class="relative py-20 lg:py-28 overflow-hidden bg-amber-900">
-  <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('image/packageCTA1.png');" aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('image/packageCTA1.webp');" aria-hidden="true"></div>
   <div class="absolute inset-0 bg-gradient-to-br from-amber-950/55 via-amber-900/45 to-stone-950/55" aria-hidden="true"></div>
 
   <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -907,7 +984,7 @@
     <!-- leading is repeated per breakpoint: the `sm:text-4xl` media rule ships
          its own line-height and would otherwise win over a base `leading-*` -->
     <h2 class="reveal text-3xl sm:text-4xl lg:text-[2.9rem] font-bold text-white leading-[1.4] sm:leading-[1.4] lg:leading-[1.4] mb-6" data-i18n="svc.cta.title">
-      Apply today and ensure a dignified farewell for your loved ones.
+      Apply today and ensure a dignified last journey for your loved ones.
     </h2>
     <p class="reveal d1 text-lg sm:text-xl text-amber-100/90 leading-relaxed mb-10 max-w-2xl mx-auto" data-i18n="svc.cta.desc">
       Registration takes a few minutes today, and spares your family days of running around tomorrow.
@@ -959,14 +1036,14 @@
       <div>
         <h2 class="text-xl font-bold text-white mb-5" data-i18n="footer.services">Our Services</h2>
         <ul class="space-y-3 text-sm">
-          <li><a href="services.html#svc-complete" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc6">Complete Funeral Ritual Services</span></a></li>
+          <li><a href="services.html#svc-complete" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc6">Complete Funeral Ceremony Services</span></a></li>
           <li><a href="services.html#svc-transport" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc1">24/7 Funeral Ambulance Service</span></a></li>
-          <li><a href="services.html#svc-rituals" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc4">Religious Rituals by Priests</span></a></li>
-          <li><a href="services.html#svc-immersion" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc3">Ash Immersion (Asthi Visarjan)</span></a></li>
-          <li><a href="services.html#svc-materials" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc2">Complete Funeral Materials</span></a></li>
+          <li><a href="services.html#svc-ceremonies" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc4">Ceremony &amp; Pandit Arrangements</span></a></li>
+          <li><a href="services.html#svc-immersion" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc3">Asthi Visarjan Service</span></a></li>
+          <li><a href="services.html#svc-materials" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc2">Funeral Materials &amp; Essential Arrangements</span></a></li>
           <li><a href="services.html#svc-booking" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc7">Cremation Ground Booking</span></a></li>
-          <li><a href="services.html#svc-counseling" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc5">Family Counseling &amp; Coordination</span></a></li>
-          <li><a href="services.html#svc-guidance" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc8">Complete Guidance for Final Rites</span></a></li>
+          <li><a href="services.html#svc-counseling" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc5">Family Counselling &amp; Support</span></a></li>
+          <li><a href="services.html#svc-guidance" class="fl-link text-stone-400 hover:text-amber-400"><span class="text-amber-500">›</span><span data-i18n="footer.svc8">Complete Guidance for Final Journey</span></a></li>
         </ul>
       </div>
 
