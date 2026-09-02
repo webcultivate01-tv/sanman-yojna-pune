@@ -636,7 +636,7 @@ const I18N = {
     "svc.cta.btnPackages": "View Packages",
     /* PAGE TITLES */
         "home.about.yearsbadge": "25+ Years",
-    "page.title.home": "24x7 Funeral Ambulance Services in Pune | Sanman Yojana",
+    "page.title.home": "Funeral Services | 24x7 Funeral Ambulance Services, Pune",
     "page.title.about": "About Sanman Yojana | 25 Years of Funeral Service in Pune",
     "page.title.services": "Funeral Services in Pune | Ambulance, Pandit & Ceremonies",
     "page.title.packages": "Funeral Packages in Pune from ₹11,000 | Sanman Yojana",
@@ -1479,7 +1479,7 @@ const I18N = {
     "svc.cta.btnPackages": "पॅकेजेस पहा",
     /* पृष्ठ शीर्षके */
         "home.about.yearsbadge": "२५+ वर्षे",
-    "page.title.home": "सन्मान योजना | पुण्यातील अंत्यसंस्कार व अंत्ययात्रा वाहन सेवा",
+    "page.title.home": "अंत्यसंस्कार सेवा | २४/७ अंत्यसंस्कार रुग्णवाहिका सेवा, पुणे",
     "page.title.about": "आमच्याविषयी | पुण्यात २५ वर्षांची अंत्यसंस्कार सेवा — सन्मान योजना",
     "page.title.services": "पुण्यातील अंत्यसंस्कार सेवा | अंत्ययात्रा वाहन, पंडित व विधी",
     "page.title.packages": "पुण्यातील अंत्यसंस्कार संच — ₹११,००० पासून | सन्मान योजना",
@@ -2319,7 +2319,7 @@ const I18N = {
     "svc.cta.btnPackages": "पैकेज देखें",
     /* पृष्ठ शीर्षक */
         "home.about.yearsbadge": "25+ वर्ष",
-    "page.title.home": "सन्मान योजना | पुणे में अंत्येष्टि व अंत्ययात्रा वाहन सेवा",
+    "page.title.home": "अंतिम संस्कार सेवा | 24/7 अंतिम संस्कार एम्बुलेंस सेवा, पुणे",
     "page.title.about": "हमारे बारे में | पुणे में 25 वर्षों की अंत्येष्टि सेवा — सन्मान योजना",
     "page.title.services": "पुणे में अंत्येष्टि सेवाएँ | अंत्ययात्रा वाहन, पंडित व अनुष्ठान",
     "page.title.packages": "पुणे में अंत्येष्टि पैकेज — ₹11,000 से | सन्मान योजना",
