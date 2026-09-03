@@ -421,7 +421,7 @@
     margin-top: 1.25rem;
     padding-top: 1.1rem;
     border-top: 1px solid rgba(180, 83, 9, 0.16);
-    text-align: center;
+    text-align: left;
   }
 
   .gov-companies-label {
@@ -431,21 +431,63 @@
     text-transform: uppercase;
     color: #b45309;
     margin-bottom: 0.55rem;
+    text-align: center;
   }
 
-  .gov-companies-list { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+  /* below the desktop breakpoint the list breaks out of the 17rem identity
+     card to the full width of the page gutters — the card above it (photo,
+     name, designation) stays narrow, but the titles get all the room the
+     screen has, so fewer of them ever need to scroll to stay on one line */
+  .gov-companies-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    width: 100%;
+    margin-left: calc(50% - 50vw + 1rem);
+    margin-right: calc(50% - 50vw + 1rem);
+    max-width: calc(100vw - 2rem);
+  }
+
+  @media (min-width: 640px) {
+    .gov-companies-list {
+      margin-left: calc(50% - 50vw + 1.5rem);
+      margin-right: calc(50% - 50vw + 1.5rem);
+      max-width: calc(100vw - 3rem);
+    }
+  }
 
   .gov-companies-list li {
     display: flex;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 0.55rem;
     font-size: 0.88rem;
     line-height: 1.45;
     color: #57534e;
+    text-align: left;
+    max-width: 100%;
   }
 
   .gov-companies-dot { flex: none; margin-top: 0.15em; color: #b45309; font-weight: 800; }
+
+  /* every title stays on one line at any screen width; the full-bleed
+     width above fits almost all of them without help, and a title still
+     too long for the row is clipped with an ellipsis instead of wrapping
+     or scrolling */
+  .gov-companies-list li span:last-child {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* wider than the identity card it sits under, and pulled further left,
+     so most titles fit without needing to scroll at all */
+  @media (min-width: 1024px) {
+    .gov-companies-list { width: max-content; max-width: 25rem; margin-left: -4.5rem; margin-right: 0; }
+  }
 
   .gov-heading {
     font-family: 'Playfair Display', serif;
@@ -853,11 +895,15 @@
           <div class="gov-companies">
             <p class="gov-companies-label" data-i18n="about.founder.companies.label">Also Associated With</p>
             <ul class="gov-companies-list">
-              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c1">Company Name 1</span></li>
-              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c2">Company Name 2</span></li>
-              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c3">Company Name 3</span></li>
-              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c4">Company Name 4</span></li>
-              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c5">Company Name 5</span></li>
+              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c2">Chairman – Amir Chicken &amp; Eggs Pvt. Ltd.</span></li>
+              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c3">Chairman – Nagar Nagari Sah. Patsanstha Marya.</span></li>
+              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c1">Founder – MAHA FPC</span></li>
+              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c4">Founder – Wonderland English Medium School</span></li>
+              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c5">Founder – Smart Thinking Career Academy</span></li>
+              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c6">Founder – Shaheed Bhagat Singh Trust &amp; Educational Foundation</span></li>
+              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c7">Divisional Warden – C-Division, Civil Defence, Pune</span></li>
+              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c8">Member – Police Peace Committee, Pune City</span></li>
+              <li><span class="gov-companies-dot" aria-hidden="true">•</span><span data-i18n="about.founder.companies.c9">Member – Disaster Management Committee, PMC Pune</span></li>
             </ul>
           </div>
         </figcaption>
