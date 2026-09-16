@@ -443,7 +443,11 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 0.4rem;
-    width: 100%;
+    /* width must also be pegged to the viewport, not left at 100% — a
+       percentage width resolves against the narrow 17rem identity card
+       above, which held the breakout to that card's width and left the
+       right-hand gutter wider than the left */
+    width: calc(100vw - 2rem);
     margin-left: calc(50% - 50vw + 1rem);
     margin-right: calc(50% - 50vw + 1rem);
     max-width: calc(100vw - 2rem);
@@ -451,6 +455,7 @@
 
   @media (min-width: 640px) {
     .gov-companies-list {
+      width: calc(100vw - 3rem);
       margin-left: calc(50% - 50vw + 1.5rem);
       margin-right: calc(50% - 50vw + 1.5rem);
       max-width: calc(100vw - 3rem);
@@ -471,16 +476,14 @@
 
   .gov-companies-dot { flex: none; margin-top: 0.15em; color: #b45309; font-weight: 800; }
 
-  /* every title stays on one line at any screen width; the full-bleed
-     width above fits almost all of them without help, and a title still
-     too long for the row is clipped with an ellipsis instead of wrapping
-     or scrolling */
+  /* every title stays on a single line; JS (fitCompanyTitles in main.js)
+     shrinks the font size just enough for titles too long to fit at the
+     base size, instead of wrapping to a second line or clipping with an
+     ellipsis */
   .gov-companies-list li span:last-child {
     flex: 1;
     min-width: 0;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   /* wider than the identity card it sits under, and pulled further left,
@@ -650,6 +653,14 @@
   }
 
   /* ===================== SOCIAL WORK ACHIEVEMENTS ===================== */
+  /* the two lines ("...Pratishthan" / "Community Welfare Initiatives") must
+     each stay on one row rather than wrapping again inside themselves; JS
+     (fitOneLineTitles in main.js) shrinks the font just enough to fit the
+     narrower one at small widths */
+  .sw-title {
+    white-space: nowrap;
+  }
+
   .sw-title br {
     content: "";
     display: block;

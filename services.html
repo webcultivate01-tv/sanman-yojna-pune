@@ -390,7 +390,19 @@
 
   /* ---- Sticky column on wide screens ---- */
   @media (min-width: 1024px) {
-    .sx-sticky { position: sticky; top: 8.5rem; align-self: start; }
+    /* min-width: 0 overrides the grid item's default content-based minimum —
+       without it, forcing .sx-why-title to nowrap below would make its full
+       unwrapped width the column's floor, growing this column past its 0.9fr
+       share and squeezing "What's Included" next to it */
+    .sx-sticky { position: sticky; top: 8.5rem; align-self: start; min-width: 0; }
+  }
+
+  /* the sticky column is narrower than the heading's own font size would
+     need to stay on one line at the lg breakpoint (the container caps out
+     before the column ever gets wide enough); JS (fitOneLineTitles in
+     main.js) shrinks it just enough to fit instead of wrapping */
+  .sx-why-title {
+    white-space: nowrap;
   }
 
   /* ---- Floating glass badge over media ---- */
@@ -1340,7 +1352,7 @@
       <!-- sticky statement -->
       <div class="sx-sticky reveal reveal-left">
         <span class="sx-kicker mb-5"><span class="sx-rule"></span><span data-i18n="svc.why.kicker">Why Sanman Yojna</span></span>
-        <h2 class="text-3xl sm:text-4xl lg:text-[2.7rem] font-bold text-stone-900 leading-tight mb-7" data-i18n="svc.why.title">
+        <h2 class="sx-why-title text-3xl sm:text-4xl lg:text-[2.7rem] font-bold text-stone-900 leading-tight mb-7" data-i18n="svc.why.title">
           Why Choose Sanman Yojna?
         </h2>
 

@@ -945,6 +945,13 @@ section[id],
    The cards are on the page from the start and ride in as the section is
    scrolled to; main.js deals out .show card by card. */
 
+/* Titles vary a lot in length, so instead of wrapping to a second row, JS
+   (fitOneLineTitles in main.js) shrinks each one's font size just enough to
+   keep it on a single line at whatever column width the grid gives it. */
+.svc-teaser-title {
+  white-space: nowrap;
+}
+
 /* The sideways travel is inward on wide screens but crosses the whole card on
    phones, so the panel clips its own overflow rather than letting a card push
    the page sideways. The clip margin leaves room for the drop shadows. */

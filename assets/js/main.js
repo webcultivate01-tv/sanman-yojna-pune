@@ -137,6 +137,47 @@
     });
   }
 
+  /* ---------- 2b. Titles that must stay on one line: shrink to fit ----------
+     Titles vary a lot in length (in every language the site supports), so instead
+     of wrapping to a second line or clipping with an ellipsis, each one's font
+     size is scaled down just enough that it still reads in full on a single line.
+     A title that already contains a hard <br> (the two-line social-work heading)
+     is treated as one line per segment — each segment must fit on its own row,
+     so the font is scaled to whichever segment is tightest. */
+
+  var _fitCanvas;
+
+  function fitOneLine(el) {
+    el.style.fontSize = "";
+    var available = el.clientWidth;
+    if (available <= 0) return;
+    var cs = getComputedStyle(el);
+    var base = parseFloat(cs.fontSize);
+    var needed;
+    if (el.querySelector("br")) {
+      var segments = el.innerHTML.split(/<br\s*\/?>/i).map(function (seg) {
+        var tmp = document.createElement("div");
+        tmp.innerHTML = seg;
+        return tmp.textContent.trim();
+      }).filter(Boolean);
+      _fitCanvas = _fitCanvas || document.createElement("canvas");
+      var ctx = _fitCanvas.getContext("2d");
+      ctx.font = cs.fontStyle + " " + cs.fontWeight + " " + base + "px " + cs.fontFamily;
+      needed = Math.max.apply(null, segments.map(function (s) { return ctx.measureText(s).width; }));
+    } else {
+      needed = el.scrollWidth;
+    }
+    if (needed > available) {
+      el.style.fontSize = (base * available / needed) + "px";
+    }
+  }
+
+  function fitOneLineTitles() {
+    document.querySelectorAll(
+      ".gov-companies-list li span:last-child, .svc-teaser-title, .sx-why-title, .sw-title"
+    ).forEach(fitOneLine);
+  }
+
   function setLang(lang) {
     LANG = lang;
     /* Safari in private browsing, and any browser with site data switched
@@ -145,6 +186,7 @@
     document.documentElement.lang = lang;
     wireSite();
     applyI18n();
+    fitOneLineTitles();
     document.querySelectorAll(".lang-btn").forEach(function (b) {
       b.classList.toggle("active", b.dataset.lang === lang);
     });
@@ -501,5 +543,18 @@
     safe("initCounters", initCounters);
     safe("initAccordion", initAccordion);
     safe("initForm", initForm);
+    safe("fitOneLineTitles", fitOneLineTitles);
+
+    /* the web font may still be loading at DOMContentLoaded — its metrics
+       differ from the fallback font, so re-measure once it's actually in use */
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { safe("fitOneLineTitles", fitOneLineTitles); });
+    }
+
+    var resizeTimer;
+    window.addEventListener("resize", function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () { safe("fitOneLineTitles", fitOneLineTitles); }, 150);
+    });
   });
 })();
