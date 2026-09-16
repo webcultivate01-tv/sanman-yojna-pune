@@ -249,6 +249,17 @@ section[id],
   transform: translateX(120%);
 }
 
+/* Header-row "Contact Now" only belongs on desktop nav (lg+). Below that the
+   hamburger is visible instead, and the same CTA already lives inside the
+   mobile dropdown menu — a plain Tailwind "hidden" class can't win here
+   because .nav-cta's display:inline-flex above has equal specificity and
+   loads later, so this has to override it directly. */
+@media (max-width: 1023.98px) {
+  .nav-cta-header {
+    display: none;
+  }
+}
+
 /* Hamburger — amber-tinted chip on the white band */
 .menu-btn {
   background: rgba(180, 83, 9, 0.08);
